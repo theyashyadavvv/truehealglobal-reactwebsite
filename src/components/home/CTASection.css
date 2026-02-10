@@ -1,0 +1,69 @@
+.cta-section {
+    position: relative;
+    padding: 7rem 0;
+    overflow: hidden;
+}
+
+.cta-section__bg {
+    position: absolute;
+    inset: 0;
+}
+
+.cta-section__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cta-section__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(57, 166, 186, 0.94) 0%, rgba(46, 196, 182, 0.9) 50%, rgba(57, 166, 186, 0.88) 100%);
+}
+
+.cta-section__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.cta-section__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--color-white);
+    margin-bottom: 1.5rem;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+}
+
+.cta-section__title-accent {
+    opacity: 0.9;
+}
+
+.cta-section__text {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+}
+
+.cta-section__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.cta-section__btn-outline {
+    color: var(--color-white) !important;
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    background: transparent !important;
+}
+
+.cta-section__btn-outline:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.7) !important;
+    transform: translateY(-2px);
+}

@@ -1,0 +1,200 @@
+/* ========== ScrollExpandHero ========== */
+
+.scroll-expand-hero {
+    overflow-x: hidden;
+    transition: background-color 0.7s ease-in-out;
+}
+
+.scroll-expand-hero__section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100dvh;
+}
+
+.scroll-expand-hero__viewport {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100dvh;
+}
+
+/* ---------- Background ---------- */
+.scroll-expand-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    height: 100%;
+}
+
+.scroll-expand-hero__bg-img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center;
+}
+
+.scroll-expand-hero__bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- Center layout ---------- */
+.scroll-expand-hero__center {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.scroll-expand-hero__center-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100dvh;
+    position: relative;
+}
+
+/* ---------- Expanding media card ---------- */
+.scroll-expand-hero__media-card {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1.25rem;
+    transition: none;
+}
+
+.scroll-expand-hero__media-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.scroll-expand-hero__media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1.25rem;
+}
+
+.scroll-expand-hero__media-dim {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 1.25rem;
+}
+
+/* ---------- Meta (subtitle + hint) ---------- */
+.scroll-expand-hero__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    margin-top: 1rem;
+    transition: none;
+}
+
+.scroll-expand-hero__date {
+    font-size: 1.5rem;
+    color: #bfdbfe;
+    /* text-blue-200 equivalent */
+    transition: none;
+}
+
+.scroll-expand-hero__hint {
+    color: #bfdbfe;
+    font-weight: 500;
+    text-align: center;
+    transition: none;
+    animation: scroll-expand-pulse 2s ease-in-out infinite;
+}
+
+@keyframes scroll-expand-pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ---------- Split title ---------- */
+.scroll-expand-hero__title-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    transition: none;
+    mix-blend-mode: normal;
+}
+
+.scroll-expand-hero__title-wrap--blend {
+    mix-blend-mode: difference;
+}
+
+.scroll-expand-hero__title-line {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: 700;
+    color: #bfdbfe;
+    transition: none;
+    white-space: nowrap;
+    letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+    .scroll-expand-hero__title-line {
+        font-size: clamp(2.5rem, 5vw, 3.75rem);
+    }
+}
+
+@media (min-width: 1024px) {
+    .scroll-expand-hero__title-line {
+        font-size: 3.75rem;
+    }
+}
+
+/* ---------- Revealed content ---------- */
+.scroll-expand-hero__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2.5rem 2rem;
+}
+
+@media (min-width: 768px) {
+    .scroll-expand-hero__content {
+        padding: 2.5rem 4rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .scroll-expand-hero__content {
+        padding: 5rem 4rem;
+    }
+}

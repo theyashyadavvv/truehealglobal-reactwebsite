@@ -1,0 +1,200 @@
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero__bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.hero__bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgba(11, 18, 21, 0.88) 0%,
+            rgba(30, 45, 53, 0.82) 40%,
+            rgba(57, 166, 186, 0.3) 100%);
+}
+
+/* Bubbles */
+.hero__bubbles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.hero__bubble {
+    position: absolute;
+    bottom: -50px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(57, 166, 186, 0.3), rgba(57, 166, 186, 0.05));
+    border: 1px solid rgba(57, 166, 186, 0.15);
+    animation: bubble-rise linear infinite;
+}
+
+/* Content */
+.hero__content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+    max-width: 860px;
+}
+
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    background: rgba(57, 166, 186, 0.15);
+    border: 1px solid rgba(57, 166, 186, 0.25);
+    border-radius: var(--radius-full);
+    color: var(--color-primary-light);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    color: var(--color-white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.hero__title-gradient {
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero__subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto 2.5rem;
+}
+
+.hero__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.hero__btn-secondary {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: var(--color-white) !important;
+}
+
+.hero__btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Stats */
+.hero__stats {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.25rem 2.5rem;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius-2xl);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.hero__stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-primary-light);
+    font-family: var(--font-primary);
+}
+
+.hero__stat-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+}
+
+.hero__stat-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Scroll Indicator */
+.hero__scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    display: flex;
+    justify-content: center;
+    padding-top: 6px;
+}
+
+.hero__scroll-dot {
+    width: 4px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-full);
+}
+
+@media (max-width: 768px) {
+    .hero__stats {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.25rem 2rem;
+    }
+
+    .hero__stat-divider {
+        width: 60px;
+        height: 1px;
+    }
+
+    .hero__actions {
+        flex-direction: column;
+    }
+
+    .hero__actions .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}

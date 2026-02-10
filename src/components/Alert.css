@@ -1,0 +1,299 @@
+/* CSS Variables */
+:root {
+    --color-success: #10b981;
+    /* Green 500 */
+    --color-success-foreground: #ffffff;
+    --color-success-soft: #ecfdf5;
+    /* Green 50 */
+    --color-success-alpha: #a7f3d0;
+    /* Green 200 */
+    --color-success-text: #059669;
+    /* Green 600 */
+
+    --color-info: #7c3aed;
+    /* Violet 600 */
+    --color-info-foreground: #ffffff;
+    --color-info-soft: #f5f3ff;
+    /* Violet 50 */
+    --color-info-alpha: #ddd6fe;
+    /* Violet 200 */
+    --color-info-text: #7c3aed;
+    /* Violet 600 */
+
+    --color-warning: #f59e0b;
+    /* Yellow 500 */
+    --color-warning-foreground: #ffffff;
+    --color-warning-soft: #fffbeb;
+    /* Yellow 50 */
+    --color-warning-alpha: #fde68a;
+    /* Yellow 200 */
+    --color-warning-text: #d97706;
+    /* Yellow 600 */
+
+    --color-primary: #39a6ba;
+    --color-primary-foreground: #ffffff;
+    --color-primary-soft: #e0f2f1;
+    --color-primary-alpha: #b2dfdb;
+
+    --color-destructive: #ef4444;
+    --color-destructive-foreground: #ffffff;
+    --color-destructive-soft: #fef2f2;
+    --color-destructive-alpha: #fecaca;
+
+    --color-muted: #f4f4f5;
+    --color-muted-foreground: #71717a;
+
+    --color-border: #e4e4e7;
+    --color-card: #ffffff;
+}
+
+/* Base Alert */
+.alert {
+    display: flex;
+    align-items: flex-start;
+    /* items-stretch in original, adapting */
+    width: 100%;
+    gap: 0.5rem;
+    position: relative;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Sizes */
+.alert--lg {
+    padding: 1rem;
+    gap: 0.75rem;
+    font-size: 1rem;
+}
+
+.alert--lg .alert-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.alert--lg .alert-icon {
+    margin-top: 0.125rem;
+}
+
+.alert--md {
+    padding: 0.875rem;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+}
+
+.alert--md .alert-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+
+.alert--sm {
+    padding: 0.625rem 0.75rem;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.alert--sm .alert-icon svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+.alert--sm .alert-icon {
+    margin-top: 0.125rem;
+}
+
+
+/* Variants - Solid */
+.alert--secondary.alert--solid {
+    background-color: var(--color-muted);
+    color: var(--color-dark-text);
+}
+
+.alert--primary.alert--solid {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+}
+
+.alert--destructive.alert--solid {
+    background-color: var(--color-destructive);
+    color: var(--color-destructive-foreground);
+}
+
+.alert--success.alert--solid {
+    background-color: var(--color-success);
+    color: var(--color-success-foreground);
+}
+
+.alert--info.alert--solid {
+    background-color: var(--color-info);
+    color: var(--color-info-foreground);
+}
+
+.alert--warning.alert--solid {
+    background-color: var(--color-warning);
+    color: var(--color-warning-foreground);
+}
+
+.alert--mono.alert--solid {
+    background-color: #18181b;
+    color: #fff;
+}
+
+/* Variants - Outline */
+.alert--outline {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+}
+
+.alert--secondary.alert--outline {
+    color: var(--color-dark-text);
+}
+
+.alert--primary.alert--outline {
+    color: var(--color-primary);
+    border-color: var(--color-border);
+}
+
+.alert--destructive.alert--outline {
+    color: var(--color-destructive);
+}
+
+.alert--success.alert--outline {
+    color: var(--color-success);
+}
+
+.alert--info.alert--outline {
+    color: var(--color-info);
+}
+
+.alert--warning.alert--outline {
+    color: var(--color-warning);
+}
+
+.alert--mono.alert--outline {
+    color: var(--color-dark-text);
+}
+
+/* Variants - Light */
+.alert--light {
+    border: 1px solid transparent;
+}
+
+.alert--secondary.alert--light {
+    background-color: var(--color-muted);
+    border-color: var(--color-border);
+    color: var(--color-dark-text);
+}
+
+.alert--primary.alert--light {
+    background-color: var(--color-primary-soft);
+    border-color: var(--color-primary-alpha);
+    color: var(--color-dark-text);
+}
+
+.alert--primary.alert--light .alert-icon {
+    color: var(--color-primary);
+}
+
+.alert--destructive.alert--light {
+    background-color: var(--color-destructive-soft);
+    border-color: var(--color-destructive-alpha);
+    color: var(--color-dark-text);
+}
+
+.alert--destructive.alert--light .alert-icon {
+    color: var(--color-destructive);
+}
+
+.alert--success.alert--light {
+    background-color: var(--color-success-soft);
+    border-color: var(--color-success-alpha);
+    color: var(--color-dark-text);
+}
+
+.alert--success.alert--light .alert-icon {
+    color: var(--color-success-text);
+}
+
+.alert--info.alert--light {
+    background-color: var(--color-info-soft);
+    border-color: var(--color-info-alpha);
+    color: var(--color-dark-text);
+}
+
+.alert--info.alert--light .alert-icon {
+    color: var(--color-info-text);
+}
+
+.alert--warning.alert--light {
+    background-color: var(--color-warning-soft);
+    border-color: var(--color-warning-alpha);
+    color: var(--color-dark-text);
+}
+
+.alert--warning.alert--light .alert-icon {
+    color: var(--color-warning-text);
+}
+
+
+/* Child Elements */
+.alert-title {
+    font-weight: 600;
+    line-height: 1.25;
+    margin-right: auto;
+    /* Push toolbar to right */
+    flex-grow: 1;
+}
+
+.alert-icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.alert-toolbar {
+    flex-shrink: 0;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-description {
+    font-size: 0.875em;
+    opacity: 0.9;
+    margin-top: 0.25rem;
+}
+
+.alert-description p {
+    margin-bottom: 0.5rem;
+}
+
+.alert-description p:last-child {
+    margin-bottom: 0;
+}
+
+.alert-close-btn {
+    margin-left: 0.5rem;
+    padding: 0 !important;
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    border: none !important;
+    color: inherit !important;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.alert-close-btn:hover {
+    opacity: 1;
+}
+
+.alert-close-icon {
+    width: 1rem;
+    height: 1rem;
+}

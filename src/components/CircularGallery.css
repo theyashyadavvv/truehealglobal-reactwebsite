@@ -1,0 +1,112 @@
+.circular-gallery-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    /* Default height, can be overridden */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* User usually wraps this in a tall container for scroll effect, 
+       but for our integration we might use it as a standalone section element */
+}
+
+.circular-gallery-rotator {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Transformation handled inline by JS */
+    transition: transform 0.1s linear;
+    /* Smooth out small jitters if any */
+}
+
+.circular-gallery-item {
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    /* Center alignment: half of width */
+    margin-top: -200px;
+    /* Center alignment: half of height */
+    transition: opacity 0.3s linear;
+    backface-visibility: hidden;
+    /* Optimize rendering */
+}
+
+.circular-gallery-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: var(--color-dark-bg, #0b1215);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    transform: scale(1);
+    transition: transform 0.3s ease;
+}
+
+.circular-gallery-item:hover .circular-gallery-card {
+    transform: scale(1.05);
+    border-color: var(--color-primary, #39a6ba);
+}
+
+.circular-gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.circular-gallery-card:hover .circular-gallery-img {
+    transform: scale(1.1);
+}
+
+.circular-gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+    color: #fff;
+    text-align: left;
+}
+
+.circular-gallery-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    font-family: var(--font-display, sans-serif);
+}
+
+.circular-gallery-subtitle {
+    display: block;
+    font-size: 0.875rem;
+    font-style: italic;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary, #39a6ba);
+}
+
+.circular-gallery-desc {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    line-height: 1.4;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .circular-gallery-item {
+        width: 220px;
+        height: 300px;
+        margin-left: -110px;
+        margin-top: -150px;
+    }
+}

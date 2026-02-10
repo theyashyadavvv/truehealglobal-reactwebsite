@@ -1,0 +1,131 @@
+.store-header {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-gray-800) 100%);
+    color: var(--color-white);
+    padding-bottom: 2rem;
+}
+
+.store-header__cover {
+    height: 250px;
+    position: relative;
+}
+
+.store-header__cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.store-header__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, rgba(3, 7, 18, 0.8));
+}
+
+.store-header__content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: -60px;
+    position: relative;
+    z-index: 2;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .store-header__content {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: -40px;
+    }
+}
+
+.store-header__info-box {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5rem;
+}
+
+.store-header__logo {
+    width: 120px;
+    height: 120px;
+    background: var(--color-white);
+    padding: 0.5rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.store-header__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-gray-50);
+}
+
+.store-header__text {
+    margin-bottom: 0.5rem;
+}
+
+.store-header__name {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+}
+
+.store-header__meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.store-header__meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.store-header__meta .rating {
+    color: var(--color-warning);
+}
+
+.store-header__actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.btn-white {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.5);
+    color: var(--color-white);
+}
+
+.btn-white:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-white);
+}
+
+/* Product Grid re-used or defined */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+@media (max-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}

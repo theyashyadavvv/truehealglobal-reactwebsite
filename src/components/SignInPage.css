@@ -1,0 +1,458 @@
+:root {
+    --color-bg: #ffffff;
+    --color-fg: #0f172a;
+    --color-muted: #64748b;
+    --color-border: #e2e8f0;
+    --color-card: rgba(255, 255, 255, 0.4);
+    --color-primary: #39a6ba;
+    --color-primary-fg: #ffffff;
+    --color-accent: #7c3aed;
+    /* Violet used in original code */
+}
+
+/* Page Layout */
+.signin-page {
+    height: 100dvh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-body, system-ui, sans-serif);
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+}
+
+@media (min-width: 768px) {
+    .signin-page {
+        flex-direction: row;
+    }
+}
+
+/* Left Column */
+.signin-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.signin-form-max-w {
+    width: 100%;
+    max-width: 28rem;
+    /* max-w-md */
+}
+
+.signin-flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.signin-title {
+    font-size: 2.25rem;
+    line-height: 1.1;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .signin-title {
+        font-size: 3rem;
+    }
+}
+
+.signin-title-span {
+    font-weight: 300;
+    letter-spacing: -0.05em;
+}
+
+.signin-description {
+    color: var(--color-muted);
+}
+
+/* Form Styles */
+.signin-field {
+    margin-bottom: 1.25rem;
+}
+
+.signin-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+}
+
+/* Glass Wrapper */
+.signin-glass-input {
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+    background-color: rgba(15, 23, 42, 0.05);
+    /* foreground/5 */
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+}
+
+.signin-glass-input:focus-within {
+    border-color: rgba(124, 58, 237, 0.7);
+    /* violet-400/70 */
+    background-color: rgba(139, 92, 246, 0.1);
+    /* violet-500/10 */
+}
+
+.signin-input {
+    width: 100%;
+    background: transparent;
+    font-size: 0.875rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: none;
+    outline: none;
+    color: var(--color-fg);
+}
+
+.signin-password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.signin-input-password {
+    padding-right: 3rem;
+    /* Space for eye icon */
+}
+
+.signin-eye-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0.75rem;
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
+.signin-eye-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-muted);
+    transition: color 0.2s;
+}
+
+.signin-eye-btn:hover .signin-eye-icon {
+    color: var(--color-fg);
+}
+
+/* Checkbox & Forgot Password */
+.signin-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+}
+
+.signin-remember {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    color: rgba(15, 23, 42, 0.9);
+}
+
+.signin-checkbox {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+}
+
+.signin-forgot {
+    color: var(--color-accent);
+    /* violet-400 */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.signin-forgot:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.signin-submit-btn {
+    width: 100%;
+    border-radius: 1rem;
+    background-color: var(--color-primary);
+    padding: 1rem;
+    font-weight: 500;
+    color: var(--color-primary-fg);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 1rem;
+}
+
+.signin-submit-btn:hover {
+    opacity: 0.9;
+}
+
+.signin-divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+.signin-divider-line {
+    width: 100%;
+    border-top: 1px solid var(--color-border);
+}
+
+.signin-divider-text {
+    position: absolute;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    background-color: var(--color-bg);
+}
+
+.signin-google-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 1rem;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: 500;
+}
+
+.signin-google-btn:hover {
+    background-color: #f8fafc;
+    /* secondary */
+}
+
+.signin-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.signin-footer {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin-top: 1rem;
+}
+
+.signin-create-account {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signin-create-account:hover {
+    text-decoration: underline;
+}
+
+/* Right Column (Hero) */
+.signin-right {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .signin-right {
+        display: block;
+        flex: 1;
+        position: relative;
+        padding: 1rem;
+        background-color: #f1f5f9;
+        /* Slate 100 placeholder if img fails */
+    }
+}
+
+.signin-hero-bg {
+    position: absolute;
+    inset: 1rem;
+    background-size: cover;
+    background-position: center;
+    border-radius: 1.5rem;
+}
+
+/* Testimonials */
+.signin-testimonials-container {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    padding: 0 2rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.signin-testimonial {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border-radius: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.4);
+    /* card/40 */
+    backdrop-filter: blur(24px);
+    /* backdrop-blur-xl */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.25rem;
+    width: 16rem;
+    /* w-64 */
+    flex-shrink: 0;
+}
+
+.hidden-xl {
+    display: none;
+}
+
+.hidden-2xl {
+    display: none;
+}
+
+@media (min-width: 1280px) {
+    .hidden-xl {
+        display: flex;
+    }
+}
+
+@media (min-width: 1536px) {
+    .hidden-2xl {
+        display: flex;
+    }
+}
+
+.signin-testimonial-avatar {
+    height: 2.5rem;
+    width: 2.5rem;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.signin-testimonial-content {
+    font-size: 0.875rem;
+    line-height: 1.375;
+}
+
+.signin-testimonial-name {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 500;
+}
+
+.signin-testimonial-handle {
+    color: var(--color-muted);
+}
+
+.signin-testimonial-text {
+    margin-top: 0.25rem;
+    color: rgba(15, 23, 42, 0.8);
+}
+
+/* Animations from Tailwind config */
+@keyframes fadeSlideIn {
+    to {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0px);
+    }
+}
+
+@keyframes slideRightIn {
+    to {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateX(0px);
+    }
+}
+
+@keyframes testimonialIn {
+    to {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0px) scale(1);
+    }
+}
+
+.animate-element {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(10px);
+    animation: fadeSlideIn 0.5s ease-out forwards;
+}
+
+.animate-slide-right {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateX(-20px);
+    animation: slideRightIn 0.7s ease-out forwards;
+}
+
+.signin-testimonial {
+    /* Base state for animation */
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(20px) scale(0.95);
+    animation: testimonialIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Delays */
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+}
+
+.delay-500 {
+    animation-delay: 0.5s;
+}
+
+.delay-600 {
+    animation-delay: 0.6s;
+}
+
+.delay-700 {
+    animation-delay: 0.7s;
+}
+
+.delay-800 {
+    animation-delay: 0.8s;
+}
+
+.delay-900 {
+    animation-delay: 0.9s;
+}
+
+.delay-1000 {
+    animation-delay: 1.0s;
+}
+
+.delay-1200 {
+    animation-delay: 1.2s;
+}
+
+.delay-1400 {
+    animation-delay: 1.4s;
+}

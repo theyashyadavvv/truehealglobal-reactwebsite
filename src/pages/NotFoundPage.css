@@ -1,0 +1,154 @@
+.not-found-page {
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Message Display */
+.not-found-msg__container {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    /* Allow clicks to pass through to canvas if needed, but buttons need pointer-events */
+}
+
+.not-found-msg__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    text-align: center;
+    pointer-events: auto;
+    /* Re-enable clicks for buttons */
+    max-width: 90%;
+}
+
+.not-found-msg__content.visible {
+    opacity: 1;
+}
+
+.not-found-msg__title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+    /* Changed to white for visibility on black bg */
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+}
+
+.not-found-msg__code {
+    font-size: 6rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+}
+
+.not-found-msg__desc {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+.not-found-msg__actions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.not-found-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--radius-full);
+    /* Assuming variable exists, else 9999px */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.not-found-btn:hover {
+    transform: scale(1.05);
+}
+
+.not-found-btn--outline {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+}
+
+.not-found-btn--outline:hover {
+    background: #fff;
+    color: #000;
+}
+
+.not-found-btn--filled {
+    background: #fff;
+    border: 2px solid #fff;
+    color: #000;
+}
+
+.not-found-btn--filled:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+
+/* Characters Animation */
+.not-found-chars {
+    position: absolute;
+    width: 99%;
+    height: 95%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.characters {
+    /* Styles handled by JS inline styles, but good to have defaults */
+    display: block;
+}
+
+/* Circle Animation Canvas */
+.not-found-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .not-found-msg__code {
+        font-size: 4rem;
+    }
+
+    .not-found-msg__title {
+        font-size: 1.5rem;
+    }
+
+    .not-found-msg__actions {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .not-found-btn {
+        justify-content: center;
+        width: 100%;
+    }
+}

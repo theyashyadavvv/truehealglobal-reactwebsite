@@ -1,0 +1,103 @@
+/* ========== CircularTestimonials — 3D Image Carousel ========== */
+
+.circ-test {
+    width: 100%;
+    max-width: 56rem;
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.circ-test__grid {
+    display: grid;
+    gap: 4rem;
+}
+
+/* --- 3D Image container --- */
+.circ-test__images {
+    position: relative;
+    width: 100%;
+    height: 24rem;
+    perspective: 1000px;
+}
+
+.circ-test__img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Content area --- */
+.circ-test__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.circ-test__name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.circ-test__designation {
+    margin-bottom: 1.5rem;
+    font-family: var(--font-primary);
+    letter-spacing: 0.02em;
+}
+
+.circ-test__quote {
+    line-height: 1.8;
+    font-family: var(--font-primary);
+}
+
+/* --- Arrow buttons --- */
+.circ-test__arrows {
+    display: flex;
+    gap: 1.25rem;
+    padding-top: 2.5rem;
+}
+
+.circ-test__arrow {
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.circ-test__arrow:hover {
+    transform: scale(1.1);
+}
+
+.circ-test__arrow:active {
+    transform: scale(0.95);
+}
+
+/* --- Responsive: 2 column on desktop --- */
+@media (min-width: 768px) {
+    .circ-test__grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .circ-test__arrows {
+        padding-top: 0;
+    }
+}
+
+/* --- Mobile tweaks --- */
+@media (max-width: 767px) {
+    .circ-test__images {
+        height: 18rem;
+    }
+
+    .circ-test {
+        padding: 1rem;
+    }
+}

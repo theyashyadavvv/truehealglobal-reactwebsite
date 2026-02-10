@@ -1,0 +1,118 @@
+.logos3-section {
+    padding: 3rem 0 4rem;
+    overflow: hidden;
+    position: relative;
+    background: var(--color-off-white);
+    border-top: 1px solid var(--color-gray-100);
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.logos3-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.logos3-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+/* Carousel Layout */
+.logos3-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logos3-carousel {
+    overflow: hidden;
+    /* Cursor grab handled by Embla if interactive */
+}
+
+.logos3-carousel-container {
+    display: flex;
+    /* Embla handles the translation */
+}
+
+.logos3-slide {
+    flex: 0 0 50%;
+    /* 2 logos per row on mobile */
+    min-width: 0;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (min-width: 640px) {
+    .logos3-slide {
+        flex: 0 0 33.333%;
+        /* 3 logos per row */
+    }
+}
+
+@media (min-width: 768px) {
+    .logos3-slide {
+        flex: 0 0 25%;
+        /* 4 logos per row */
+    }
+}
+
+@media (min-width: 1024px) {
+    .logos3-slide {
+        flex: 0 0 16.666%;
+        /* 6 logos per row */
+    }
+}
+
+.logos3-logo-wrap {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Optional: background/border for logo box */
+}
+
+.logos3-img {
+    max-height: 50px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logos3-img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+/* Gradient Fade Masks */
+.logos3-fade-left,
+.logos3-fade-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    /* Fade width */
+    z-index: 10;
+    pointer-events: none;
+}
+
+.logos3-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--color-off-white), transparent);
+}
+
+.logos3-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--color-off-white), transparent);
+}
+
+/* If background is dark/different, update fade colors above */

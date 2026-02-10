@@ -1,0 +1,140 @@
+.warp-hero {
+    position: relative;
+    min-height: 80vh;
+    /* Adjust height as needed */
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    color: var(--color-white);
+}
+
+.warp-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    /* Ensure shader receives full container size */
+}
+
+/* Content Container */
+.warp-hero__content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.warp-hero__text-wrap {
+    max-width: 56rem;
+    /* max-w-4xl */
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Typography */
+.warp-hero__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--color-primary-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+}
+
+.warp-hero__title {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 300;
+    /* font-light */
+    line-height: 1.1;
+    color: var(--color-white);
+}
+
+@media (min-width: 768px) {
+    .warp-hero__title {
+        font-size: 4.5rem;
+        /* md:text-7xl roughly */
+    }
+}
+
+.warp-hero__subtitle {
+    font-family: var(--font-primary);
+    font-size: 1.125rem;
+    /* text-lg */
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 48rem;
+    /* max-w-3xl */
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .warp-hero__subtitle {
+        font-size: 1.5rem;
+        /* md:text-2xl */
+    }
+}
+
+/* Actions/Buttons */
+.warp-hero__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 640px) {
+    .warp-hero__actions {
+        flex-direction: row;
+    }
+}
+
+.warp-hero__btn {
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    /* rounded-full */
+    font-weight: 500;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.warp-hero__btn:hover {
+    transform: scale(1.05);
+}
+
+.warp-hero__btn--primary {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--color-white);
+}
+
+.warp-hero__btn--primary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.warp-hero__btn--secondary {
+    background: var(--color-white);
+    color: var(--color-gray-800);
+}
+
+.warp-hero__btn--secondary:hover {
+    background: var(--color-gray-100);
+}

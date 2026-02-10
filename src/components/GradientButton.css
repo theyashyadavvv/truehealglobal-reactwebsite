@@ -1,0 +1,252 @@
+/* ========== GradientButton — Animated Radial Gradient ========== */
+
+/* CSS @property declarations for animatable custom properties */
+@property --gb-pos-x {
+    syntax: '<percentage>';
+    initial-value: 11%;
+    inherits: false;
+}
+
+@property --gb-pos-y {
+    syntax: '<percentage>';
+    initial-value: 140%;
+    inherits: false;
+}
+
+@property --gb-spread-x {
+    syntax: '<percentage>';
+    initial-value: 150%;
+    inherits: false;
+}
+
+@property --gb-spread-y {
+    syntax: '<percentage>';
+    initial-value: 180%;
+    inherits: false;
+}
+
+@property --gb-color-1 {
+    syntax: '<color>';
+    initial-value: #0B1215;
+    inherits: false;
+}
+
+@property --gb-color-2 {
+    syntax: '<color>';
+    initial-value: #0e2a30;
+    inherits: false;
+}
+
+@property --gb-color-3 {
+    syntax: '<color>';
+    initial-value: #1a4d56;
+    inherits: false;
+}
+
+@property --gb-color-4 {
+    syntax: '<color>';
+    initial-value: #2D8A9B;
+    inherits: false;
+}
+
+@property --gb-color-5 {
+    syntax: '<color>';
+    initial-value: #39A6BA;
+    inherits: false;
+}
+
+@property --gb-border-angle {
+    syntax: '<angle>';
+    initial-value: 20deg;
+    inherits: true;
+}
+
+@property --gb-border-c1 {
+    syntax: '<color>';
+    initial-value: hsla(190, 55%, 60%, 0.2);
+    inherits: true;
+}
+
+@property --gb-border-c2 {
+    syntax: '<color>';
+    initial-value: hsla(190, 55%, 40%, 0.75);
+    inherits: true;
+}
+
+@property --gb-stop-1 {
+    syntax: '<percentage>';
+    initial-value: 37%;
+    inherits: false;
+}
+
+@property --gb-stop-2 {
+    syntax: '<percentage>';
+    initial-value: 61%;
+    inherits: false;
+}
+
+@property --gb-stop-3 {
+    syntax: '<percentage>';
+    initial-value: 78%;
+    inherits: false;
+}
+
+@property --gb-stop-4 {
+    syntax: '<percentage>';
+    initial-value: 90%;
+    inherits: false;
+}
+
+@property --gb-stop-5 {
+    syntax: '<percentage>';
+    initial-value: 100%;
+    inherits: false;
+}
+
+/* ---------- Button base ---------- */
+.gradient-btn {
+    position: relative;
+    appearance: none;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    min-width: 132px;
+    padding: 1rem 2.25rem;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-white);
+    background: radial-gradient(var(--gb-spread-x) var(--gb-spread-y) at var(--gb-pos-x) var(--gb-pos-y),
+            var(--gb-color-1) var(--gb-stop-1),
+            var(--gb-color-2) var(--gb-stop-2),
+            var(--gb-color-3) var(--gb-stop-3),
+            var(--gb-color-4) var(--gb-stop-4),
+            var(--gb-color-5) var(--gb-stop-5));
+    transition:
+        --gb-pos-x 0.5s,
+        --gb-pos-y 0.5s,
+        --gb-spread-x 0.5s,
+        --gb-spread-y 0.5s,
+        --gb-color-1 0.5s,
+        --gb-color-2 0.5s,
+        --gb-color-3 0.5s,
+        --gb-color-4 0.5s,
+        --gb-color-5 0.5s,
+        --gb-border-angle 0.5s,
+        --gb-border-c1 0.5s,
+        --gb-border-c2 0.5s,
+        --gb-stop-1 0.5s,
+        --gb-stop-2 0.5s,
+        --gb-stop-3 0.5s,
+        --gb-stop-4 0.5s,
+        --gb-stop-5 0.5s;
+}
+
+/* Animated gradient border via mask */
+.gradient-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(var(--gb-border-angle),
+            var(--gb-border-c1),
+            var(--gb-border-c2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* ---------- Hover — THG teal bloom ---------- */
+.gradient-btn:hover {
+    --gb-pos-x: 0%;
+    --gb-pos-y: 91%;
+    --gb-spread-x: 120%;
+    --gb-spread-y: 103%;
+    --gb-color-1: #5FC4D6;
+    --gb-color-2: #39A6BA;
+    --gb-color-3: #2EC4B6;
+    --gb-color-4: #1a4d56;
+    --gb-color-5: #0B1215;
+    --gb-border-angle: 190deg;
+    --gb-border-c1: hsla(190, 78%, 90%, 0.1);
+    --gb-border-c2: hsla(190, 75%, 90%, 0.6);
+    --gb-stop-1: 0%;
+    --gb-stop-2: 9%;
+    --gb-stop-3: 21%;
+    --gb-stop-4: 71%;
+    --gb-stop-5: 86%;
+}
+
+.gradient-btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.gradient-btn:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* ---------- Accent variant — green-teal ---------- */
+.gradient-btn--accent {
+    --gb-color-1: #0B1215;
+    --gb-color-2: #1a3d3a;
+    --gb-color-3: #2EC4B6;
+    --gb-color-4: #a8edea;
+    --gb-border-angle: 200deg;
+    --gb-border-c1: hsla(175, 75%, 90%, 0.6);
+    --gb-border-c2: hsla(175, 50%, 90%, 0.15);
+}
+
+.gradient-btn--accent:hover {
+    --gb-pos-x: 0%;
+    --gb-pos-y: 95%;
+    --gb-spread-x: 110%;
+    --gb-spread-y: 110%;
+    --gb-color-1: #0B1215;
+    --gb-color-2: #a8edea;
+    --gb-color-3: #2EC4B6;
+    --gb-color-4: #1a3d3a;
+    --gb-color-5: #0B1215;
+    --gb-stop-1: 0%;
+    --gb-stop-2: 10%;
+    --gb-stop-3: 35%;
+    --gb-stop-4: 71%;
+    --gb-stop-5: 91%;
+    --gb-border-angle: 210deg;
+    --gb-border-c1: hsla(175, 75%, 90%, 0.2);
+    --gb-border-c2: hsla(175, 50%, 90%, 0.75);
+}
+
+/* ---------- Size variants ---------- */
+.gradient-btn--sm {
+    min-width: 80px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8rem;
+    border-radius: 8px;
+}
+
+.gradient-btn--lg {
+    min-width: 160px;
+    padding: 1.15rem 2.75rem;
+    font-size: 1.1rem;
+    border-radius: 13px;
+}
+
+/* ---------- Block (full width) ---------- */
+.gradient-btn--block {
+    width: 100%;
+}
+
+/* ---------- Icon spacing ---------- */
+.gradient-btn>svg {
+    margin-left: 0.4rem;
+    flex-shrink: 0;
+}

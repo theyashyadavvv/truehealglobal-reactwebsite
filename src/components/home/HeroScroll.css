@@ -1,0 +1,55 @@
+/* ========== HeroScroll Section ========== */
+
+.hero-scroll {
+    background: linear-gradient(180deg, var(--color-dark) 0%, var(--color-gray-800) 100%);
+    overflow: hidden;
+}
+
+.hero-scroll__title-wrap {
+    padding: 0 1rem;
+}
+
+.hero-scroll__label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-primary-light);
+    margin-bottom: 1.25rem;
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background: rgba(57, 166, 186, 0.1);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(57, 166, 186, 0.15);
+}
+
+.hero-scroll__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.75rem);
+    font-weight: 800;
+    color: var(--color-white);
+    line-height: 1.08;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-scroll__title-gradient {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1;
+    display: block;
+    margin-top: 0.25rem;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light, #5dd6e6) 40%, #a8edea 80%, var(--color-accent-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+}
+
+.hero-scroll__subtitle {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}

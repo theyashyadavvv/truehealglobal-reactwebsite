@@ -1,0 +1,101 @@
+/* ========== SpotlightCard — Cursor-Tracking Glow Effect ========== */
+
+/*  Private custom-properties (set via JS)
+    --x, --y       pointer position in px
+    --xp, --yp     pointer position as 0-1 fraction
+    --sc-base      base hue (set inline)
+    --sc-spread    hue-spread (set inline)
+*/
+
+.spotlight-card {
+    --sc-hue: calc(var(--sc-base) + (var(--xp, 0) * var(--sc-spread, 0)));
+    --sc-radius: 14;
+    --sc-border: 2;
+    --sc-size: 220;
+    --sc-border-size: calc(var(--sc-border) * 1px);
+    --sc-spot-size: calc(var(--sc-size) * 1px);
+
+    position: relative;
+    border-radius: calc(var(--sc-radius) * 1px);
+    overflow: hidden;
+    touch-action: none;
+
+    /* subtle radial spotlight on background — low-opacity glow */
+    background-image:
+        radial-gradient(var(--sc-spot-size) var(--sc-spot-size) at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+            hsla(var(--sc-hue, 180) 90% 65% / 0.08),
+            transparent);
+    background-size: calc(100% + 2 * var(--sc-border-size)) calc(100% + 2 * var(--sc-border-size));
+    background-position: 50% 50%;
+    background-attachment: fixed;
+
+    /* border glow */
+    border: var(--sc-border-size) solid hsla(var(--sc-hue, 180) 50% 60% / 0.15);
+    transition: border-color 0.4s, box-shadow 0.4s;
+}
+
+.spotlight-card:hover {
+    border-color: hsla(var(--sc-hue, 180) 80% 55% / 0.35);
+    box-shadow:
+        0 0 20px hsla(var(--sc-hue, 180) 80% 55% / 0.08),
+        0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ---- Outer glow pseudo-layer (child div) ---- */
+.spotlight-card__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s;
+    will-change: filter;
+
+    /* glowing border radial */
+    background-image:
+        radial-gradient(calc(var(--sc-spot-size) * 0.75) calc(var(--sc-spot-size) * 0.75) at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+            hsla(var(--sc-hue, 180) 100% 60% / 0.25),
+            transparent 100%);
+    background-attachment: fixed;
+    background-size: calc(100% + 20px) calc(100% + 20px);
+    background-position: 50% 50%;
+    filter: blur(12px);
+}
+
+.spotlight-card:hover .spotlight-card__glow {
+    opacity: 1;
+}
+
+/* ---- ::before = coloured border highlight ---- */
+.spotlight-card::before {
+    content: '';
+    position: absolute;
+    inset: calc(var(--sc-border-size) * -1);
+    pointer-events: none;
+    border-radius: calc(var(--sc-radius) * 1px);
+    border: var(--sc-border-size) solid transparent;
+    background-image:
+        radial-gradient(calc(var(--sc-spot-size) * 0.75) calc(var(--sc-spot-size) * 0.75) at calc(var(--x, 0) * 1px) calc(var(--y, 0) * 1px),
+            hsla(var(--sc-hue, 180) 100% 50% / 0.6),
+            transparent 100%);
+    background-attachment: fixed;
+    background-size: calc(100% + 2 * var(--sc-border-size)) calc(100% + 2 * var(--sc-border-size));
+    background-position: 50% 50%;
+    -webkit-mask:
+        linear-gradient(transparent, transparent),
+        linear-gradient(white, white);
+    -webkit-mask-clip: padding-box, border-box;
+    -webkit-mask-composite: source-in;
+    mask:
+        linear-gradient(transparent, transparent),
+        linear-gradient(white, white);
+    mask-clip: padding-box, border-box;
+    mask-composite: intersect;
+    filter: brightness(2);
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.spotlight-card:hover::before {
+    opacity: 1;
+}

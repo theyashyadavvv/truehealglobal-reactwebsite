@@ -1,0 +1,105 @@
+.categories__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .categories__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.categories__card {
+    display: block;
+    position: relative;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    min-height: 420px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.categories__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+}
+
+.categories__card-image {
+    position: absolute;
+    inset: 0;
+}
+
+.categories__card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.categories__card:hover .categories__card-image img {
+    transform: scale(1.06);
+}
+
+.categories__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+            rgba(11, 18, 21, 0.92) 0%,
+            rgba(11, 18, 21, 0.5) 50%,
+            rgba(11, 18, 21, 0.2) 100%);
+}
+
+.categories__card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 2.5rem;
+}
+
+.categories__card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-xl);
+    background: rgba(57,166,186,0.15);
+    border: 1px solid rgba(57,166,186,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-primary-light);
+    margin-bottom: 1.25rem;
+    backdrop-filter: blur(16px);
+    transition: all 0.4s ease;
+}
+
+.categories__card:hover .categories__card-icon {
+    background: rgba(57,166,186,0.25);
+    transform: scale(1.05);
+}
+
+.categories__card-title {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    color: var(--color-white);
+    margin-bottom: 0.75rem;
+}
+
+.categories__card-desc {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.categories__card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary-light);
+}

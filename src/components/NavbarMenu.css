@@ -1,0 +1,152 @@
+/* ========== NavbarMenu — Hover Dropdown Panels ========== */
+
+/* --- Menu Item (each nav link with dropdown) --- */
+.nav-menu-item {
+    position: relative;
+}
+
+.nav-menu-item__label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-gray-600);
+    font-size: 0.95rem;
+    transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+}
+
+.nav-menu-item__label:hover,
+.nav-menu-item--active .nav-menu-item__label {
+    color: var(--color-gray-900);
+}
+
+.nav-menu-item__chevron {
+    font-size: 0.7rem;
+    transition: transform 0.3s;
+}
+
+.nav-menu-item--active .nav-menu-item__chevron {
+    transform: rotate(180deg);
+}
+
+/* --- Dropdown Panel --- */
+.nav-menu-dropdown {
+    position: absolute;
+    top: calc(100% + 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: 0.5rem;
+    z-index: 100;
+}
+
+.nav-menu-dropdown__inner {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.1),
+        0 4px 12px rgba(0, 0, 0, 0.04),
+        0 0 0 1px rgba(0, 0, 0, 0.02);
+    padding: 1.25rem;
+    width: max-content;
+}
+
+/* --- ProductItem (image + text card in dropdown) --- */
+.nav-product-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    transition: background 0.2s;
+}
+
+.nav-product-item:hover {
+    background: var(--color-gray-50);
+}
+
+.nav-product-item__img {
+    width: 110px;
+    height: 70px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-gray-50);
+}
+
+.nav-product-item__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nav-product-item__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nav-product-item__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-gray-800);
+    margin-bottom: 0.15rem;
+}
+
+.nav-product-item__desc {
+    font-size: 0.8rem;
+    color: var(--color-gray-400);
+    max-width: 10rem;
+    line-height: 1.4;
+}
+
+/* --- HoveredLink (simple text link in dropdown) --- */
+.nav-hovered-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-md);
+    color: var(--color-gray-600);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-hovered-link:hover {
+    color: var(--color-gray-900);
+    background: var(--color-gray-50);
+}
+
+.nav-hovered-link__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    background: var(--color-primary-ultra-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+/* --- Dropdown grid layout for Products --- */
+.nav-menu-products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+}
+
+/* --- Dropdown column layout for links --- */
+.nav-menu-links-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 200px;
+}
