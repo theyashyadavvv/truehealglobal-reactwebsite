@@ -113,6 +113,45 @@
     }
 }
 
+@media (max-width: 480px) {
+    .product-list__hero {
+        padding: 6rem 0 2rem;
+    }
+
+    .product-list__toolbar {
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    .product-list__cat-btn {
+        padding: 0.45rem 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .product-list__controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .plp-card__image {
+        height: 200px;
+        padding: 1.5rem;
+    }
+
+    .plp-card__body {
+        padding: 1.15rem;
+    }
+
+    .plp-card__name {
+        font-size: 1rem;
+    }
+
+    .plp-card__price {
+        font-size: 1.1rem;
+    }
+}
+
 /* Product Card */
 .plp-card {
     display: flex;

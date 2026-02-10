@@ -146,6 +146,39 @@
     }
 }
 
+@media (max-width: 480px) {
+    .search-page__hero {
+        padding: 5rem 0 2rem;
+    }
+
+    .search-page__input {
+        font-size: 0.95rem;
+        padding: 0.85rem 2.5rem 0.85rem 3rem;
+    }
+
+    .search-page__filters {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .search-page__filter-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .search-card__image {
+        height: 170px;
+    }
+
+    .search-card__body {
+        padding: 1rem;
+    }
+
+    .search-card__name {
+        font-size: 0.9rem;
+    }
+}
+
 /* Search Card */
 .search-card {
     display: flex;

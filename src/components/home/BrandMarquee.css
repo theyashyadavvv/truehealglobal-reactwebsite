@@ -63,3 +63,37 @@
         transform: translateX(-33.333%);
     }
 }
+
+@media (max-width: 768px) {
+    .brand-marquee {
+        padding: 2rem 0 2.5rem;
+    }
+
+    .brand-marquee .section-header {
+        margin-bottom: 1.5rem;
+    }
+
+    .brand-marquee__content {
+        gap: 2.5rem;
+    }
+
+    .brand-marquee__item {
+        width: 100px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-marquee {
+        padding: 1.5rem 0 2rem;
+    }
+
+    .brand-marquee__content {
+        gap: 2rem;
+    }
+
+    .brand-marquee__item {
+        width: 80px;
+        height: 40px;
+    }
+}

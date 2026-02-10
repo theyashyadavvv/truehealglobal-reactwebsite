@@ -110,6 +110,70 @@
     }
 }
 
+@media (max-width: 480px) {
+    .profile-header {
+        padding: 5rem 0 2rem;
+    }
+
+    .profile-header__avatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .profile-header__name {
+        font-size: 1.35rem;
+    }
+
+    .profile-header__stats {
+        gap: 1.25rem;
+    }
+
+    .profile-stat__value {
+        font-size: 1.2rem;
+    }
+
+    .profile-sidebar__btn {
+        padding: 0.65rem 0.85rem;
+        font-size: 0.8rem;
+    }
+
+    .order-card {
+        padding: 1rem;
+    }
+
+    .order-card__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .order-card__items {
+        flex-wrap: wrap;
+    }
+
+    .order-card__footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .addresses-grid {
+        gap: 1rem;
+    }
+
+    .address-card {
+        padding: 1.15rem;
+    }
+
+    .wishlist-card__image {
+        height: 150px;
+    }
+
+    .wishlist-card__body {
+        padding: 1rem;
+    }
+}
+
 .profile-sidebar__btn {
     display: flex;
     align-items: center;

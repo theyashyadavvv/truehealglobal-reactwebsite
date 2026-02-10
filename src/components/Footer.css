@@ -268,3 +268,77 @@
     color: rgba(255, 255, 255, 0.3);
     letter-spacing: 0.02em;
 }
+
+@media (max-width: 768px) {
+    .footer__main {
+        padding: 3rem 0 2.5rem;
+    }
+
+    .footer__wave svg {
+        height: 50px;
+    }
+
+    .footer__newsletter-form {
+        flex-direction: column;
+        border-radius: var(--radius-lg);
+    }
+
+    .footer__newsletter-btn {
+        padding: 0.75rem;
+        justify-content: center;
+    }
+
+    .footer__socials {
+        justify-content: center;
+    }
+
+    .footer__trust-items {
+        gap: 0.5rem;
+    }
+
+    .footer__trust-item {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.65rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer__main {
+        padding: 2.5rem 0 2rem;
+    }
+
+    .footer__grid {
+        gap: 1.75rem;
+    }
+
+    .footer__brand-desc {
+        font-size: 0.85rem;
+    }
+
+    .footer__heading {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .footer__list a {
+        font-size: 0.825rem;
+    }
+
+    .footer__contact-list li {
+        font-size: 0.825rem;
+    }
+
+    .footer__social-link {
+        width: 36px;
+        height: 36px;
+    }
+
+    .footer__trust {
+        padding: 1.25rem 0;
+    }
+
+    .footer__bottom {
+        padding: 1rem 0;
+        font-size: 0.7rem;
+    }
+}

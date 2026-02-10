@@ -53,3 +53,35 @@
     margin: 0 auto;
     line-height: 1.7;
 }
+
+@media (max-width: 768px) {
+    .hero-scroll__title-wrap {
+        padding: 0 0.5rem;
+    }
+
+    .hero-scroll__subtitle {
+        font-size: 0.95rem;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-scroll__label {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.75rem;
+    }
+
+    .hero-scroll__title {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+        margin-bottom: 0.75rem;
+    }
+
+    .hero-scroll__title-gradient {
+        font-size: clamp(2rem, 10vw, 3rem);
+    }
+
+    .hero-scroll__subtitle {
+        font-size: 0.875rem;
+        line-height: 1.6;
+    }
+}

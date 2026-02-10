@@ -113,6 +113,60 @@
     }
 }
 
+@media (max-width: 768px) {
+    .testimonials__carousel {
+        max-width: 100%;
+    }
+
+    .testimonials__card {
+        padding: 2rem 1.25rem;
+    }
+
+    .testimonials__quote {
+        font-size: 3.5rem;
+    }
+
+    .testimonials__text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonials__card {
+        padding: 1.5rem 1rem;
+    }
+
+    .testimonials__quote {
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .testimonials__text {
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 1rem;
+    }
+
+    .testimonials__stars {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .testimonials__avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 0.95rem;
+    }
+
+    .testimonials__name {
+        font-size: 0.9rem;
+    }
+
+    .testimonials__dots {
+        margin-top: 1.25rem;
+    }
+}
+
 .testimonials__dots {
     display: flex;
     justify-content: center;

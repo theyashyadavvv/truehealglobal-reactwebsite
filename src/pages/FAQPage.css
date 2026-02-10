@@ -149,3 +149,47 @@
     color: var(--color-gray-400);
     font-size: 0.95rem;
 }
+
+@media (max-width: 768px) {
+    .faq-page__search {
+        max-width: 100%;
+        padding: 0.85rem 1.15rem;
+    }
+
+    .faq-page__categories {
+        gap: 0.35rem;
+    }
+
+    .faq-page__cat-btn {
+        padding: 0.45rem 0.85rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-page__search-section {
+        margin-top: -2rem;
+    }
+
+    .faq-page__search input {
+        font-size: 0.9rem;
+    }
+
+    .faq-page__question {
+        padding: 1rem 1.15rem;
+    }
+
+    .faq-page__question-text {
+        font-size: 0.9rem;
+    }
+
+    .faq-page__answer p {
+        padding: 0 1.15rem 1.15rem;
+        font-size: 0.875rem;
+    }
+
+    .faq-page__empty {
+        padding: 2rem 1rem;
+        font-size: 0.85rem;
+    }
+}

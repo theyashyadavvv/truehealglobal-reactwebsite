@@ -157,3 +157,35 @@
     font-size: 0.8rem;
     border-top: 1px solid var(--color-gray-100);
 }
+
+@media (max-width: 480px) {
+    .menu-drawer {
+        max-width: 100%;
+    }
+
+    .menu-drawer__header {
+        padding: 1rem 1.25rem;
+    }
+
+    .menu-drawer__content {
+        padding: 1.25rem 0.75rem;
+    }
+
+    .menu-drawer__item {
+        padding: 0.85rem;
+    }
+
+    .menu-drawer__item-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .menu-drawer__item-left span {
+        font-size: 0.9rem;
+    }
+
+    .menu-drawer__footer {
+        padding: 1rem;
+        font-size: 0.75rem;
+    }
+}

@@ -103,3 +103,38 @@
     font-weight: 600;
     color: var(--color-primary-light);
 }
+
+@media (max-width: 480px) {
+    .categories__grid {
+        gap: 1.25rem;
+    }
+
+    .categories__card {
+        min-height: 300px;
+    }
+
+    .categories__card-content {
+        padding: 1.5rem;
+    }
+
+    .categories__card-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .categories__card-title {
+        font-size: 1.35rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .categories__card-desc {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .categories__card-link {
+        font-size: 0.85rem;
+    }
+}

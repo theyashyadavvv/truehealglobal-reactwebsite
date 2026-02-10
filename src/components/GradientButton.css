@@ -250,3 +250,17 @@
     margin-left: 0.4rem;
     flex-shrink: 0;
 }
+
+@media (max-width: 480px) {
+    .gradient-btn {
+        min-width: 100px;
+        padding: 0.85rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .gradient-btn--lg {
+        min-width: 120px;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}

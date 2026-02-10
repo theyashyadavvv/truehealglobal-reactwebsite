@@ -138,3 +138,36 @@
 .warp-hero__btn--secondary:hover {
     background: var(--color-gray-100);
 }
+
+@media (max-width: 480px) {
+    .warp-hero {
+        min-height: 60vh;
+    }
+
+    .warp-hero__content {
+        padding: 1.5rem 0;
+    }
+
+    .warp-hero__text-wrap {
+        gap: 1rem;
+    }
+
+    .warp-hero__label {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.85rem;
+    }
+
+    .warp-hero__title {
+        font-size: 2rem;
+    }
+
+    .warp-hero__subtitle {
+        font-size: 0.95rem;
+    }
+
+    .warp-hero__btn {
+        padding: 0.85rem 1.5rem;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+}

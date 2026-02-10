@@ -149,3 +149,33 @@
     background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
     border-radius: 0 2px 2px 0;
 }
+
+@media (max-width: 480px) {
+    .banner-carousel {
+        height: 400px;
+    }
+
+    .banner-carousel__title {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+        margin-bottom: 0.75rem;
+    }
+
+    .banner-carousel__subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+    }
+
+    .banner-carousel__dots {
+        bottom: 20px;
+    }
+
+    .banner-carousel__dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .banner-carousel__dot--active {
+        width: 20px;
+    }
+}

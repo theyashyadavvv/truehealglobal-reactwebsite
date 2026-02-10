@@ -38,6 +38,30 @@
     }
 }
 
+@media (max-width: 480px) {
+    .categories-hero {
+        padding: 6rem 0 2rem;
+    }
+
+    .category-card-large {
+        padding: 1.5rem;
+    }
+
+    .category-card-large__image {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 1rem;
+    }
+
+    .category-card-large__info h3 {
+        font-size: 1.05rem;
+    }
+
+    .category-card-large__info p {
+        font-size: 0.85rem;
+    }
+}
+
 .category-card-large {
     display: block;
     background: var(--color-white);

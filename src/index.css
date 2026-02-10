@@ -457,6 +457,51 @@ h6 {
   }
 }
 
+@media (max-width: 480px) {
+  .section {
+    padding: clamp(2.5rem, 6vw, 4rem) 0;
+  }
+
+  .section-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.75rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .section-title {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .btn-lg {
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
+  }
+
+  .btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .section-header-row {
+    margin-bottom: var(--space-xl);
+    gap: var(--space-md);
+  }
+}
+
 @media (min-width: 769px) {
   .hide-desktop {
     display: none !important;

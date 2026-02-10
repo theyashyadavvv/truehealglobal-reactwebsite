@@ -198,3 +198,23 @@
         padding: 5rem 4rem;
     }
 }
+
+@media (max-width: 480px) {
+    .scroll-expand-hero__title-line {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+        white-space: normal;
+        text-align: center;
+    }
+
+    .scroll-expand-hero__date {
+        font-size: 1rem;
+    }
+
+    .scroll-expand-hero__hint {
+        font-size: 0.85rem;
+    }
+
+    .scroll-expand-hero__content {
+        padding: 1.5rem 1rem;
+    }
+}

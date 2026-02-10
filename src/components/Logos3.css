@@ -116,3 +116,26 @@
 }
 
 /* If background is dark/different, update fade colors above */
+
+@media (max-width: 480px) {
+    .logos3-section {
+        padding: 2rem 0 2.5rem;
+    }
+
+    .logos3-header {
+        margin-bottom: 2rem;
+    }
+
+    .logos3-logo-wrap {
+        height: 60px;
+    }
+
+    .logos3-img {
+        max-height: 36px;
+    }
+
+    .logos3-fade-left,
+    .logos3-fade-right {
+        width: 50px;
+    }
+}

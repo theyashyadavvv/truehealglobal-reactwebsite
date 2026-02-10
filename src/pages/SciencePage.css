@@ -19,6 +19,40 @@
     }
 }
 
+@media (max-width: 480px) {
+    .science-page__explainer-desc {
+        font-size: 0.9rem;
+    }
+
+    .science-page__key-points li {
+        font-size: 0.875rem;
+    }
+
+    .science-page__explainer-image img {
+        height: 250px;
+    }
+
+    .science-page__orp-item {
+        grid-template-columns: 70px 1fr 100px;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .science-page__orp-value {
+        font-size: 0.8rem;
+    }
+
+    .science-page__orp-label {
+        font-size: 0.75rem;
+    }
+
+    .science-page__comparison th,
+    .science-page__comparison td {
+        padding: 0.75rem 0.85rem;
+        font-size: 0.8rem;
+    }
+}
+
 .science-page__explainer-desc {
     font-size: 1rem;
     color: var(--color-gray-500);

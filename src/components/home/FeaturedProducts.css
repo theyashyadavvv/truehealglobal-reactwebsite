@@ -107,8 +107,8 @@
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.featured__card:hover .featured__card-image img { transform: scale(1.08) translateY(-4px); }
-    transform: scale(1.1);
+.featured__card:hover .featured__card-image img {
+    transform: scale(1.08) translateY(-4px);
 }
 
 .featured__card-body {
@@ -208,5 +208,41 @@
 
     .featured__card-wrapper {
         flex: 0 0 260px;
+    }
+}
+
+@media (max-width: 480px) {
+    .featured__card-wrapper {
+        flex: 0 0 230px;
+    }
+
+    .featured__card-image {
+        height: 180px;
+        padding: 1rem;
+    }
+
+    .featured__card-image img {
+        max-height: 140px;
+    }
+
+    .featured__card-body {
+        padding: 1rem;
+    }
+
+    .featured__card-name {
+        font-size: 0.9rem;
+    }
+
+    .featured__card-price {
+        font-size: 1.05rem;
+    }
+
+    .featured__nav-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .featured__carousel {
+        gap: 1rem;
     }
 }

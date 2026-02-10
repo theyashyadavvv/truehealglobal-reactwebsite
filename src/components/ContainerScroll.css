@@ -77,3 +77,17 @@
     object-position: left top;
     border-radius: 1rem;
 }
+
+@media (max-width: 480px) {
+    .container-scroll {
+        height: 45rem;
+        padding: 0.25rem;
+    }
+
+    .container-scroll__card {
+        height: 22rem;
+        padding: 0.25rem;
+        border-radius: 20px;
+        border-width: 3px;
+    }
+}

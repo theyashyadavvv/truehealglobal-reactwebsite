@@ -174,3 +174,43 @@
     color: var(--color-warning);
     font-weight: 600;
 }
+
+@media (max-width: 768px) {
+    .store-list__hero {
+        padding: 6rem 0 2rem;
+    }
+
+    .store-list__controls {
+        flex-direction: column;
+    }
+
+    .search-bar {
+        min-width: 100%;
+    }
+
+    .filter-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .store-card--large .store-card__cover {
+        height: 120px;
+    }
+
+    .store-card--large .store-card__logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .store-card--large .store-card__info {
+        padding: 0 1rem 1rem;
+        margin-top: -30px;
+    }
+
+    .store-card__name {
+        font-size: 1.05rem;
+    }
+}

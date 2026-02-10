@@ -110,3 +110,28 @@
         margin-top: -150px;
     }
 }
+
+@media (max-width: 480px) {
+    .circular-gallery-container {
+        height: 400px;
+    }
+
+    .circular-gallery-item {
+        width: 180px;
+        height: 250px;
+        margin-left: -90px;
+        margin-top: -125px;
+    }
+
+    .circular-gallery-overlay {
+        padding: 1rem;
+    }
+
+    .circular-gallery-title {
+        font-size: 1rem;
+    }
+
+    .circular-gallery-subtitle {
+        font-size: 0.75rem;
+    }
+}
