@@ -20,7 +20,7 @@ export default function HeroScroll() {
                 }
             >
                 <img
-                    src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=1400&h=720&fit=crop&q=80"
+                    src="/assets/image/hero_scroll_showcase.jpg"
                     alt="Premium hydrogen water purification system showcase"
                     draggable={false}
                 />

@@ -1,16 +1,20 @@
+import { Suspense, lazy } from 'react';
 import ScrollExpandHero from '../components/ScrollExpandHero';
 import BannerCarousel from '../components/home/BannerCarousel';
 import HeroScroll from '../components/home/HeroScroll';
 import CategoryGrid from '../components/home/CategoryGrid';
 import PopularStores from '../components/home/PopularStores';
 import Logos3 from '../components/Logos3';
-import FeaturedProducts from '../components/home/FeaturedProducts';
 import { useBrands } from '../hooks/useDataHooks';
-import CategoryHighlights from '../components/home/CategoryHighlights';
-import ScienceBenefits from '../components/home/ScienceBenefits';
-import Testimonials from '../components/home/Testimonials';
-import FAQPreview from '../components/home/FAQPreview';
-import CTASection from '../components/home/CTASection';
+import LoadingSpinner from '../components/LoadingSpinner'; // Assuming this exists or use fallback
+
+// Lazy load below-the-fold components
+const FeaturedProducts = lazy(() => import('../components/home/FeaturedProducts'));
+const CategoryHighlights = lazy(() => import('../components/home/CategoryHighlights'));
+const ScienceBenefits = lazy(() => import('../components/home/ScienceBenefits'));
+const Testimonials = lazy(() => import('../components/home/Testimonials'));
+const FAQPreview = lazy(() => import('../components/home/FAQPreview'));
+const CTASection = lazy(() => import('../components/home/CTASection'));
 
 export default function HomePage() {
     const { data: brandsData } = useBrands();
@@ -43,12 +47,14 @@ export default function HomePage() {
                 />
             )}
 
-            <FeaturedProducts />
-            <CategoryHighlights />
-            <ScienceBenefits />
-            <Testimonials />
-            <FAQPreview />
-            <CTASection />
+            <Suspense fallback={<div className="py-20 text-center">Loading...</div>}>
+                <FeaturedProducts />
+                <CategoryHighlights />
+                <ScienceBenefits />
+                <Testimonials />
+                <FAQPreview />
+                <CTASection />
+            </Suspense>
         </main>
     );
 }

@@ -50,7 +50,11 @@ export function AuthProvider({ children }) {
             // Auto guest-login like Flutter does
             guestLogin()
                 .then(() => setIsGuest(true))
-                .catch(() => {})
+                .catch((err) => {
+                    console.error('Guest login failed:', err);
+                    // Fallback to guest mode even if API fails to allow browsing
+                    setIsGuest(true);
+                })
                 .finally(() => setLoading(false));
         }
     }, [loadUser]);

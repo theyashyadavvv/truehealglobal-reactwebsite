@@ -52,10 +52,16 @@ const pageVariants = {
     exit: { opacity: 0, y: -8, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } }
 };
 
+import LoadingSpinner from './components/LoadingSpinner';
+
 export default function App() {
     const location = useLocation();
 
-    const LazyFallback = <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
+    const LazyFallback = (
+        <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <LoadingSpinner size="lg" />
+        </div>
+    );
 
     return (
         <>

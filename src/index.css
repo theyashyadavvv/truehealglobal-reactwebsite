@@ -187,9 +187,11 @@ h3,
 h4,
 h5,
 h6 {
+  font-family: var(--font-display);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   color: var(--color-gray-800);
+  letter-spacing: -0.02em;
 }
 
 /* --- Layout Utilities --- */
@@ -581,5 +583,6 @@ h6 {
   to {
     transform: rotate(360deg);
   }
-}  
-/* ========== MICRO-ANIMATION UTILITIES ========== */ 
+}
+
+/* ========== MICRO-ANIMATION UTILITIES ========== */

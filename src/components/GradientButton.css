@@ -182,6 +182,8 @@
     --gb-stop-3: 21%;
     --gb-stop-4: 71%;
     --gb-stop-5: 86%;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(57, 166, 186, 0.5);
 }
 
 .gradient-btn:focus-visible {
