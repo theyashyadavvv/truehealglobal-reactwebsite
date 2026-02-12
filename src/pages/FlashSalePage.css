@@ -1,0 +1,23 @@
+.flash-sale__hero { padding: 6rem 0 2rem; background: linear-gradient(135deg, #7c2d12 0%, #dc2626 100%); }
+.flash-sale__hero h1 { display: flex; align-items: center; gap: 0.5rem; color: white; }
+.flash-sale__hero p { color: rgba(255,255,255,0.8); }
+.flash-sale__body { padding: 2rem 0 4rem; }
+.flash-skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+.flash-skeleton { aspect-ratio: 3/4; border-radius: 14px; background: var(--color-surface); animation: pulse 1.5s infinite; }
+.flash-empty { text-align: center; padding: 4rem 0; color: var(--color-text-secondary); }
+.flash-empty h3 { margin-top: 1rem; color: var(--color-text); }
+.flash-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; overflow-x: auto; padding-bottom: 0.5rem; }
+.flash-tab { padding: 0.6rem 1.25rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--color-text-secondary); cursor: pointer; font-size: 0.85rem; font-weight: 600; white-space: nowrap; display: flex; flex-direction: column; gap: 0.2rem; transition: all 0.2s; }
+.flash-tab.active { background: #dc2626; color: white; border-color: #dc2626; }
+.flash-tab__time { font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem; opacity: 0.8; }
+.flash-no-products { text-align: center; padding: 2rem; color: var(--color-text-secondary); }
+.flash-products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+.flash-product-card { border-radius: 14px; overflow: hidden; background: var(--color-surface); border: 1px solid rgba(255,255,255,0.04); text-decoration: none; color: var(--color-text); transition: all 0.2s; }
+.flash-product-card:hover { border-color: #dc2626; transform: translateY(-3px); }
+.flash-product__img-wrap { position: relative; aspect-ratio: 1; overflow: hidden; }
+.flash-product__img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.flash-product__badge { position: absolute; top: 8px; left: 8px; background: #dc2626; color: white; padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; }
+.flash-product__stock { position: absolute; bottom: 8px; left: 8px; background: rgba(0,0,0,0.7); color: #fbbf24; padding: 0.2rem 0.5rem; border-radius: 6px; font-size: 0.7rem; font-weight: 600; }
+.flash-product__info { padding: 0.75rem; }
+.flash-product__info h4 { font-size: 0.9rem; margin-bottom: 0.3rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.flash-product__price { display: flex; align-items: center; gap: 0.5rem; }

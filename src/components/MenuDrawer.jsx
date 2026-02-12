@@ -9,20 +9,43 @@ import {
     HiOutlineChat,
     HiOutlineOfficeBuilding,
     HiOutlineLogin,
+    HiOutlineLogout,
     HiOutlineX,
-    HiChevronRight
+    HiChevronRight,
+    HiOutlineHeart,
+    HiOutlineCreditCard,
+    HiOutlineBell,
+    HiOutlineLightningBolt,
+    HiOutlineTag,
+    HiOutlineHome,
+    HiOutlineSearch,
+    HiOutlineViewGrid,
+    HiOutlineShoppingCart,
 } from 'react-icons/hi';
+import { useAuth } from '../context/AuthContext';
 import './MenuDrawer.css';
 
 export default function MenuDrawer({ isOpen, onClose }) {
     const navigate = useNavigate();
+    const { isLoggedIn, user, logout } = useAuth();
 
-    const menuItems = [
+    const mainLinks = [
+        { icon: HiOutlineHome, label: 'Home', path: '/' },
+        { icon: HiOutlineViewGrid, label: 'Categories', path: '/categories' },
+        { icon: HiOutlineSearch, label: 'Search', path: '/search' },
+        { icon: HiOutlineShoppingCart, label: 'Cart', path: '/cart' },
+        { icon: HiOutlineLightningBolt, label: 'Flash Sales', path: '/flash-sales' },
+        { icon: HiOutlineTag, label: 'Brands', path: '/brands' },
+    ];
+
+    const userLinks = [
         { icon: HiOutlineUser, label: 'Profile', path: '/profile' },
         { icon: HiOutlineShoppingBag, label: 'My Orders', path: '/orders' },
-        { icon: HiOutlineLocationMarker, label: 'My Address', path: '/address' },
-        { icon: HiOutlineTicket, label: 'Coupon', path: '/coupons' },
-        { icon: HiOutlineQuestionMarkCircle, label: 'Help & Support', path: '/help' },
+        { icon: HiOutlineHeart, label: 'Wishlist', path: '/wishlist' },
+        { icon: HiOutlineLocationMarker, label: 'My Addresses', path: '/addresses' },
+        { icon: HiOutlineCreditCard, label: 'Wallet', path: '/wallet' },
+        { icon: HiOutlineTicket, label: 'Coupons', path: '/coupons' },
+        { icon: HiOutlineBell, label: 'Notifications', path: '/notifications' },
     ];
 
     const handleNavigation = (path) => {
@@ -63,9 +86,9 @@ export default function MenuDrawer({ isOpen, onClose }) {
                         </div>
 
                         <div className="menu-drawer__content">
-                            {menuItems.map((item, index) => (
+                            {mainLinks.map((item, index) => (
                                 <button
-                                    key={index}
+                                    key={`main-${index}`}
                                     className="menu-drawer__item"
                                     onClick={() => handleNavigation(item.path)}
                                 >
@@ -78,6 +101,26 @@ export default function MenuDrawer({ isOpen, onClose }) {
                                     <HiChevronRight className="menu-drawer__chevron" />
                                 </button>
                             ))}
+
+                            <div className="menu-drawer__divider" />
+
+                            {isLoggedIn && userLinks.map((item, index) => (
+                                <button
+                                    key={`user-${index}`}
+                                    className="menu-drawer__item"
+                                    onClick={() => handleNavigation(item.path)}
+                                >
+                                    <div className="menu-drawer__item-left">
+                                        <div className="menu-drawer__item-icon">
+                                            <item.icon size={22} />
+                                        </div>
+                                        <span>{item.label}</span>
+                                    </div>
+                                    <HiChevronRight className="menu-drawer__chevron" />
+                                </button>
+                            ))}
+
+                            {isLoggedIn && <div className="menu-drawer__divider" />}
 
                             <a
                                 href="https://wa.me/"
@@ -97,31 +140,46 @@ export default function MenuDrawer({ isOpen, onClose }) {
 
                             <button
                                 className="menu-drawer__item"
-                                onClick={() => handleNavigation('/join-store')}
+                                onClick={() => handleNavigation('/about')}
                             >
                                 <div className="menu-drawer__item-left">
                                     <div className="menu-drawer__item-icon">
                                         <HiOutlineOfficeBuilding size={22} />
                                     </div>
-                                    <span>Join as a Store</span>
+                                    <span>About Us</span>
                                 </div>
                                 <HiChevronRight className="menu-drawer__chevron" />
                             </button>
 
                             <div className="menu-drawer__divider" />
 
-                            <button
-                                className="menu-drawer__item menu-drawer__item--highlight"
-                                onClick={() => handleNavigation('/login')}
-                            >
-                                <div className="menu-drawer__item-left">
-                                    <div className="menu-drawer__item-icon menu-drawer__item-icon--highlight">
-                                        <HiOutlineLogin size={22} />
+                            {isLoggedIn ? (
+                                <button
+                                    className="menu-drawer__item menu-drawer__item--highlight"
+                                    onClick={() => { logout(); onClose(); }}
+                                >
+                                    <div className="menu-drawer__item-left">
+                                        <div className="menu-drawer__item-icon menu-drawer__item-icon--highlight">
+                                            <HiOutlineLogout size={22} />
+                                        </div>
+                                        <span>Sign Out</span>
                                     </div>
-                                    <span>Sign In</span>
-                                </div>
-                                <HiChevronRight className="menu-drawer__chevron" />
-                            </button>
+                                    <HiChevronRight className="menu-drawer__chevron" />
+                                </button>
+                            ) : (
+                                <button
+                                    className="menu-drawer__item menu-drawer__item--highlight"
+                                    onClick={() => handleNavigation('/login')}
+                                >
+                                    <div className="menu-drawer__item-left">
+                                        <div className="menu-drawer__item-icon menu-drawer__item-icon--highlight">
+                                            <HiOutlineLogin size={22} />
+                                        </div>
+                                        <span>Sign In</span>
+                                    </div>
+                                    <HiChevronRight className="menu-drawer__chevron" />
+                                </button>
+                            )}
                         </div>
 
                         <div className="menu-drawer__footer">

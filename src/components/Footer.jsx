@@ -42,9 +42,10 @@ export default function Footer() {
                             <ul className="footer__list">
                                 <li><Link to="/">Home</Link></li>
                                 <li><Link to="/products">All Products</Link></li>
-                                <li><Link to="/products?category=hydrogen">Hydrogen Machines</Link></li>
-                                <li><Link to="/products?category=alkaline">Alkaline Machines</Link></li>
-                                <li><Link to="/science">Science & Research</Link></li>
+                                <li><Link to="/categories">Categories</Link></li>
+                                <li><Link to="/stores">Stores</Link></li>
+                                <li><Link to="/brands">Brands</Link></li>
+                                <li><Link to="/flash-sales">Flash Sales</Link></li>
                                 <li><Link to="/faq">FAQs</Link></li>
                             </ul>
                         </div>
@@ -53,12 +54,12 @@ export default function Footer() {
                         <div className="footer__column">
                             <h4 className="footer__heading">Policies</h4>
                             <ul className="footer__list">
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Cancellation Policy</a></li>
-                                <li><a href="#">Refund Policy</a></li>
-                                <li><a href="#">Shipping Policy</a></li>
-                                <li><a href="#">Vendor Registration</a></li>
+                                <li><Link to="/privacy">Privacy Policy</Link></li>
+                                <li><Link to="/terms">Terms & Conditions</Link></li>
+                                <li><Link to="/cancellation-policy">Cancellation Policy</Link></li>
+                                <li><Link to="/refund-policy">Refund Policy</Link></li>
+                                <li><Link to="/shipping-policy">Shipping Policy</Link></li>
+                                <li><Link to="/about">About Us</Link></li>
                             </ul>
                         </div>
 

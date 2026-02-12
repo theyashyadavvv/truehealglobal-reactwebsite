@@ -1,0 +1,1 @@
+import{V as t,ai as e,aj as i}from"./index-CSWpObML.js";async function f({offset:n=1,limit:o=20}={}){return t(`${e}?offset=${n}&limit=${o}`)}async function p(n,o){let a=`${i}?code=${encodeURIComponent(n)}`;return o&&(a+=`&store_id=${o}`),t(a)}export{p as a,f};

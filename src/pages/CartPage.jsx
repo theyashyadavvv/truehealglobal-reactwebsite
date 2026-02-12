@@ -1,34 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
 import GradientButton from '../components/GradientButton';
 import { HiTrash, HiShoppingCart, HiArrowRight, HiArrowLeft, HiShieldCheck, HiTruck, HiRefresh } from 'react-icons/hi';
-import { products } from '../data/mockData';
+import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 import './CartPage.css';
 
 export default function CartPage() {
-    const [cartItems, setCartItems] = useState([
-        { ...products[0], quantity: 1 },
-        { ...products[1], quantity: 2 },
-    ]);
+    const { items: cartItems, loading, updateItem, removeItem: ctxRemoveItem, clearCart, refreshCart, subtotal: cartSubtotal } = useCart();
+    const toast = useToast();
 
     const formatPrice = (price) =>
         new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);
 
-    const updateQuantity = (id, delta) => {
-        setCartItems(prev => prev.map(item =>
-            item.id === id
-                ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-                : item
-        ));
+    const updateQuantity = async (id, delta) => {
+        const item = cartItems.find(i => i.id === id);
+        if (!item) return;
+        const newQty = Math.max(1, (item.quantity || 1) + delta);
+        try {
+            await updateItem({ cart_id: id, price: item.price, quantity: newQty });
+        } catch (e) { toast.error(e.message || 'Failed to update quantity'); }
     };
 
-    const removeItem = (id) => {
-        setCartItems(prev => prev.filter(item => item.id !== id));
+    const removeItem = async (id) => {
+        try {
+            await ctxRemoveItem(id);
+            toast.success('Item removed from cart');
+        } catch (e) { toast.error(e.message || 'Failed to remove item'); }
     };
 
-    const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const subtotal = cartSubtotal || cartItems.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
     const shipping = subtotal > 50000 ? 0 : 499;
     const discount = Math.round(subtotal * 0.05);
     const total = subtotal - discount + shipping;
@@ -77,6 +80,9 @@ export default function CartPage() {
                     <div className="cart-layout">
                         {/* Cart items */}
                         <div className="cart-items">
+                            {loading ? (
+                                <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--color-text-secondary)' }}>Loading cart...</div>
+                            ) : (
                             <AnimatePresence>
                                 {cartItems.map((item, index) => (
                                     <motion.div
@@ -88,25 +94,24 @@ export default function CartPage() {
                                         transition={{ duration: 0.3, delay: index * 0.1 }}
                                     >
                                         <div className="cart-item__image">
-                                            <img src={item.image} alt={item.name} />
+                                            <img src={item.image_full_url || item.image || '/assets/image/placeholder.png'} alt={item.name} onError={(e) => e.target.src = '/assets/image/placeholder.png'} />
                                         </div>
                                         <div className="cart-item__details">
                                             <span className="cart-item__category">
-                                                {item.category === 'hydrogen' ? 'Hydrogen Water' : 'Alkaline Water'}
+                                                {item.store_name || item.module_name || 'Product'}
                                             </span>
                                             <h3 className="cart-item__name">{item.name}</h3>
                                             <div className="cart-item__pricing">
                                                 <span className="cart-item__price">{formatPrice(item.price)}</span>
-                                                <span className="cart-item__original">{formatPrice(item.originalPrice)}</span>
                                             </div>
                                         </div>
                                         <div className="cart-item__actions">
                                             <div className="cart-item__quantity">
                                                 <button onClick={() => updateQuantity(item.id, -1)}>−</button>
-                                                <span>{item.quantity}</span>
+                                                <span>{item.quantity || 1}</span>
                                                 <button onClick={() => updateQuantity(item.id, 1)}>+</button>
                                             </div>
-                                            <span className="cart-item__subtotal">{formatPrice(item.price * item.quantity)}</span>
+                                            <span className="cart-item__subtotal">{formatPrice((item.price || 0) * (item.quantity || 1))}</span>
                                             <button className="cart-item__remove" onClick={() => removeItem(item.id)}>
                                                 <HiTrash size={18} />
                                             </button>
@@ -114,6 +119,7 @@ export default function CartPage() {
                                     </motion.div>
                                 ))}
                             </AnimatePresence>
+                            )}
 
                             <div className="cart-continue">
                                 <Link to="/products">

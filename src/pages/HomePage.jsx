@@ -5,7 +5,7 @@ import CategoryGrid from '../components/home/CategoryGrid';
 import PopularStores from '../components/home/PopularStores';
 import Logos3 from '../components/Logos3';
 import FeaturedProducts from '../components/home/FeaturedProducts';
-import { brands } from '../data/mockData';
+import { useBrands } from '../hooks/useDataHooks';
 import CategoryHighlights from '../components/home/CategoryHighlights';
 import ScienceBenefits from '../components/home/ScienceBenefits';
 import Testimonials from '../components/home/Testimonials';
@@ -13,6 +13,9 @@ import FAQPreview from '../components/home/FAQPreview';
 import CTASection from '../components/home/CTASection';
 
 export default function HomePage() {
+    const { data: brandsData } = useBrands();
+    const brandsList = (brandsData?.brands || brandsData || []);
+
     return (
         <main>
             <ScrollExpandHero
@@ -29,14 +32,16 @@ export default function HomePage() {
             <CategoryGrid />
             <PopularStores />
 
-            <Logos3
-                heading="Brands We Work With"
-                logos={brands.map(b => ({
-                    id: b.id,
-                    image: b.logo,
-                    description: b.name
-                }))}
-            />
+            {brandsList.length > 0 && (
+                <Logos3
+                    heading="Brands We Work With"
+                    logos={brandsList.map(b => ({
+                        id: b.id,
+                        image: b.image_full_url || b.logo || b.image,
+                        description: b.name
+                    }))}
+                />
+            )}
 
             <FeaturedProducts />
             <CategoryHighlights />

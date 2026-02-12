@@ -441,32 +441,8 @@ export const certifications = [
     { name: "ISO 9001:2015", icon: "iso" }
 ];
 
-export const banners = [
-    {
-        id: 1,
-        title: "The Future of Hydration",
-        subtitle: "Experience the power of hydrogen-rich water for better health and recovery.",
-        image: "/assets/image/molecular_hero.jpg",
-        link: "/products",
-        buttonText: "Shop Now"
-    },
-    {
-        id: 2,
-        title: "Alkaline Ionizers",
-        subtitle: "Restore your body's pH balance with our premium alkaline water systems.",
-        image: "/assets/image/science_hero.jpg",
-        link: "/products",
-        buttonText: "Explore Range"
-    },
-    {
-        id: 3,
-        title: "Join the Revolution",
-        subtitle: "Start your wellness journey today with True Heal Global.",
-        image: "/assets/image/water_wave_bg.png",
-        link: "/login",
-        buttonText: "Get Started"
-    }
-];
+
+
 
 export const stores = [
     {

@@ -1,0 +1,231 @@
+.catitem-page__hero {
+    padding: 6rem 0 2rem;
+    background: linear-gradient(135deg, var(--color-bg, #0a0a1a) 0%, var(--color-surface, #1a1a2e) 100%);
+    text-align: center;
+}
+.catitem-page__title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+.catitem-page__subtitle {
+    color: var(--color-text-secondary, #94a3b8);
+    font-size: 1.1rem;
+}
+
+/* Subcategory pills */
+.catitem-page__subcats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.catitem-page__subcats-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: var(--color-text-secondary, #94a3b8);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.catitem-page__subcats-btn:hover,
+.catitem-page__subcats-btn.active {
+    background: var(--color-primary, #6366f1);
+    color: white;
+    border-color: var(--color-primary, #6366f1);
+}
+
+/* Tabs */
+.catitem-page__tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid rgba(255,255,255,0.06);
+}
+.catitem-page__tab {
+    padding: 0.75rem 2rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--color-text-secondary, #94a3b8);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: -2px;
+}
+.catitem-page__tab:hover {
+    color: var(--color-text, #e2e8f0);
+}
+.catitem-page__tab.active {
+    color: var(--color-primary, #6366f1);
+    border-bottom-color: var(--color-primary, #6366f1);
+}
+
+/* Grid */
+.catitem-page__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Card */
+.catitem-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: var(--color-surface, #1a1a2e);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.catitem-card__image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.2);
+}
+.catitem-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+.catitem-card:hover .catitem-card__image img {
+    transform: scale(1.05);
+}
+.catitem-card__badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--color-primary, #6366f1);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    z-index: 2;
+}
+.catitem-card__body {
+    padding: 1rem 1.25rem;
+}
+.catitem-card__store {
+    font-size: 0.75rem;
+    color: var(--color-primary, #6366f1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.catitem-card__name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0.25rem 0 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.catitem-card__rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary, #94a3b8);
+    margin-bottom: 0.5rem;
+}
+.catitem-card__star {
+    color: #f59e0b;
+}
+.catitem-card__reviews {
+    opacity: 0.7;
+}
+.catitem-card__address {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary, #94a3b8);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.catitem-card__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.catitem-card__price {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--color-primary, #6366f1);
+}
+.catitem-card__cart-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-primary, #6366f1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Skeleton */
+.catitem-skeleton {
+    height: 340px;
+    border-radius: 16px;
+    background: var(--color-surface, #1a1a2e);
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.3; }
+}
+
+/* Empty */
+.catitem-page__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--color-text-secondary, #94a3b8);
+}
+.catitem-page__empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+.catitem-page__empty h3 {
+    font-size: 1.5rem;
+    color: var(--color-text, #e2e8f0);
+    margin-bottom: 0.5rem;
+}
+
+/* Load more */
+.catitem-page__loadmore {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+.catitem-page__loadmore-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-primary, #6366f1);
+    background: transparent;
+    color: var(--color-primary, #6366f1);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.catitem-page__loadmore-btn:hover {
+    background: var(--color-primary, #6366f1);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .catitem-page__title { font-size: 1.8rem; }
+    .catitem-page__grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .catitem-card__image { height: 160px; }
+}

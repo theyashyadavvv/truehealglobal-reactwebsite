@@ -187,6 +187,99 @@
     font-weight: 700;
 }
 
+/* ── Alerts ── */
+.login-page__alert {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+.login-page__alert--error {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.login-page__alert--success {
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+/* ── Country code phone input ── */
+.input-phone-wrapper {
+    display: flex;
+    align-items: center;
+}
+.country-code-select {
+    width: auto;
+    min-width: 90px;
+    max-width: 110px;
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    padding: 0 0.25rem 0 0.75rem;
+    color: var(--color-text, #222);
+    cursor: pointer;
+    outline: none;
+    appearance: auto;
+}
+.input-phone-wrapper input[type="tel"] {
+    border-left: 1px solid var(--color-gray-200, #e5e7eb);
+    padding-left: 0.75rem;
+}
+
+/* ── Password toggle ── */
+.password-toggle {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-gray-400, #9ca3af);
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+.password-toggle:hover {
+    color: var(--color-primary, #22c55e);
+}
+
+/* ── Options row (remember me + forgot link) ── */
+.login-page__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -0.25rem 0 0.75rem;
+    font-size: 0.875rem;
+}
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: var(--color-gray-600, #4b5563);
+    margin-bottom: 0.75rem;
+}
+.remember-me input[type="checkbox"] {
+    accent-color: var(--color-primary, #22c55e);
+    width: 16px;
+    height: 16px;
+}
+.forgot-link {
+    color: var(--color-primary, #22c55e);
+    text-decoration: none;
+    font-weight: 500;
+}
+.forgot-link:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 576px) {
     .login-page {
         padding: 1rem;
@@ -194,5 +287,9 @@
 
     .login-page__card {
         padding: 1.5rem;
+    }
+
+    .country-code-select {
+        min-width: 80px;
     }
 }

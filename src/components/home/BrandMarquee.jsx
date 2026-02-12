@@ -1,8 +1,14 @@
+import { Link } from 'react-router-dom';
 import ScrollReveal from '../ScrollReveal';
-import { brands } from '../../data/mockData';
+import { useBrands } from '../../hooks/useDataHooks';
 import './BrandMarquee.css';
 
 export default function BrandMarquee() {
+    const { data: brands, loading } = useBrands();
+    const brandList = brands || [];
+
+    if (loading || brandList.length === 0) return null;
+
     return (
         <section className="brand-marquee section">
             <div className="container">
@@ -15,10 +21,13 @@ export default function BrandMarquee() {
             </div>
             <div className="brand-marquee__track">
                 <div className="brand-marquee__content">
-                    {[...brands, ...brands, ...brands].map((brand, i) => (
-                        <div key={`brand-${i}`} className="brand-marquee__item">
-                            <img src={brand.logo} alt={brand.name} />
-                        </div>
+                    {[...brandList, ...brandList, ...brandList].map((brand, i) => (
+                        <Link key={`brand-${i}`} to={`/brands/${brand.id}`} className="brand-marquee__item">
+                            <img
+                                src={brand.image_full_url || `https://admin.truehealglobal.com/storage/app/public/brand/${brand.image}`}
+                                alt={brand.name}
+                            />
+                        </Link>
                     ))}
                 </div>
             </div>

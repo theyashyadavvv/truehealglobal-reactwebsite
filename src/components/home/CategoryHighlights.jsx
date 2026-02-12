@@ -2,10 +2,15 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../ScrollReveal';
 import { HiArrowRight } from 'react-icons/hi';
-import { categories } from '../../data/mockData';
+import { useCategories } from '../../hooks/useDataHooks';
 import './CategoryHighlights.css';
 
 export default function CategoryHighlights() {
+    const { data: categories, loading } = useCategories();
+    const catList = (categories || []).slice(0, 6);
+
+    if (loading && catList.length === 0) return null;
+
     return (
         <section className="categories section">
             <div className="container">
@@ -14,25 +19,27 @@ export default function CategoryHighlights() {
                         <p className="section-label">Our Collections</p>
                         <h2 className="section-title">Tailored Hydration Starts Here</h2>
                         <p className="section-subtitle">
-                            Choose your path to optimal wellness with our two flagship product lines
+                            Choose your path to optimal wellness with our product collections
                         </p>
                     </div>
                 </ScrollReveal>
 
                 <div className="categories__grid">
-                    {categories.map((cat, i) => (
+                    {catList.map((cat, i) => (
                         <ScrollReveal key={cat.id} delay={i * 0.15} direction="up">
-                            <Link to={`/products?category=${cat.id}`} className="categories__card">
+                            <Link to={`/categories/${cat.id}`} className="categories__card">
                                 <div className="categories__card-image">
-                                    <img src={cat.image} alt={cat.name} />
+                                    <img
+                                        src={cat.image_full_url || cat.image}
+                                        alt={cat.name}
+                                    />
                                     <div className="categories__card-overlay" />
                                 </div>
                                 <div className="categories__card-content">
                                     <div className="categories__card-icon">
-                                        {cat.id === 'hydrogen' ? 'H₂' : 'pH'}
+                                        {(cat.name || '')[0]?.toUpperCase() || '?'}
                                     </div>
                                     <h3 className="categories__card-title">{cat.name}</h3>
-                                    <p className="categories__card-desc">{cat.description}</p>
                                     <motion.span
                                         className="categories__card-link"
                                         whileHover={{ x: 8 }}

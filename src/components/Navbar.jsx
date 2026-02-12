@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { HiMenuAlt3, HiOutlineSearch, HiOutlineBell, HiOutlineShoppingCart, HiOutlineLockClosed } from 'react-icons/hi';
+import { HiMenuAlt3, HiOutlineSearch, HiOutlineBell, HiOutlineShoppingCart, HiOutlineLockClosed, HiOutlineUser } from 'react-icons/hi';
 import { HiOutlineBeaker, HiOutlineCube, HiOutlineDesktopComputer, HiOutlineChip, HiOutlineSparkles, HiOutlineStar } from 'react-icons/hi';
 import { MenuItem, ProductItem, HoveredLink } from './NavbarMenu';
 import MenuDrawer from './MenuDrawer';
-import { products, stores, categoryList } from '../data/mockData';
+import { useCategories, usePopularStores, usePopularItems } from '../hooks/useDataHooks';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -13,6 +15,11 @@ export default function Navbar() {
     const [activeMenu, setActiveMenu] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
+    const { isLoggedIn, user } = useAuth();
+    const { itemCount } = useCart();
+    const { data: categories } = useCategories();
+    const { data: popularStores } = usePopularStores();
+    const { data: popularItems } = usePopularItems();
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -26,7 +33,9 @@ export default function Navbar() {
         setActiveMenu(null);
     }, [location]);
 
-    const featured = products.slice(0, 4);
+    const featured = (popularItems || []).slice(0, 4);
+    const navStores = (popularStores || []).slice(0, 4);
+    const navCategories = categories || [];
 
     // Icons for categories
     const catIcons = [HiOutlineBeaker, HiOutlineDesktopComputer, HiOutlineCube, HiOutlineBeaker, HiOutlineChip, HiOutlineSparkles];
@@ -44,7 +53,7 @@ export default function Navbar() {
 
                         <MenuItem setActive={setActiveMenu} active={activeMenu} item="Categories" to="/categories">
                             <div className="nav-menu-links-col">
-                                {categoryList.map((cat, i) => {
+                                {navCategories.map((cat, i) => {
                                     const Icon = catIcons[i % catIcons.length];
                                     return (
                                         <HoveredLink key={cat.id} to={`/categories/${cat.id}`} icon={Icon}>
@@ -61,9 +70,9 @@ export default function Navbar() {
                                     <ProductItem
                                         key={p.id}
                                         title={p.name}
-                                        description={p.badge ? `${p.badge} • ★ ${p.rating}` : `★ ${p.rating} (${p.reviews})`}
+                                        description={`★ ${p.avg_rating?.toFixed(1) || '0.0'}`}
                                         href={`/products/${p.id}`}
-                                        src={p.image}
+                                        src={p.image_full_url || p.image}
                                     />
                                 ))}
                             </div>
@@ -71,13 +80,13 @@ export default function Navbar() {
 
                         <MenuItem setActive={setActiveMenu} active={activeMenu} item="Stores" to="/stores">
                             <div className="nav-menu-products-grid">
-                                {stores.map(s => (
+                                {navStores.map(s => (
                                     <ProductItem
                                         key={s.id}
                                         title={s.name}
-                                        description={`★ ${s.rating} • ${s.products} Products`}
+                                        description={`★ ${s.avg_rating?.toFixed(1) || '0.0'} • ${s.items_count || 0} Products`}
                                         href={`/stores/${s.id}`}
-                                        src={s.cover}
+                                        src={s.cover_photo_full_url || s.cover_photo}
                                     />
                                 ))}
                             </div>
@@ -91,20 +100,27 @@ export default function Navbar() {
                             <HiOutlineSearch size={22} />
                         </button>
 
-                        <button className="navbar__action-btn" aria-label="Notifications">
+                        <button className="navbar__action-btn" aria-label="Notifications" onClick={() => navigate('/notifications')}>
                             <HiOutlineBell size={22} />
                             <span className="navbar__dot"></span>
                         </button>
 
                         <Link to="/cart" className="navbar__action-btn" aria-label="Cart">
                             <HiOutlineShoppingCart size={22} />
-                            <span className="navbar__badge">2</span>
+                            {itemCount > 0 && <span className="navbar__badge">{itemCount}</span>}
                         </Link>
 
-                        <Link to="/login" className="navbar__auth-btn">
-                            <HiOutlineLockClosed size={18} />
-                            <span>Sign In</span>
-                        </Link>
+                        {isLoggedIn ? (
+                            <Link to="/profile" className="navbar__auth-btn">
+                                <HiOutlineUser size={18} />
+                                <span>{user?.f_name || 'Profile'}</span>
+                            </Link>
+                        ) : (
+                            <Link to="/login" className="navbar__auth-btn">
+                                <HiOutlineLockClosed size={18} />
+                                <span>Sign In</span>
+                            </Link>
+                        )}
 
                         <button
                             className="navbar__menu-btn"

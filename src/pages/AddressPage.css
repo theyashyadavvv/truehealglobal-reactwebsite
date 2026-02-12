@@ -1,0 +1,35 @@
+.address-page__hero { padding: 6rem 0 2rem; background: linear-gradient(135deg, var(--color-bg, #0a0a1a) 0%, var(--color-surface, #1a1a2e) 100%); }
+.address-page__title { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.25rem; }
+.address-page__subtitle { color: var(--color-text-secondary); }
+.addr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+.addr-skeleton { height: 150px; border-radius: 16px; background: var(--color-surface); animation: pulse 1.5s infinite; }
+.addr-empty { text-align: center; padding: 4rem 2rem; color: var(--color-text-secondary); }
+.addr-empty__icon { font-size: 4rem; margin-bottom: 1rem; }
+.addr-empty h3 { font-size: 1.5rem; color: var(--color-text); margin-bottom: 0.5rem; }
+.addr-card { background: var(--color-surface, #1a1a2e); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.06); }
+.addr-card__header { display: flex; justify-content: space-between; margin-bottom: 0.75rem; }
+.addr-card__type { text-transform: capitalize; font-size: 0.75rem; font-weight: 700; color: var(--color-primary); display: flex; align-items: center; gap: 4px; }
+.addr-card__actions { display: flex; gap: 0.5rem; }
+.addr-card__actions button { background: none; border: none; color: var(--color-text-secondary); cursor: pointer; padding: 4px; }
+.addr-card__actions button:hover { color: var(--color-primary); }
+.addr-card__name { font-weight: 700; margin-bottom: 0.25rem; }
+.addr-card__address { color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.5; }
+.addr-card__city { color: var(--color-text-secondary); font-size: 0.85rem; }
+.addr-card__phone { color: var(--color-text); font-size: 0.85rem; margin-top: 0.25rem; }
+
+/* Modal */
+.addr-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.addr-modal { background: var(--color-surface, #1a1a2e); border-radius: 20px; padding: 2rem; max-width: 520px; width: 100%; border: 1px solid rgba(255,255,255,0.1); max-height: 90vh; overflow-y: auto; }
+.addr-modal__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.addr-modal__header h3 { font-size: 1.3rem; font-weight: 700; }
+.addr-modal__header button { background: none; border: none; color: var(--color-text-secondary); cursor: pointer; }
+.addr-form { display: flex; flex-direction: column; gap: 1rem; }
+.addr-form-error { color: #ef4444; background: rgba(239,68,68,0.1); padding: 0.75rem; border-radius: 8px; font-size: 0.9rem; }
+.addr-form__types { display: flex; gap: 0.5rem; }
+.addr-type-btn { padding: 0.5rem 1.25rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--color-text-secondary); cursor: pointer; text-transform: capitalize; font-weight: 600; transition: all 0.2s; }
+.addr-type-btn.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+.addr-form__group { display: flex; flex-direction: column; gap: 0.25rem; }
+.addr-form__group label { font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); }
+.addr-form__group input, .addr-form__group textarea { padding: 0.75rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: var(--color-text); font-size: 0.95rem; font-family: inherit; }
+.addr-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 768px) { .address-page__title { font-size: 1.8rem; } .addr-grid { grid-template-columns: 1fr; } .addr-form__row { grid-template-columns: 1fr; } }

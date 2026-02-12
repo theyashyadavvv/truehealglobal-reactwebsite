@@ -521,3 +521,164 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ── Variations ── */
+.pdp__variations {
+    margin-bottom: 1.25rem;
+}
+.pdp__variations h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+}
+.pdp__required {
+    color: #ef4444;
+    font-size: 0.8rem;
+}
+.pdp__var-hint {
+    color: var(--color-gray-400);
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+.pdp__variation-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.pdp__variation-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-gray-200, #e5e7eb);
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.pdp__variation-btn:hover {
+    border-color: var(--color-primary, #22c55e);
+}
+.pdp__variation-btn--active {
+    border-color: var(--color-primary, #22c55e);
+    background: rgba(34,197,94,0.08);
+    color: var(--color-primary, #22c55e);
+    font-weight: 600;
+}
+.pdp__variation-price {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+.pdp__variation-oos {
+    font-size: 0.7rem;
+    color: #ef4444;
+    margin-left: 0.25rem;
+}
+
+/* ── Add-ons ── */
+.pdp__addons {
+    margin-bottom: 1.25rem;
+}
+.pdp__addons h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.pdp__addon-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.pdp__addon-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--color-gray-200, #e5e7eb);
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+.pdp__addon-item--active {
+    border-color: var(--color-primary, #22c55e);
+    background: rgba(34,197,94,0.04);
+}
+.pdp__addon-item label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    flex: 1;
+    font-size: 0.85rem;
+}
+.pdp__addon-item input[type="checkbox"] {
+    accent-color: var(--color-primary, #22c55e);
+}
+.pdp__addon-price {
+    color: var(--color-gray-500);
+    font-size: 0.8rem;
+    margin-left: auto;
+}
+.pdp__addon-qty {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: 0.75rem;
+}
+.pdp__addon-qty button {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--color-gray-200);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+.pdp__addon-qty span {
+    width: 20px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* ── Wishlist active state ── */
+.pdp__wishlist--active {
+    color: #ef4444;
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+}
+
+/* ── Specs table ── */
+.pdp__specs-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.pdp__specs-table td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--color-gray-100, #f3f4f6);
+    font-size: 0.9rem;
+}
+.pdp__specs-table td:first-child {
+    font-weight: 600;
+    color: var(--color-gray-500);
+    width: 35%;
+}
+
+/* ── Review summary ── */
+.pdp__review-summary {
+    padding: 1rem;
+}
+.pdp__review-avg {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.pdp__review-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+}

@@ -35,7 +35,7 @@
 .banner-carousel__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(3,7,18,0.88) 0%, rgba(3,7,18,0.45) 60%, rgba(3,7,18,0.2) 100%);
+    background: linear-gradient(90deg, rgba(3, 7, 18, 0.88) 0%, rgba(3, 7, 18, 0.45) 60%, rgba(3, 7, 18, 0.2) 100%);
 }
 
 .banner-carousel__content {
@@ -57,7 +57,7 @@
 
 .banner-carousel__subtitle {
     font-size: 1.15rem;
-    color: rgba(255,255,255,0.75);
+    color: rgba(255, 255, 255, 0.75);
     margin-bottom: 2.5rem;
     max-width: 540px;
     line-height: 1.7;
@@ -178,4 +178,43 @@
     .banner-carousel__dot--active {
         width: 20px;
     }
+}
+
+/* Loading skeleton */
+.banner-carousel__skeleton {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-gray-800) 0%, var(--color-gray-900) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-carousel__skeleton-shimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.04) 50%, transparent 100%);
+    animation: bannerShimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes bannerShimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Empty / error state */
+.banner-carousel__empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-gray-800) 0%, var(--color-gray-900) 100%);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.1rem;
 }
