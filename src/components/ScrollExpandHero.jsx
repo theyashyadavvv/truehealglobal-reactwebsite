@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import './ScrollExpandHero.css';
 
 /**
- * ScrollExpandHero — adapted from Aceternity's scroll-expansion-hero.
- * As the user scrolls, a media element (image or video) expands from a centered
- * card to fill the viewport, with split-text title animation that slides apart.
- * Once fully expanded, normal page scroll resumes.
+ * ScrollExpandHero — Refactored for mid-page placement.
+ * Uses CSS sticky positioning + Framer Motion useScroll.
  */
 export default function ScrollExpandHero({
     mediaType = 'image',
@@ -19,20 +17,8 @@ export default function ScrollExpandHero({
     textBlend = false,
     children,
 }) {
-    const [scrollProgress, setScrollProgress] = useState(0);
-    const [showContent, setShowContent] = useState(false);
-    const [mediaFullyExpanded, setMediaFullyExpanded] = useState(false);
-    const [touchStartY, setTouchStartY] = useState(0);
-    const [isMobile, setIsMobile] = useState(false);
-
     const sectionRef = useRef(null);
-
-    // Reset on media type change
-    useEffect(() => {
-        setScrollProgress(0);
-        setShowContent(false);
-        setMediaFullyExpanded(false);
-    }, [mediaType]);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Mobile detection
     useEffect(() => {
@@ -42,205 +28,147 @@ export default function ScrollExpandHero({
         return () => window.removeEventListener('resize', check);
     }, []);
 
-    // Scroll hijack logic
-    useEffect(() => {
-        const handleWheel = (e) => {
-            if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
-                setMediaFullyExpanded(false);
-                e.preventDefault();
-            } else if (!mediaFullyExpanded) {
-                e.preventDefault();
-                const delta = e.deltaY * 0.0009;
-                const next = Math.min(Math.max(scrollProgress + delta, 0), 1);
-                setScrollProgress(next);
+    // Track scroll progress of this specific section
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start start", "end end"]
+    });
 
-                if (next >= 1) {
-                    setMediaFullyExpanded(true);
-                    setShowContent(true);
-                } else if (next < 0.75) {
-                    setShowContent(false);
-                }
-            }
-        };
+    // --- Animations mapped to scroll progress (0 to 1) ---
 
-        const handleTouchStart = (e) => {
-            setTouchStartY(e.touches[0].clientY);
-        };
+    // 1. Media Expansion
+    // Start small (300px width) -> End full width + extra (140vw to ensure coverage)
+    const mediaWidth = useTransform(scrollYProgress, [0, 1], [300, isMobile ? window.innerWidth : window.innerWidth]);
+    const mediaHeight = useTransform(scrollYProgress, [0, 1], [400, window.innerHeight]);
 
-        const handleTouchMove = (e) => {
-            if (!touchStartY) return;
-            const touchY = e.touches[0].clientY;
-            const deltaY = touchStartY - touchY;
+    // Border radius: 20px -> 0px
+    const borderRadius = useTransform(scrollYProgress, [0.8, 1], [20, 0]);
 
-            if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
-                setMediaFullyExpanded(false);
-                e.preventDefault();
-            } else if (!mediaFullyExpanded) {
-                e.preventDefault();
-                const factor = deltaY < 0 ? 0.008 : 0.005;
-                const next = Math.min(Math.max(scrollProgress + deltaY * factor, 0), 1);
-                setScrollProgress(next);
+    // Text splitting (Moving apart)
+    const textTranslateX = useTransform(scrollYProgress, [0, 0.6], [0, isMobile ? 200 : 400]);
+    const textOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
 
-                if (next >= 1) {
-                    setMediaFullyExpanded(true);
-                    setShowContent(true);
-                } else if (next < 0.75) {
-                    setShowContent(false);
-                }
-                setTouchStartY(touchY);
-            }
-        };
+    // Background Image Opacity (Fading in)
+    // It should start invisible and fade in as we expand? 
+    // Or in the original: "opacity: 1 - scrollProgress" (fading OUT background?)
+    // Let's stick to the original feel: The 'bgImageSrc' was the background behind the card.
+    // As card expands, it covers the background.
+    const bgOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-        const handleTouchEnd = () => setTouchStartY(0);
+    // Dimming overlay on the media itself
+    const mediaDimOpacity = useTransform(scrollYProgress, [0, 1], [0.5, 0]);
 
-        const handleScroll = () => {
-            if (!mediaFullyExpanded) window.scrollTo(0, 0);
-        };
-
-        window.addEventListener('wheel', handleWheel, { passive: false });
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('touchstart', handleTouchStart, { passive: false });
-        window.addEventListener('touchmove', handleTouchMove, { passive: false });
-        window.addEventListener('touchend', handleTouchEnd);
-
-        return () => {
-            window.removeEventListener('wheel', handleWheel);
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('touchstart', handleTouchStart);
-            window.removeEventListener('touchmove', handleTouchMove);
-            window.removeEventListener('touchend', handleTouchEnd);
-        };
-    }, [scrollProgress, mediaFullyExpanded, touchStartY]);
-
-    // Computed dimensions
-    const mediaWidth = 300 + scrollProgress * (isMobile ? 650 : 1250);
-    const mediaHeight = 400 + scrollProgress * (isMobile ? 200 : 400);
-    const textTranslateX = scrollProgress * (isMobile ? 180 : 150);
+    // Reveal Content (children)
+    const contentOpacity = useTransform(scrollYProgress, [0.9, 1], [0, 1]);
+    const contentY = useTransform(scrollYProgress, [0.9, 1], [50, 0]);
 
     const firstWord = title.split(' ')[0] || '';
     const restOfTitle = title.split(' ').slice(1).join(' ') || '';
 
     return (
         <div ref={sectionRef} className="scroll-expand-hero">
-            <section className="scroll-expand-hero__section">
-                <div className="scroll-expand-hero__viewport">
+            <div className="scroll-expand-hero__sticky">
+                <section className="scroll-expand-hero__section">
+                    <div className="scroll-expand-hero__viewport">
 
-                    {/* Background image fading out */}
-                    <motion.div
-                        className="scroll-expand-hero__bg"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 - scrollProgress }}
-                        transition={{ duration: 0.1 }}
-                    >
-                        <img
-                            src={bgImageSrc}
-                            alt="Background"
-                            className="scroll-expand-hero__bg-img"
-                        />
-                        <div className="scroll-expand-hero__bg-overlay" />
-                    </motion.div>
+                        {/* Background Layer */}
+                        <motion.div
+                            className="scroll-expand-hero__bg"
+                            style={{ opacity: bgOpacity }}
+                        >
+                            <img src={bgImageSrc} alt="Background" className="scroll-expand-hero__bg-img" />
+                            <div className="scroll-expand-hero__bg-overlay" />
+                        </motion.div>
 
-                    {/* Center content */}
-                    <div className="scroll-expand-hero__center">
-                        <div className="scroll-expand-hero__center-inner">
-
-                            {/* Expanding media card */}
-                            <div
-                                className="scroll-expand-hero__media-card"
-                                style={{
-                                    width: `${mediaWidth}px`,
-                                    height: `${mediaHeight}px`,
-                                    maxWidth: '95vw',
-                                    maxHeight: '85vh',
-                                    boxShadow: '0 0 50px rgba(0,0,0,0.3)',
-                                }}
-                            >
-                                {mediaType === 'video' ? (
+                        {/* Center Expanding Card */}
+                        <div className="scroll-expand-hero__center">
+                            <div className="scroll-expand-hero__center-inner">
+                                <motion.div
+                                    className="scroll-expand-hero__media-card"
+                                    style={{
+                                        width: mediaWidth,
+                                        height: mediaHeight,
+                                        borderRadius: borderRadius,
+                                        boxShadow: '0 0 50px rgba(0,0,0,0.3)',
+                                    }}
+                                >
                                     <div className="scroll-expand-hero__media-wrap">
-                                        <video
-                                            src={mediaSrc}
-                                            poster={posterSrc}
-                                            autoPlay
-                                            muted
-                                            loop
-                                            playsInline
-                                            preload="auto"
-                                            className="scroll-expand-hero__media"
-                                            controls={false}
-                                        />
+                                        {mediaType === 'video' ? (
+                                            <video
+                                                src={mediaSrc}
+                                                poster={posterSrc}
+                                                autoPlay muted loop playsInline
+                                                className="scroll-expand-hero__media"
+                                            />
+                                        ) : (
+                                            <img
+                                                src={mediaSrc}
+                                                alt={title}
+                                                className="scroll-expand-hero__media"
+                                            />
+                                        )}
+                                        {/* Dim Overlay */}
                                         <motion.div
                                             className="scroll-expand-hero__media-dim"
-                                            initial={{ opacity: 0.7 }}
-                                            animate={{ opacity: 0.5 - scrollProgress * 0.3 }}
-                                            transition={{ duration: 0.2 }}
+                                            style={{ opacity: mediaDimOpacity }}
                                         />
                                     </div>
-                                ) : (
-                                    <div className="scroll-expand-hero__media-wrap">
-                                        <img
-                                            src={mediaSrc}
-                                            alt={title || 'Media content'}
-                                            className="scroll-expand-hero__media"
-                                        />
-                                        <motion.div
-                                            className="scroll-expand-hero__media-dim"
-                                            initial={{ opacity: 0.7 }}
-                                            animate={{ opacity: 0.7 - scrollProgress * 0.3 }}
-                                            transition={{ duration: 0.2 }}
-                                        />
-                                    </div>
-                                )}
 
-                                {/* Subtitle + scroll hint sliding apart */}
-                                <div className="scroll-expand-hero__meta">
-                                    {subtitle && (
-                                        <p
+                                    {/* Meta Text (Subtitle / Hint) inside the card? No, usually outside or on top. 
+                                        In original it was absolute centered. We keep it similar. */}
+                                    <motion.div
+                                        className="scroll-expand-hero__meta"
+                                        style={{ opacity: textOpacity }}
+                                    >
+                                        <motion.p
                                             className="scroll-expand-hero__date"
-                                            style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                                            style={{ x: useTransform(textTranslateX, v => -v) }}
                                         >
                                             {subtitle}
-                                        </p>
-                                    )}
-                                    {scrollHint && (
-                                        <p
+                                        </motion.p>
+                                        <motion.p
                                             className="scroll-expand-hero__hint"
-                                            style={{ transform: `translateX(${textTranslateX}vw)` }}
+                                            style={{ x: textTranslateX }}
                                         >
                                             {scrollHint}
-                                        </p>
-                                    )}
+                                        </motion.p>
+                                    </motion.div>
+                                </motion.div>
+
+                                {/* Split Title */}
+                                <div className={`scroll-expand-hero__title-wrap ${textBlend ? 'scroll-expand-hero__title-wrap--blend' : ''}`}>
+                                    <motion.h2
+                                        className="scroll-expand-hero__title-line"
+                                        style={{
+                                            x: useTransform(textTranslateX, v => -v),
+                                            opacity: textOpacity
+                                        }}
+                                    >
+                                        {firstWord}
+                                    </motion.h2>
+                                    <motion.h2
+                                        className="scroll-expand-hero__title-line"
+                                        style={{
+                                            x: textTranslateX,
+                                            opacity: textOpacity
+                                        }}
+                                    >
+                                        {restOfTitle}
+                                    </motion.h2>
                                 </div>
                             </div>
 
-                            {/* Split title text */}
-                            <div className={`scroll-expand-hero__title-wrap ${textBlend ? 'scroll-expand-hero__title-wrap--blend' : ''}`}>
-                                <motion.h2
-                                    className="scroll-expand-hero__title-line"
-                                    style={{ transform: `translateX(-${textTranslateX}vw)` }}
-                                >
-                                    {firstWord}
-                                </motion.h2>
-                                <motion.h2
-                                    className="scroll-expand-hero__title-line"
-                                    style={{ transform: `translateX(${textTranslateX}vw)` }}
-                                >
-                                    {restOfTitle}
-                                </motion.h2>
-                            </div>
+                            {/* Revealed Content */}
+                            <motion.section
+                                className="scroll-expand-hero__content"
+                                style={{ opacity: contentOpacity, y: contentY }}
+                            >
+                                {children}
+                            </motion.section>
                         </div>
-
-                        {/* Revealed content after expansion */}
-                        <motion.section
-                            className="scroll-expand-hero__content"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: showContent ? 1 : 0 }}
-                            transition={{ duration: 0.7 }}
-                        >
-                            {children}
-                        </motion.section>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </div>
     );
 }

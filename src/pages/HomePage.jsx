@@ -9,7 +9,7 @@ import { useBrands } from '../hooks/useDataHooks';
 import LoadingSpinner from '../components/LoadingSpinner'; // Assuming this exists or use fallback
 
 // Lazy load below-the-fold components
-const FeaturedProducts = lazy(() => import('../components/home/FeaturedProducts'));
+// const FeaturedProducts = lazy(() => import('../components/home/FeaturedProducts'));
 const CategoryHighlights = lazy(() => import('../components/home/CategoryHighlights'));
 const ScienceBenefits = lazy(() => import('../components/home/ScienceBenefits'));
 const Testimonials = lazy(() => import('../components/home/Testimonials'));
@@ -22,15 +22,6 @@ export default function HomePage() {
 
     return (
         <main>
-            <ScrollExpandHero
-                mediaType="image"
-                mediaSrc="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=1400&h=800&fit=crop&q=80"
-                bgImageSrc="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920&h=1080&fit=crop&q=80"
-                title="Pure Hydrogen Water"
-                subtitle="Advanced Ionization Technology"
-                scrollHint="Scroll to explore"
-                textBlend
-            />
             <BannerCarousel />
             <HeroScroll />
             <CategoryGrid />
@@ -48,7 +39,16 @@ export default function HomePage() {
             )}
 
             <Suspense fallback={<div className="py-20 text-center">Loading...</div>}>
-                <FeaturedProducts />
+                {/* Replaced FeaturedProducts with ScrollExpandHero */}
+                <ScrollExpandHero
+                    mediaType="image"
+                    mediaSrc="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=1400&h=800&fit=crop&q=80"
+                    bgImageSrc="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920&h=1080&fit=crop&q=80"
+                    title="Pure Hydrogen Water"
+                    subtitle="Advanced Ionization Technology"
+                    scrollHint="Scroll to explore"
+                    textBlend
+                />
                 <CategoryHighlights />
                 <ScienceBenefits />
                 <Testimonials />
