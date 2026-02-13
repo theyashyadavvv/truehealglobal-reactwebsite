@@ -191,8 +191,8 @@ export function useOrderDetails(orderId) {
 // ─── Notification Hook ──────────────────────────────────────────────────
 import { fetchNotifications } from '../api/services/customer';
 
-export function useNotifications(options = {}) {
-    const fn = useCallback(() => fetchNotifications(options), [JSON.stringify(options)]);
+export function useNotifications() {
+    const fn = useCallback(() => fetchNotifications(), []);
     return useApi(fn, { initialData: null });
 }
 

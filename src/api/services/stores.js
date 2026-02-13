@@ -20,9 +20,10 @@ export async function fetchStores({ offset = 1, limit = 12, type = 'all', filter
     }
 }
 
-/** Fetch store details by ID */
+/** Fetch store details by ID — unwrap if backend wraps in {store:{...}} */
 export async function fetchStoreDetails(storeId) {
-    return apiGet(`${EP.STORE_DETAILS_URI}${storeId}`);
+    const data = await apiGet(`${EP.STORE_DETAILS_URI}${storeId}`);
+    return data?.store || data;
 }
 
 /** Fetch popular stores */
@@ -55,9 +56,9 @@ export async function fetchVisitAgainStores({ offset = 1, limit = 10 } = {}) {
     return apiGet(`${EP.VISIT_AGAIN_STORE_URI}?offset=${offset}&limit=${limit}`);
 }
 
-/** Search stores by name */
-export async function searchStores(query, { offset = 1, limit = 20 } = {}) {
-    return apiGet(`${EP.SEARCH_SUGGESTIONS_URI}?name=${encodeURIComponent(query)}&offset=${offset}&limit=${limit}`);
+/** Search stores by name — Flutter: /api/v1/stores/search?name={query}&offset=1&limit=50 */
+export async function searchStores(query, { offset = 1, limit = 50 } = {}) {
+    return apiGet(`/api/v1/stores/search?name=${encodeURIComponent(query)}&offset=${offset}&limit=${limit}`);
 }
 
 /** Register vendor (store) */

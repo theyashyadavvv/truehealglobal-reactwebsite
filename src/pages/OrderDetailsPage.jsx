@@ -144,9 +144,9 @@ export default function OrderDetailsPage() {
                                         {(order.details || []).map((detail, idx) => (
                                             <div key={idx} className="orderdet-item">
                                                 <img
-                                                    src={detail.item_details?.image_full_url || '/assets/image/placeholder.png'}
+                                                    src={detail.item_details?.image_full_url || '/assets/image/placeholder.jpg'}
                                                     alt={detail.item_details?.name || 'Item'}
-                                                    onError={e => e.target.src = '/assets/image/placeholder.png'}
+                                                    onError={e => { e.target.onerror = null; e.target.src = '/assets/image/placeholder.jpg'; }}
                                                 />
                                                 <div className="orderdet-item__info">
                                                     <p className="orderdet-item__name">{detail.item_details?.name || `Item #${detail.item_id}`}</p>

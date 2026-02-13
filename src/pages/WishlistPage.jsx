@@ -33,7 +33,7 @@ export default function WishlistPage() {
 
     const handleRemove = async (item) => {
         try {
-            await removeFromWishlist(item.id, 'item');
+            await removeFromWishlist(item.id, false);
             setItems(prev => prev.filter(i => i.id !== item.id));
             toast.success('Removed from wishlist');
         } catch (e) { toast.error(e.message || 'Failed to remove'); }

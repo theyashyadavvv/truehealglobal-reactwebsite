@@ -71,7 +71,7 @@ export default function CheckoutPage() {
         if (!couponCode.trim()) return;
         setCouponError('');
         try {
-            const storeId = cartItems[0]?.store_id || '';
+            const storeId = cartItems[0]?.item?.store_id || cartItems[0]?.store_id || '';
             const data = await applyCoupon(couponCode, storeId);
             if (data.discount) {
                 setCouponDiscount(data.discount);
@@ -115,7 +115,9 @@ export default function CheckoutPage() {
                 order_amount: String(total),
                 payment_method: paymentMethod,
                 order_type: 'delivery',
-                store_id: String(cartItems[0]?.store_id || ''),
+                store_id: String(cartItems[0]?.item?.store_id || cartItems[0]?.store_id || ''),
+                // For multi-store carts, include all store IDs
+                store_ids: [...new Set(cartItems.map(i => i.item?.store_id || i.store_id).filter(Boolean))].map(String),
                 coupon_code: couponApplied ? couponCode : '',
                 coupon_discount_amount: String(couponDiscount),
                 coupon_discount_title: couponApplied ? 'Coupon' : '',
@@ -149,7 +151,7 @@ export default function CheckoutPage() {
                 if (paymentMethod === 'digital_payment') {
                     const userId = user?.id || getGuestId();
                     const callbackUrl = `${window.location.origin}/order-success?id=${orderId}&status=`;
-                    const paymentUrl = `${BASE_URL}/payment-mobile?order_id=${orderId}&&customer_id=${userId}&payment_method=stripe&payment_platform=web&&callback=${encodeURIComponent(callbackUrl)}`;
+                    const paymentUrl = `${BASE_URL}/payment-mobile?order_id=${orderId}&customer_id=${userId}&payment_method=stripe&payment_platform=web&callback=${encodeURIComponent(callbackUrl)}`;
                     toast.info('Redirecting to payment gateway...');
                     window.location.href = paymentUrl;
                     return;
@@ -219,7 +221,7 @@ export default function CheckoutPage() {
                                                     <div className="checkout-address-card__check">
                                                         {selectedAddress?.id === addr.id && <HiCheck size={16} />}
                                                     </div>
-                                                    <div>
+                                                    <div className="checkout-address-card__content">
                                                         <span className="checkout-address-card__type">{addr.address_type || 'Other'}</span>
                                                         <p className="checkout-address-card__text">{addr.address}</p>
                                                         <p className="checkout-address-card__contact">{addr.contact_person_name} - {addr.contact_person_number}</p>
@@ -315,7 +317,15 @@ export default function CheckoutPage() {
                                 <div className="checkout-summary__items">
                                     {cartItems.map(item => (
                                         <div key={item.id} className="checkout-summary__item">
-                                            <img src={item.image_full_url || item.image || '/assets/image/placeholder.png'} alt={item.name} onError={e => e.target.src = '/assets/image/placeholder.png'} />
+                                            <img
+                                                src={item.image_full_url || item.image || '/assets/image/placeholder.jpg'}
+                                                alt={item.name}
+                                                onError={e => {
+                                                    console.log('Image failed:', e.target.src);
+                                                    e.target.onerror = null;
+                                                    e.target.src = '/assets/image/placeholder.jpg';
+                                                }}
+                                            />
                                             <div>
                                                 <p className="item-name">{item.name}</p>
                                                 <p className="item-qty">x{item.quantity || 1}</p>

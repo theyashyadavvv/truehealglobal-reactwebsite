@@ -16,7 +16,7 @@ export default function OrderSuccessPage() {
     useEffect(() => {
         if (status === 'success' || !status) {
             // If coming from digital payment with success, clear cart
-            clearCart().catch(() => {});
+            clearCart().catch(err => console.warn('Cart clear after order:', err.message));
         }
     }, []);
 

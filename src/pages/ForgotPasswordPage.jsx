@@ -9,6 +9,7 @@ import './LoginPage.css';
 export default function ForgotPasswordPage() {
     const [step, setStep] = useState(1); // 1=enter email/phone, 2=OTP, 3=new password
     const [method, setMethod] = useState('phone');
+    const [countryCode, setCountryCode] = useState('+91');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
@@ -24,8 +25,14 @@ export default function ForgotPasswordPage() {
         setError('');
         setLoading(true);
         try {
-            const identifier = method === 'phone' ? phone.replace(/\s/g, '') : email;
-            const data = await forgotPassword({ email_or_phone: identifier, [method]: identifier });
+            // Match Flutter: sends phone (with country code), email, verification_method
+            const fullPhone = method === 'phone' ? `${countryCode}${phone.replace(/\s/g, '')}` : '';
+            const body = {
+                phone: fullPhone,
+                email: method === 'email' ? email : '',
+                verification_method: method,
+            };
+            const data = await forgotPassword(body);
             if (data.errors) {
                 setError(Object.values(data.errors).flat().join('. '));
             } else {
@@ -43,8 +50,15 @@ export default function ForgotPasswordPage() {
         setError('');
         setLoading(true);
         try {
-            const identifier = method === 'phone' ? phone.replace(/\s/g, '') : email;
-            const data = await verifyToken({ email_or_phone: identifier, [method]: identifier, reset_token: otp, token: otp });
+            // Match Flutter: phone (with country code), email, verification_method, reset_token
+            const fullPhone = method === 'phone' ? `${countryCode}${phone.replace(/\s/g, '')}` : '';
+            const body = {
+                phone: fullPhone,
+                email: method === 'email' ? email : '',
+                verification_method: method,
+                reset_token: otp,
+            };
+            const data = await verifyToken(body);
             if (data.errors) {
                 setError(Object.values(data.errors).flat().join('. '));
             } else {
@@ -67,15 +81,18 @@ export default function ForgotPasswordPage() {
         }
         setLoading(true);
         try {
-            const identifier = method === 'phone' ? phone.replace(/\s/g, '') : email;
-            const data = await resetPassword({
-                email_or_phone: identifier,
-                [method]: identifier,
+            // Match Flutter: _method: put, reset_token, phone (with country code), email, verification_method, password, confirm_password
+            const fullPhone = method === 'phone' ? `${countryCode}${phone.replace(/\s/g, '')}` : '';
+            const body = {
+                _method: 'put',
                 reset_token: resetToken,
-                token: resetToken,
+                phone: fullPhone,
+                email: method === 'email' ? email : '',
+                verification_method: method,
                 password: newPassword,
                 confirm_password: confirmPassword,
-            });
+            };
+            const data = await resetPassword(body);
             if (data.errors) {
                 setError(Object.values(data.errors).flat().join('. '));
             } else {
@@ -116,7 +133,20 @@ export default function ForgotPasswordPage() {
                                         <label>Phone Number</label>
                                         <div className="input-icon-wrapper">
                                             <HiOutlinePhone className="input-icon" />
-                                            <input type="tel" placeholder="+91 98765 43210" value={phone} onChange={e => setPhone(e.target.value)} required />
+                                            <select
+                                                className="country-code-select"
+                                                value={countryCode}
+                                                onChange={e => setCountryCode(e.target.value)}
+                                            >
+                                                <option value="+91">🇮🇳 +91</option>
+                                                <option value="+1">🇺🇸 +1</option>
+                                                <option value="+44">🇬🇧 +44</option>
+                                                <option value="+971">🇦🇪 +971</option>
+                                                <option value="+880">🇧🇩 +880</option>
+                                                <option value="+61">🇦🇺 +61</option>
+                                                <option value="+81">🇯🇵 +81</option>
+                                            </select>
+                                            <input type="tel" placeholder="98765 43210" value={phone} onChange={e => setPhone(e.target.value)} required />
                                         </div>
                                     </div>
                                 ) : (

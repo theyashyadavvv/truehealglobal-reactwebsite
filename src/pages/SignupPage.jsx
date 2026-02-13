@@ -8,7 +8,7 @@ import './LoginPage.css'; // Reusing login styles for consistency
 import GradientButton from '../components/GradientButton';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { register } from '../api/services/auth';
+import { register, verifyPhone } from '../api/services/auth';
 
 export default function SignupPage() {
     const [name, setName] = useState('');
@@ -24,6 +24,11 @@ export default function SignupPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    // Phone verification flow
+    const [showOtpInput, setShowOtpInput] = useState(false);
+    const [otpCode, setOtpCode] = useState('');
+    const [pendingPhone, setPendingPhone] = useState('');
+    const [pendingToken, setPendingToken] = useState('');
     const { onLoginSuccess } = useAuth();
     const toast = useToast();
     const navigate = useNavigate();
@@ -59,8 +64,11 @@ export default function SignupPage() {
                 toast.success('Account created! Welcome!');
                 navigate('/');
             } else if (!data.is_phone_verified) {
-                // Phone not verified — need OTP
-                setSuccess('Account created successfully! Please verify your phone number. Check your SMS for the verification code.');
+                // Phone not verified — show OTP input
+                setPendingPhone(fullPhone);
+                setPendingToken(data.token || '');
+                setShowOtpInput(true);
+                setSuccess('Please verify your phone number. Enter the OTP sent to your phone.');
             } else if (!data.is_email_verified) {
                 setSuccess('Account created! Please verify your email address. Check your inbox.');
             } else if (data.token) {
@@ -229,16 +237,57 @@ export default function SignupPage() {
                         </GradientButton>
                     </form>
 
+                    {/* OTP Verification for phone */}
+                    {showOtpInput && (
+                        <div className="login-page__otp-section">
+                            <form className="login-page__form" onSubmit={async (e) => {
+                                e.preventDefault();
+                                setLoading(true);
+                                setError('');
+                                try {
+                                    await verifyPhone({ phone: pendingPhone, otp: otpCode });
+                                    if (pendingToken) {
+                                        await onLoginSuccess(pendingToken);
+                                        toast.success('Phone verified! Welcome!');
+                                        navigate('/');
+                                    } else {
+                                        toast.success('Phone verified! Please sign in.');
+                                        navigate('/login');
+                                    }
+                                } catch (err) {
+                                    setError(err.message || 'OTP verification failed');
+                                } finally {
+                                    setLoading(false);
+                                }
+                            }}>
+                                <div className="form-group">
+                                    <label>Enter OTP</label>
+                                    <div className="input-icon-wrapper">
+                                        <HiOutlineLockClosed className="input-icon" />
+                                        <input type="text" placeholder="Enter 6-digit OTP" value={otpCode} onChange={e => setOtpCode(e.target.value)} required maxLength={6} />
+                                    </div>
+                                </div>
+                                <GradientButton type="submit" size="lg" block disabled={loading || otpCode.length < 4}>
+                                    {loading ? 'Verifying...' : 'Verify OTP'}
+                                </GradientButton>
+                            </form>
+                        </div>
+                    )}
+
                     <div className="login-page__divider">
                         <span>Or register with</span>
                     </div>
 
                     <div className="login-page__social">
-                        <button className="social-btn" type="button">
+                        <button className="social-btn" type="button" onClick={() => {
+                            toast.info('Google sign-up: For production, integrate Google OAuth.');
+                        }}>
                             <FcGoogle size={24} />
                             <span>Google</span>
                         </button>
-                        <button className="social-btn" type="button">
+                        <button className="social-btn" type="button" onClick={() => {
+                            toast.info('Apple sign-in is only available on Apple devices.');
+                        }}>
                             <FaApple size={24} />
                             <span>Apple</span>
                         </button>

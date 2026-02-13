@@ -20,6 +20,7 @@ export default function WalletPage() {
     const [loyaltyPoints, setLoyaltyPoints] = useState(0);
     const [addAmount, setAddAmount] = useState('');
     const [addModalOpen, setAddModalOpen] = useState(false);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('stripe');
     const [transferAmount, setTransferAmount] = useState('');
     const [transferModalOpen, setTransferModalOpen] = useState(false);
     const { isLoggedIn, user, refreshUser } = useAuth();
@@ -38,8 +39,8 @@ export default function WalletPage() {
     const loadData = async () => {
         try {
             const [wt, lt, bn] = await Promise.allSettled([
-                fetchWalletTransactions(1, 20),
-                fetchLoyaltyTransactions(1, 20),
+                fetchWalletTransactions({ offset: 1, limit: 20 }),
+                fetchLoyaltyTransactions({ offset: 1, limit: 20 }),
                 fetchWalletBonuses(),
             ]);
             if (wt.status === 'fulfilled') setWalletTxns(wt.value?.data || wt.value || []);
@@ -56,7 +57,13 @@ export default function WalletPage() {
             return;
         }
         try {
-            const data = await addFundToWallet({ amount: amt, payment_method: 'stripe' });
+            const callbackUrl = `${window.location.origin}/wallet`;
+            const data = await addFundToWallet({
+                amount: amt,
+                payment_method: selectedPaymentMethod,
+                payment_platform: 'web',
+                callback: callbackUrl,
+            });
             // If backend returns a redirect URL, use it
             if (data?.redirect_link || data?.url) {
                 toast.info('Redirecting to payment...');
@@ -64,8 +71,7 @@ export default function WalletPage() {
                 return;
             }
             // Otherwise redirect to payment-mobile endpoint like Flutter
-            const callbackUrl = `${window.location.origin}/wallet`;
-            const payUrl = `${BASE_URL}/payment-mobile?customer_id=${user?.id}&order_id=add_fund_${Date.now()}&payment_method=stripe&payment_platform=web&&callback=${encodeURIComponent(callbackUrl)}`;
+            const payUrl = `${BASE_URL}/payment-mobile?customer_id=${user?.id}&order_id=add_fund_${Date.now()}&payment_method=${selectedPaymentMethod}&payment_platform=web&callback=${encodeURIComponent(callbackUrl)}`;
             toast.info('Redirecting to payment gateway...');
             window.location.href = payUrl;
         } catch (e) {

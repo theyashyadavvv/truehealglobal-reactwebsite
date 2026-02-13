@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HiOutlineMail, HiOutlinePhone, HiOutlineLockClosed, HiEye, HiEyeOff } from 'react-icons/hi';
 import { FcGoogle } from 'react-icons/fc';
@@ -8,7 +8,7 @@ import './LoginPage.css';
 import GradientButton from '../components/GradientButton';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { login as loginApi } from '../api/services/auth';
+import { login as loginApi, socialLogin, verifyPhone } from '../api/services/auth';
 
 export default function LoginPage() {
     const [method, setMethod] = useState('phone'); // 'phone' or 'email'
@@ -21,9 +21,16 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    // Phone verification flow
+    const [showOtpInput, setShowOtpInput] = useState(false);
+    const [otpCode, setOtpCode] = useState('');
+    const [pendingPhone, setPendingPhone] = useState('');
+    const [pendingToken, setPendingToken] = useState('');
     const { onLoginSuccess } = useAuth();
     const toast = useToast();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from || '/';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -59,16 +66,19 @@ export default function LoginPage() {
                 // Fully verified — login success
                 await onLoginSuccess(data.token);
                 toast.success('Welcome back!');
-                navigate('/');
+                navigate(from, { replace: true });
             } else if (data.token && !data.is_phone_verified) {
-                // Phone not verified — would need OTP screen
-                setSuccess('Account found! Phone verification required. Please check your SMS.');
+                // Phone not verified — show OTP input
+                setPendingPhone(fullPhone || '');
+                setPendingToken(data.token);
+                setShowOtpInput(true);
+                setSuccess('Phone verification required. Please enter the OTP sent to your phone.');
             } else if (data.token && !data.is_email_verified) {
                 setSuccess('Account found! Email verification required. Please check your email.');
             } else if (data.token) {
                 // Token exists, verification passed
                 await onLoginSuccess(data.token);
-                navigate('/');
+                navigate(from, { replace: true });
             } else {
                 setError(data.message || 'Login failed. Please try again.');
             }
@@ -208,16 +218,56 @@ export default function LoginPage() {
                     </div>
 
                     <div className="login-page__social">
-                        <button className="social-btn" type="button">
+                        <button className="social-btn" type="button" onClick={async () => {
+                            toast.info('Google sign-in: For production, integrate Google OAuth. Redirecting to manual login.');
+                            // In production, use Google OAuth to get idToken, then call:
+                            // const data = await socialLogin({ token: idToken, unique_id: googleId, email, medium: 'google' });
+                            // if (data.token) { await onLoginSuccess(data.token); navigate(from); }
+                        }}>
                             <FcGoogle size={24} />
                             <span>Google</span>
                         </button>
-                        <button className="social-btn" type="button">
+                        <button className="social-btn" type="button" onClick={() => {
+                            toast.info('Apple sign-in is only available on Apple devices.');
+                        }}>
                             <FaApple size={24} />
                             <span>Apple</span>
                         </button>
                     </div>
-
+                    {/* OTP Verification Modal */}
+                    {showOtpInput && (
+                        <div className="login-page__otp-section">
+                            <form className="login-page__form" onSubmit={async (e) => {
+                                e.preventDefault();
+                                setLoading(true);
+                                setError('');
+                                try {
+                                    await verifyPhone({ phone: pendingPhone, otp: otpCode });
+                                    // Now login with the token
+                                    if (pendingToken) {
+                                        await onLoginSuccess(pendingToken);
+                                        toast.success('Phone verified! Welcome!');
+                                        navigate(from, { replace: true });
+                                    }
+                                } catch (err) {
+                                    setError(err.message || 'OTP verification failed');
+                                } finally {
+                                    setLoading(false);
+                                }
+                            }}>
+                                <div className="form-group">
+                                    <label>Enter OTP</label>
+                                    <div className="input-icon-wrapper">
+                                        <HiOutlineLockClosed className="input-icon" />
+                                        <input type="text" placeholder="Enter 6-digit OTP" value={otpCode} onChange={e => setOtpCode(e.target.value)} required maxLength={6} />
+                                    </div>
+                                </div>
+                                <GradientButton type="submit" size="lg" block disabled={loading || otpCode.length < 4}>
+                                    {loading ? 'Verifying...' : 'Verify OTP'}
+                                </GradientButton>
+                            </form>
+                        </div>
+                    )}
                     <div className="login-page__footer">
                         <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
                     </div>

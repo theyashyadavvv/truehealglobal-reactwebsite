@@ -9,8 +9,25 @@ export async function fetchCustomerInfo() {
     return apiGet(EP.CUSTOMER_INFO_URI);
 }
 
-/** Update customer profile */
-export async function updateProfile(formData) {
+/** Update customer profile — matches Flutter profile_repository.dart (multipart with 'image' field) */
+export async function updateProfile(profileData, imageFile = null) {
+    // If already FormData, pass through
+    if (profileData instanceof FormData) {
+        return apiPostMultipart(EP.UPDATE_PROFILE_URI, profileData);
+    }
+    // Convert plain object to FormData (Flutter sends Map<String, String> + MultipartBody)
+    const formData = new FormData();
+    // Flutter's UpdateUserModel.toJson() sends: name, email, phone, otp, button_type, etc.
+    const name = `${profileData.f_name || ''} ${profileData.l_name || ''}`.trim();
+    formData.append('name', name || '');
+    formData.append('email', profileData.email || '');
+    formData.append('phone', profileData.phone || '');
+    if (profileData.button_type) formData.append('button_type', profileData.button_type);
+    if (profileData.password) formData.append('password', profileData.password);
+    // Append image file if provided
+    if (imageFile) {
+        formData.append('image', imageFile);
+    }
     return apiPostMultipart(EP.UPDATE_PROFILE_URI, formData);
 }
 
@@ -34,9 +51,9 @@ export async function fetchSuggestedItems() {
     return apiGet(EP.SUGGESTED_ITEM_URI);
 }
 
-/** Get notifications */
-export async function fetchNotifications({ offset = 1, limit = 10 } = {}) {
-    return apiGet(`${EP.NOTIFICATION_URI}?offset=${offset}&limit=${limit}`);
+/** Get notifications — Flutter: simple GET, no pagination, returns plain array */
+export async function fetchNotifications() {
+    return apiGet(EP.NOTIFICATION_URI);
 }
 
 /** Delete account */

@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react';
 import ScrollExpandHero from '../components/ScrollExpandHero';
+import hydrogenGlassImg from '../assets/hydrogen_glass.jpg';
 import BannerCarousel from '../components/home/BannerCarousel';
 import HeroScroll from '../components/home/HeroScroll';
 import CategoryGrid from '../components/home/CategoryGrid';
@@ -46,7 +47,7 @@ export default function HomePage() {
                 {/* Replaced FeaturedProducts with ScrollExpandHero */}
                 <ScrollExpandHero
                     mediaType="image"
-                    mediaSrc="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=1400&h=800&fit=crop&q=80"
+                    mediaSrc={hydrogenGlassImg}
                     bgImageSrc="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920&h=1080&fit=crop&q=80"
                     title="Pure Hydrogen Water"
                     subtitle="Advanced Ionization Technology"

@@ -31,7 +31,8 @@ export default function OrdersPage() {
     const [historyOrders, setHistoryOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [historyLoading, setHistoryLoading] = useState(false);
-    const [page, setPage] = useState(1);
+    const [historyOffset, setHistoryOffset] = useState(1);
+    const [hasMoreHistory, setHasMoreHistory] = useState(true);
     const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
 
@@ -55,11 +56,19 @@ export default function OrdersPage() {
         finally { setLoading(false); }
     };
 
-    const loadHistoryOrders = async () => {
+    const loadHistoryOrders = async (offset = 1, append = false) => {
         setHistoryLoading(true);
         try {
-            const data = await fetchOrderHistory({ offset: 1, limit: 50 });
-            setHistoryOrders(data?.orders || data?.data || (Array.isArray(data) ? data : []));
+            const limit = 20;
+            const data = await fetchOrderHistory({ offset, limit });
+            const list = data?.orders || data?.data || (Array.isArray(data) ? data : []);
+            if (append) {
+                setHistoryOrders(prev => [...prev, ...list]);
+            } else {
+                setHistoryOrders(list);
+            }
+            setHistoryOffset(offset);
+            setHasMoreHistory(list.length >= limit);
         } catch (e) { console.error(e); }
         finally { setHistoryLoading(false); }
     };
@@ -167,6 +176,15 @@ export default function OrdersPage() {
                                     </ScrollReveal>
                                 );
                             })}
+                        </div>
+                    )}
+
+                    {/* Load More for history */}
+                    {activeTab === 'history' && hasMoreHistory && historyOrders.length > 0 && !isLoading && (
+                        <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+                            <GradientButton size="sm" variant="accent" onClick={() => loadHistoryOrders(historyOffset + 1, true)}>
+                                Load More Orders
+                            </GradientButton>
                         </div>
                     )}
                 </div>

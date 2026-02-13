@@ -4,9 +4,10 @@
 import { apiGet, apiPost } from '../config';
 import * as EP from '../endpoints';
 
-/** Fetch item details by ID */
+/** Fetch item details by ID — unwrap if backend wraps in {item:{...}} */
 export async function fetchItemDetails(itemId) {
-    return apiGet(`${EP.ITEM_DETAILS_URI}${itemId}`);
+    const data = await apiGet(`${EP.ITEM_DETAILS_URI}${itemId}`);
+    return data?.item || data;
 }
 
 /** Fetch latest items (paginated) */
@@ -59,9 +60,23 @@ export async function fetchCartStoreSuggestedItems(storeId, { offset = 1, limit 
     return apiGet(`${EP.CART_STORE_SUGGESTED_URI}?store_id=${storeId}&offset=${offset}&limit=${limit}`);
 }
 
-/** Search items and stores combined */
+/** Search items and stores combined — with AbortController support for race conditions */
+let _searchAbortController = null;
 export async function searchItemsAndStores(query, { offset = 1, limit = 20 } = {}) {
-    return apiGet(`${EP.SEARCH_SUGGESTIONS_URI}?name=${encodeURIComponent(query)}&offset=${offset}&limit=${limit}`);
+    // Cancel previous in-flight search
+    if (_searchAbortController) {
+        _searchAbortController.abort();
+    }
+    _searchAbortController = new AbortController();
+    try {
+        const data = await apiGet(`${EP.SEARCH_SUGGESTIONS_URI}?name=${encodeURIComponent(query)}&offset=${offset}&limit=${limit}`);
+        return data;
+    } catch (err) {
+        if (err.name === 'AbortError') return null;
+        throw err;
+    } finally {
+        _searchAbortController = null;
+    }
 }
 
 /** Submit item review */

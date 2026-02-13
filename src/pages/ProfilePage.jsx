@@ -73,7 +73,7 @@ export default function ProfilePage() {
     const loadOrders = async () => {
         setOrdersLoading(true);
         try {
-            const data = await fetchOrderHistory(1, 20);
+            const data = await fetchOrderHistory({ offset: 1, limit: 20 });
             setOrders(data.orders || data.data || data || []);
         } catch (e) { console.error(e); }
         finally { setOrdersLoading(false); }
@@ -106,7 +106,7 @@ export default function ProfilePage() {
 
     const handleRemoveWishlist = async (item) => {
         try {
-            await removeFromWishlist(item.id, item.store_id ? 'store' : 'item');
+            await removeFromWishlist(item.id, !!item.store_id);
             setWishlistItems(prev => prev.filter(w => w.id !== item.id));
         } catch (e) { console.error(e); }
     };

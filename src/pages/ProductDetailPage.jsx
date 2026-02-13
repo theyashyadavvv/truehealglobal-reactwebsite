@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchItemDetails } from '../api/services/items';
-import { addToWishlist, removeFromWishlist } from '../api/services/wishlist';
+import { addToWishlist, removeFromWishlist, fetchWishlist } from '../api/services/wishlist';
 import ScrollReveal from '../components/ScrollReveal';
 import { HiStar, HiShoppingCart, HiHeart, HiShieldCheck, HiArrowLeft, HiTruck, HiRefresh } from 'react-icons/hi';
 import GradientButton from '../components/GradientButton';
@@ -47,6 +47,15 @@ export default function ProductDetailPage() {
                         defaults[group.name] = [];
                     });
                     setSelectedFoodVariations(defaults);
+                }
+
+                // Initialize wishlist state from server
+                if (isLoggedIn) {
+                    try {
+                        const wlData = await fetchWishlist();
+                        const wlItems = wlData?.items || wlData?.products || wlData?.item || (Array.isArray(wlData) ? wlData : []);
+                        setIsWishlisted(wlItems.some(w => w.id === Number(id)));
+                    } catch (e) { /* wishlist check failed silently */ }
                 }
             } catch (err) {
                 console.error('Failed to load product:', err);

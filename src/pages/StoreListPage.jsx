@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
-import { fetchStores, fetchPopularStores, fetchLatestStores } from '../api/services/stores';
+import { fetchStores, fetchPopularStores, fetchLatestStores, searchStores } from '../api/services/stores';
 import { HiStar, HiShoppingBag, HiSearch, HiFilter, HiEmojiSad, HiChevronRight, HiArrowRight } from 'react-icons/hi';
 import './StoreListPage.css';
 
@@ -53,15 +53,10 @@ export default function StoreListPage() {
     async function performSearch() {
         setLoading(true);
         try {
-            const query = searchQuery.toLowerCase();
-            const [popData, latData] = await Promise.all([
-                fetchPopularStores({ limit: 50 }).catch(() => ({ stores: [] })),
-                fetchLatestStores({ limit: 50 }).catch(() => ({ stores: [] })),
-            ]);
-            const all = [...(popData.stores || []), ...(latData.stores || [])];
-            const seen = new Set();
-            const unique = all.filter(s => { if (seen.has(s.id)) return false; seen.add(s.id); return true; });
-            setStores(unique.filter(s => s.name?.toLowerCase().includes(query) || s.address?.toLowerCase().includes(query)));
+            // Use backend API search instead of client-side filter
+            const data = await searchStores(searchQuery.trim());
+            const storeList = data?.stores || data?.data || (Array.isArray(data) ? data : []);
+            setStores(storeList);
             setError(null);
         } catch (err) {
             console.error('Search failed:', err);

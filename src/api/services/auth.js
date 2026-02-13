@@ -37,11 +37,21 @@ export async function register({ name, phone, email, password, ref_code }) {
     return data;
 }
 
-/** Social login (Google / Apple / Facebook) */
-export async function socialLogin({ token, unique_id, email, medium, phone }) {
-    const body = { token, unique_id, email, medium };
+/** Social login (Google / Apple / Facebook) — Flutter uses loginUri, not socialLoginUri */
+export async function socialLogin({ token, unique_id, email, medium, phone, login_type = 'social', platform = 'web' }) {
+    const body = {
+        email,
+        token,
+        unique_id,
+        medium,       // 'google', 'facebook', 'apple'
+        login_type,
+        platform,
+    };
     if (phone) body.phone = phone;
-    return apiPost(EP.SOCIAL_LOGIN_URI, body);
+    // Flutter uses loginUri for social login too
+    const data = await apiPost(EP.LOGIN_URI, body);
+    if (data.token) saveToken(data.token);
+    return data;
 }
 
 /** Social register */
@@ -59,27 +69,38 @@ export async function guestLogin(fcmToken = '') {
     return data;
 }
 
-/** Forgot password */
-export async function forgotPassword({ phone, email, fieldType = 'phone' }) {
-    const body = fieldType === 'phone'
-        ? { phone, field_type: 'phone' }
-        : { email, email_or_phone: email, field_type: 'email' };
+/** Forgot password — matches Flutter verification_repository.dart */
+export async function forgotPassword({ phone, email, verification_method }) {
+    const body = {
+        phone: phone || '',
+        email: email || '',
+        verification_method: verification_method || (phone ? 'phone' : 'email'),
+    };
     return apiPost(EP.FORGOT_PASSWORD_URI, body);
 }
 
-/** Verify OTP token */
-export async function verifyToken({ phone, email, token, fieldType = 'phone' }) {
-    const body = { token };
-    if (fieldType === 'phone') body.phone = phone;
-    else { body.email = email; body.email_or_phone = email; }
+/** Verify OTP token — matches Flutter verification_repository.dart */
+export async function verifyToken({ phone, email, reset_token, verification_method }) {
+    const body = {
+        phone: phone || '',
+        email: email || '',
+        verification_method: verification_method || (phone ? 'phone' : 'email'),
+        reset_token: reset_token || '',
+    };
     return apiPost(EP.VERIFY_TOKEN_URI, body);
 }
 
-/** Reset password */
-export async function resetPassword({ phone, email, password, confirm_password, token, fieldType = 'phone' }) {
-    const body = { password, confirm_password, reset_token: token };
-    if (fieldType === 'phone') body.phone = phone;
-    else { body.email = email; body.email_or_phone = email; }
+/** Reset password — matches Flutter verification_repository.dart (uses _method: put) */
+export async function resetPassword({ _method, reset_token, phone, email, verification_method, password, confirm_password }) {
+    const body = {
+        _method: _method || 'put',
+        reset_token: reset_token || '',
+        phone: phone || '',
+        email: email || '',
+        verification_method: verification_method || (phone ? 'phone' : 'email'),
+        password,
+        confirm_password,
+    };
     return apiPost(EP.RESET_PASSWORD_URI, body);
 }
 

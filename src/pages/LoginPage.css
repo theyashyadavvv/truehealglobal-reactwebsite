@@ -293,3 +293,20 @@
         min-width: 80px;
     }
 }
+
+/* OTP Verification Section */
+.login-page__otp-section {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-page__otp-section .form-group {
+    margin-bottom: 1rem;
+}
+
+.login-page__otp-section input[type="text"] {
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 0.3rem;
+}
