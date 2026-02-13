@@ -8,10 +8,26 @@ export default function Logos3({
     heading = "Trusted by these companies",
     logos = []
 }) {
+    // Ensure we have enough logos for smooth infinite scrolling
+    // If we have fewer than 10 logos, multiply them
+    const MIN_LOGOS = 12;
+    const repeatedLogos = React.useMemo(() => {
+        if (!logos || logos.length === 0) return [];
+        let result = [...logos];
+        while (result.length < MIN_LOGOS) {
+            result = [...result, ...logos];
+        }
+        // Add one more set for good measure to ensure no gaps on wide screens
+        if (result.length < 20) {
+            result = [...result, ...logos];
+        }
+        return result;
+    }, [logos]);
+
     // Embla carousel with AutoScroll plugin
     const [emblaRef, emblaApi] = useEmblaCarousel(
         { loop: true },
-        [AutoScroll({ playOnInit: true, speed: 1.5, stopOnInteraction: false })]
+        [AutoScroll({ playOnInit: true, speed: 1, stopOnInteraction: false })]
     );
 
     return (
@@ -27,8 +43,8 @@ export default function Logos3({
                 <div className="logos3-carousel-wrapper">
                     <div className="logos3-carousel" ref={emblaRef}>
                         <div className="logos3-carousel-container">
-                            {logos.map((logo, index) => (
-                                <div className="logos3-slide" key={logo.id || index}>
+                            {repeatedLogos.map((logo, index) => (
+                                <div className="logos3-slide" key={`${logo.id || index}-${index}`}>
                                     <div className="logos3-logo-wrap">
                                         <img
                                             src={logo.image || logo}

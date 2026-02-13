@@ -1,7 +1,7 @@
 /* ========== HeroScroll Section ========== */
 
 .hero-scroll {
-    background: linear-gradient(180deg, var(--color-dark) 0%, var(--color-gray-800) 100%);
+    background: var(--color-pure-white, #ffffff);
     overflow: hidden;
 }
 
@@ -14,20 +14,22 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: var(--color-primary-light);
+    color: var(--color-primary, #39a6ba);
+    /* Darker for accessibility on white */
     margin-bottom: 1.25rem;
     display: inline-block;
     padding: 0.35rem 1rem;
     background: rgba(57, 166, 186, 0.1);
     border-radius: var(--radius-full);
-    border: 1px solid rgba(57, 166, 186, 0.15);
+    border: 1px solid rgba(57, 166, 186, 0.2);
 }
 
 .hero-scroll__title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3.75rem);
     font-weight: 800;
-    color: var(--color-white);
+    color: var(--color-gray-900, #111827);
+    /* Dark text */
     line-height: 1.08;
     margin-bottom: 1.25rem;
     letter-spacing: -0.02em;
@@ -39,7 +41,8 @@
     line-height: 1;
     display: block;
     margin-top: 0.25rem;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light, #5dd6e6) 40%, #a8edea 80%, var(--color-accent-light) 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, #2c8a9e 100%);
+    /* Adjusted gradient */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -48,7 +51,8 @@
 
 .hero-scroll__subtitle {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-gray-600, #4b5563);
+    /* Darker gray for readability */
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.7;
