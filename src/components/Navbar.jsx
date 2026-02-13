@@ -42,6 +42,9 @@ export default function Navbar() {
 
     return (
         <>
+            <div className="tagline-bar">
+                The World's First Healing Company
+            </div>
             <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
                 <div className="container navbar__container">
                     <Link to="/" className="navbar__logo">
@@ -93,6 +96,7 @@ export default function Navbar() {
                         </MenuItem>
                         <MenuItem setActive={setActiveMenu} active={activeMenu} item="Science" to="/science" />
                         <MenuItem setActive={setActiveMenu} active={activeMenu} item="FAQ" to="/faq" />
+                        <MenuItem setActive={setActiveMenu} active={activeMenu} item="Contact Us" to="/contact-us" />
                     </div>
 
                     <div className="navbar__actions">

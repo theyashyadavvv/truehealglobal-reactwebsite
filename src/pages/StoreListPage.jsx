@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
 import { fetchStores, fetchPopularStores, fetchLatestStores } from '../api/services/stores';
-import { HiStar, HiShoppingBag, HiSearch, HiFilter, HiEmojiSad } from 'react-icons/hi';
+import { HiStar, HiShoppingBag, HiSearch, HiFilter, HiEmojiSad, HiChevronRight, HiArrowRight } from 'react-icons/hi';
 import './StoreListPage.css';
 
 export default function StoreListPage() {
@@ -11,13 +11,12 @@ export default function StoreListPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [filter, setFilter] = useState('all'); // all, veg, non_veg
+    const [filter, setFilter] = useState('all');
 
     useEffect(() => {
         loadStores();
-    }, [filter]); // Reload when filter changes
+    }, [filter]);
 
-    // Debounce search
     useEffect(() => {
         const timer = setTimeout(() => {
             if (searchQuery.trim()) {
@@ -32,14 +31,12 @@ export default function StoreListPage() {
     async function loadStores() {
         setLoading(true);
         try {
-            // Fetch popular + latest stores and merge for a complete listing
             const [popData, latData] = await Promise.all([
                 fetchPopularStores({ limit: 50 }).catch(() => ({ stores: [] })),
                 fetchLatestStores({ limit: 50 }).catch(() => ({ stores: [] })),
             ]);
             const popStores = popData.stores || [];
             const latStores = latData.stores || [];
-            // Merge & deduplicate
             const merged = [...popStores];
             const seen = new Set(popStores.map(s => s.id));
             latStores.forEach(s => { if (!seen.has(s.id)) { merged.push(s); seen.add(s.id); } });
@@ -56,7 +53,6 @@ export default function StoreListPage() {
     async function performSearch() {
         setLoading(true);
         try {
-            // Filter from already loaded stores client-side
             const query = searchQuery.toLowerCase();
             const [popData, latData] = await Promise.all([
                 fetchPopularStores({ limit: 50 }).catch(() => ({ stores: [] })),
@@ -79,6 +75,11 @@ export default function StoreListPage() {
         <div className="store-list-page">
             <section className="store-list__hero">
                 <div className="container">
+                    <div className="store-list__breadcrumb">
+                        <Link to="/">Home</Link>
+                        <HiChevronRight />
+                        <span>Stores</span>
+                    </div>
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -94,6 +95,16 @@ export default function StoreListPage() {
                     >
                         Discover verified vendors offering premium water solutions near you.
                     </motion.p>
+                    {!loading && stores.length > 0 && (
+                        <motion.span
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.25 }}
+                            className="store-list__hero-count"
+                        >
+                            {stores.length} Stores Available
+                        </motion.span>
+                    )}
                 </div>
             </section>
 
@@ -104,21 +115,17 @@ export default function StoreListPage() {
                             <HiSearch />
                             <input
                                 type="text"
-                                placeholder="Search stores..."
+                                placeholder="Search stores by name or location..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                        {/* Simple Filter Implementation */}
-                        <div className="filter-group">
-                            <button
-                                className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-                                onClick={() => setFilter('all')}
-                            >
-                                All
-                            </button>
-                            {/* Add more filters if API supports them reliably, e.g. veg/non-veg if relevant, or categories */}
-                        </div>
+                        <button
+                            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+                            onClick={() => setFilter('all')}
+                        >
+                            <HiFilter /> All Stores
+                        </button>
                     </div>
 
                     {loading ? (
@@ -169,6 +176,9 @@ export default function StoreListPage() {
                                                     </span>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div className="store-card__arrow">
+                                            <HiArrowRight />
                                         </div>
                                     </Link>
                                 </ScrollReveal>

@@ -18,26 +18,31 @@
 .cta-section__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(57, 166, 186, 0.94) 0%, rgba(46, 196, 182, 0.9) 50%, rgba(57, 166, 186, 0.88) 100%);
+    background: linear-gradient(135deg, rgba(8, 51, 62, 0.96) 0%, rgba(57, 166, 186, 0.92) 100%);
+    backdrop-filter: blur(4px);
 }
 
 .cta-section__content {
     position: relative;
     z-index: 1;
     text-align: center;
+    padding: 2rem;
 }
 
 .cta-section__title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     color: var(--color-white);
-    margin-bottom: 1.5rem;
-    line-height: 1.12;
-    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .cta-section__title-accent {
-    opacity: 0.9;
+    opacity: 1;
+    color: #8bebf9;
+    /* Brighter accent */
 }
 
 .cta-section__text {

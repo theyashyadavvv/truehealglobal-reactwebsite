@@ -1,9 +1,32 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from 'react-icons/hi';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import './Footer.css';
+import { useToast } from '../context/ToastContext';
+import { subscribeNewsletter } from '../api/services/newsletterService';
 
 export default function Footer() {
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+    const toast = useToast();
+
+    const handleSubscribe = async (e) => {
+        e.preventDefault();
+        if (!email) return;
+
+        setLoading(true);
+        try {
+            await subscribeNewsletter(email);
+            toast.success('Subscribed successfully!');
+            setEmail('');
+        } catch (error) {
+            toast.error(error.message || 'Failed to subscribe');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <footer className="footer">
             <div className="footer__wave">
@@ -29,10 +52,12 @@ export default function Footer() {
                                 Backed by science, trusted by thousands across India.
                             </p>
                             <div className="footer__socials">
-                                <a href="#" className="footer__social-link" aria-label="Facebook"><FaFacebookF /></a>
-                                <a href="#" className="footer__social-link" aria-label="Instagram"><FaInstagram /></a>
-                                <a href="#" className="footer__social-link" aria-label="LinkedIn"><FaLinkedinIn /></a>
-                                <a href="#" className="footer__social-link" aria-label="YouTube"><FaYoutube /></a>
+                                <div className="footer__socials">
+                                    <a href="https://www.facebook.com/people/Truehealglobal/61576012675998/" target="_blank" rel="noreferrer" className="footer__social-link" aria-label="Facebook"><FaFacebookF /></a>
+                                    <a href="https://www.instagram.com/truehealglobal/" target="_blank" rel="noreferrer" className="footer__social-link" aria-label="Instagram"><FaInstagram /></a>
+                                    <a href="#" className="footer__social-link" aria-label="LinkedIn"><FaLinkedinIn /></a>
+                                    <a href="#" className="footer__social-link" aria-label="YouTube"><FaYoutube /></a>
+                                </div>
                             </div>
                         </div>
 
@@ -83,16 +108,19 @@ export default function Footer() {
 
                             <div className="footer__newsletter">
                                 <h5 className="footer__newsletter-title">Stay Updated</h5>
-                                <div className="footer__newsletter-form">
+                                <form className="footer__newsletter-form" onSubmit={handleSubscribe}>
                                     <input
                                         type="email"
                                         placeholder="Your email"
                                         className="footer__newsletter-input"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required
                                     />
-                                    <button className="footer__newsletter-btn">
-                                        <HiOutlineMail size={18} />
+                                    <button type="submit" className="footer__newsletter-btn" disabled={loading}>
+                                        {loading ? <div className="spinner-sm" /> : <HiOutlineMail size={18} />}
                                     </button>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

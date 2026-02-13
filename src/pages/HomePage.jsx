@@ -4,6 +4,8 @@ import BannerCarousel from '../components/home/BannerCarousel';
 import HeroScroll from '../components/home/HeroScroll';
 import CategoryGrid from '../components/home/CategoryGrid';
 import PopularStores from '../components/home/PopularStores';
+import WhyChooseUs from '../components/home/WhyChooseUs';
+import GlobeSection from '../components/home/GlobeSection';
 import Logos3 from '../components/Logos3';
 import { useBrands } from '../hooks/useDataHooks';
 import LoadingSpinner from '../components/LoadingSpinner'; // Assuming this exists or use fallback
@@ -26,6 +28,8 @@ export default function HomePage() {
             <HeroScroll />
             <CategoryGrid />
             <PopularStores />
+            <WhyChooseUs />
+            <GlobeSection />
 
             {brandsList.length > 0 && (
                 <Logos3

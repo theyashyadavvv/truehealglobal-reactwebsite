@@ -39,7 +39,8 @@
 
 .faq-preview__item--open {
     border-color: var(--color-primary);
-    box-shadow: 0 4px 20px rgba(57, 166, 186, 0.1);
+    background: linear-gradient(to right, rgba(57, 166, 186, 0.03), transparent);
+    box-shadow: 0 8px 30px rgba(57, 166, 186, 0.15);
 }
 
 .faq-preview__question {

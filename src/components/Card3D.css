@@ -1,0 +1,21 @@
+.card-3d {
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+    transform-style: preserve-3d;
+    will-change: transform;
+    border-radius: var(--radius-xl);
+}
+
+.card-3d>* {
+    transform-style: preserve-3d;
+}
+
+/* Make inner elements "float" above the card surface */
+.card-3d .card-3d__float {
+    transform: translateZ(30px);
+    transition: transform 0.2s ease;
+}
+
+.card-3d .card-3d__float-high {
+    transform: translateZ(50px);
+    transition: transform 0.2s ease;
+}

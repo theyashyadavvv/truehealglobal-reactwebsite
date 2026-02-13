@@ -17,7 +17,27 @@ export default function CategoryHighlights() {
                 <ScrollReveal>
                     <div className="section-header">
                         <p className="section-label">Our Collections</p>
-                        <h2 className="section-title">Tailored Hydration Starts Here</h2>
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.3 }}
+                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '1rem', flexWrap: 'wrap', overflow: 'hidden' }}
+                        >
+                            <motion.img
+                                src="/assets/image/trolley.png"
+                                alt="Trolley"
+                                variants={{
+                                    hidden: { x: -400, opacity: 0 },
+                                    visible: {
+                                        x: 0,
+                                        opacity: 1,
+                                        transition: { duration: 1, type: 'spring', bounce: 0.3 }
+                                    }
+                                }}
+                                style={{ width: 'auto', height: '150px' }}
+                            />
+                            <h2 className="section-title" style={{ margin: 0 }}>Tailored Hydration Starts Here</h2>
+                        </motion.div>
                         <p className="section-subtitle">
                             Choose your path to optimal wellness with our product collections
                         </p>

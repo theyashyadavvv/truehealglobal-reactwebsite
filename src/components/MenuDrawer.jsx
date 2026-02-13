@@ -21,6 +21,7 @@ import {
     HiOutlineSearch,
     HiOutlineViewGrid,
     HiOutlineShoppingCart,
+    HiOutlineMail,
 } from 'react-icons/hi';
 import { useAuth } from '../context/AuthContext';
 import './MenuDrawer.css';
@@ -36,6 +37,7 @@ export default function MenuDrawer({ isOpen, onClose }) {
         { icon: HiOutlineShoppingCart, label: 'Cart', path: '/cart' },
         { icon: HiOutlineLightningBolt, label: 'Flash Sales', path: '/flash-sales' },
         { icon: HiOutlineTag, label: 'Brands', path: '/brands' },
+        { icon: HiOutlineMail, label: 'Contact Us', path: '/contact-us' },
     ];
 
     const userLinks = [

@@ -1,7 +1,27 @@
 /* Updating Navbar CSS to match new structure and remove old mobile menu styles */
-.navbar {
+.tagline-bar {
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 1001;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    position: fixed;
+    top: 32px;
+    /* Pushed down by tagline bar */
     left: 0;
     right: 0;
     z-index: 1000;

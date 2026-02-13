@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import ScrollReveal from '../ScrollReveal';
 import SpotlightCard from '../SpotlightCard';
 import { usePopularStores } from '../../hooks/useDataHooks';
@@ -15,9 +16,20 @@ export default function PopularStores() {
             <div className="container">
                 <ScrollReveal>
                     <div className="section-header-row">
-                        <div>
-                            <h2 className="section-title" style={{ marginBottom: '0.5rem', textAlign: 'left' }}>Popular Stores</h2>
-                            <p className="section-subtitle" style={{ margin: 0, textAlign: 'left' }}>Top rated vendors on True Heal Global</p>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
+                            <div>
+                                <h2 className="section-title" style={{ marginBottom: '0.5rem', textAlign: 'left' }}>Popular Stores</h2>
+                                <p className="section-subtitle" style={{ margin: 0, textAlign: 'left' }}>Top rated vendors on True Heal Global</p>
+                            </div>
+                            <motion.img
+                                src="/assets/image/popular_stores_decoration_v2.png"
+                                alt="Featured"
+                                initial={{ opacity: 0, x: 200, scale: 0.8 }}
+                                whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                                transition={{ duration: 0.8, delay: 0.2, type: 'spring' }}
+                                viewport={{ once: true }}
+                                style={{ height: '200px', width: 'auto' }}
+                            />
                         </div>
                         <Link to="/stores">
                             <GradientButton variant="accent">

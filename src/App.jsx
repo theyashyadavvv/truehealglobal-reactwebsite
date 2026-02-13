@@ -39,6 +39,7 @@ const BrandsPage = lazy(() => import('./pages/BrandsPage'));
 const BrandItemPage = lazy(() => import('./pages/BrandItemPage'));
 const FlashSalePage = lazy(() => import('./pages/FlashSalePage'));
 const StaticPage = lazy(() => import('./pages/StaticPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -127,6 +128,7 @@ export default function App() {
                             <Route path="/cancellation-policy" element={<StaticPage />} />
                             <Route path="/shipping-policy" element={<StaticPage />} />
                             <Route path="/refund-policy" element={<StaticPage />} />
+                            <Route path="/contact-us" element={<ContactPage />} />
 
                             {/* Demo / Legacy */}
                             <Route path="/alert-demo" element={<AlertDemoPage />} />

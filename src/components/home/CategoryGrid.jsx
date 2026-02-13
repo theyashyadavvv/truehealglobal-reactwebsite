@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import ScrollReveal from '../ScrollReveal';
-import SpotlightCard from '../SpotlightCard';
+import Card3D from '../Card3D';
 import { useCategories } from '../../hooks/useDataHooks';
 import './CategoryGrid.css';
 
@@ -32,19 +32,21 @@ export default function CategoryGrid() {
                     <div className="category-grid__layout">
                         {categories.map((cat, i) => (
                             <ScrollReveal key={cat.id} delay={i * 0.05} className="category-grid__item-wrap">
-                                <SpotlightCard glowColor="teal">
+                                <Card3D>
                                     <Link to={`/categories/${cat.id}`} className="category-grid__card">
-                                        <div className="category-grid__image">
+                                        <div className="category-grid__image card-3d__float-high">
                                             <img
                                                 src={cat.image_full_url || cat.image || '/assets/image/placeholder.png'}
                                                 alt={cat.name}
                                                 onError={(e) => e.target.src = '/assets/image/placeholder.png'}
                                             />
                                         </div>
-                                        <h3 className="category-grid__name">{cat.name}</h3>
-                                        <span className="category-grid__count">{cat.products_count || 0} Products</span>
+                                        <h3 className="category-grid__name card-3d__float">{cat.name}</h3>
+                                        {(cat.products_count || cat.items_count) > 0 && (
+                                            <span className="category-grid__count">{cat.products_count || cat.items_count} Products</span>
+                                        )}
                                     </Link>
-                                </SpotlightCard>
+                                </Card3D>
                             </ScrollReveal>
                         ))}
                     </div>
