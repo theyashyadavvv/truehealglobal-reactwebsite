@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiChevronDown } from 'react-icons/hi';
@@ -17,11 +18,40 @@ const spring = {
  */
 export function MenuItem({ setActive, active, item, to, children }) {
     const isOpen = active === item;
+    const openTimeoutRef = React.useRef(null);
+    const closeTimeoutRef = React.useRef(null);
+
+    const handleMouseEnter = () => {
+        // Cancel any pending close action
+        if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+
+        // If already open, do nothing
+        if (isOpen) return;
+
+        // Queue open action
+        if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current);
+        openTimeoutRef.current = setTimeout(() => {
+            setActive(item);
+        }, 150); // 150ms delay for intentional hover
+    };
+
+    const handleMouseLeave = () => {
+        // Cancel pending open action
+        if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current);
+
+        // Queue close action
+        if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = setTimeout(() => {
+            // Only close if this item is currently valid
+            setActive((current) => (current === item ? null : current));
+        }, 150); // 150ms delay to bridge the gap or intentional exit
+    };
 
     return (
         <div
             className={`nav-menu-item ${isOpen ? 'nav-menu-item--active' : ''}`}
-            onMouseEnter={() => setActive(item)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
         >
             {to ? (
                 <Link to={to} className="nav-menu-item__label">
@@ -39,18 +69,14 @@ export function MenuItem({ setActive, active, item, to, children }) {
                 {isOpen && children && (
                     <motion.div
                         className="nav-menu-dropdown"
-                        initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 8 }}
-                        transition={spring}
+                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                        transition={{ duration: 0.2 }}
                     >
-                        <motion.div
-                            className="nav-menu-dropdown__inner"
-                            layoutId="navbar-active-dropdown"
-                            transition={spring}
-                        >
+                        <div className="nav-menu-dropdown__inner">
                             {children}
-                        </motion.div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
