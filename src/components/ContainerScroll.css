@@ -9,7 +9,7 @@
     padding: 0.5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .container-scroll {
         height: 80rem;
         padding: 5rem;
@@ -23,7 +23,7 @@
     perspective: 1000px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .container-scroll__perspective {
         padding: 10rem 0;
     }
@@ -47,7 +47,7 @@
     height: 30rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .container-scroll__card {
         height: 40rem;
         padding: 1.5rem;
@@ -62,7 +62,7 @@
     background: var(--color-gray-100, #f3f4f6);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     .container-scroll__card-inner {
         border-radius: 1rem;
         padding: 1rem;
@@ -90,5 +90,18 @@
         padding: 0.25rem;
         border-radius: 20px;
         border-width: 3px;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 1023px) {
+    .container-scroll {
+        height: 55rem;
+        padding: 1rem;
+    }
+
+    .container-scroll__card {
+        height: 28rem;
+        padding: 0.75rem;
+        border-radius: 24px;
     }
 }

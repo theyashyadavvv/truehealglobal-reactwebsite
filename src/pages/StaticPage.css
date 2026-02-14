@@ -1,6 +1,6 @@
 .static-page__hero {
     padding: 6rem 0 2rem;
-    background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-surface) 100%);
+    background: linear-gradient(135deg, var(--color-gray-800) 0%, var(--color-primary-dark) 100%);
 }
 
 .static-page__body {
@@ -213,4 +213,59 @@
     border-radius: var(--radius-lg);
     margin-bottom: var(--space-md);
     box-shadow: var(--shadow-sm);
+}
+
+/* ── Static Page Responsive ── */
+@media (max-width: 768px) {
+    .static-page__hero {
+        padding: 5.5rem 0 1.5rem;
+    }
+
+    .static-page__body {
+        padding: 1.5rem 0 3rem;
+    }
+
+    .contact-header-bg {
+        padding: var(--space-xl);
+    }
+
+    .faq-section {
+        padding: var(--space-lg);
+    }
+}
+
+@media (max-width: 480px) {
+    .static-page__hero {
+        padding: 5rem 0 1.25rem;
+    }
+
+    .static-page__body {
+        padding: 1rem 0 2rem;
+    }
+
+    .contact-header-bg {
+        padding: var(--space-lg);
+        border-radius: var(--radius-lg);
+    }
+
+    .contact-card-link {
+        padding: var(--space-md);
+    }
+
+    .social-btns {
+        justify-content: center;
+    }
+
+    .faq-section {
+        padding: var(--space-md);
+        margin-top: var(--space-2xl);
+    }
+
+    .faq-item {
+        padding: var(--space-md);
+    }
+
+    .form-control {
+        font-size: var(--font-size-base);
+    }
 }
