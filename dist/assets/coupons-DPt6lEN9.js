@@ -1,0 +1,1 @@
+import{V as t,ar as e,as as s}from"./index-B7P4RGAv.js";async function f({offset:n=1,limit:o=20}={}){return t(`${e}?offset=${n}&limit=${o}`)}async function i(n,o){let a=`${s}?code=${encodeURIComponent(n)}`;return o&&(a+=`&store_id=${o}`),t(a)}export{i as a,f};
