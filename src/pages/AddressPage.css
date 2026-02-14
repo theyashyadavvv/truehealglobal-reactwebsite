@@ -32,4 +32,32 @@
 .addr-form__group label { font-size: 0.85rem; font-weight: 600; color: var(--color-text-secondary); }
 .addr-form__group input, .addr-form__group textarea { padding: 0.75rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: var(--color-text); font-size: 0.95rem; font-family: inherit; }
 .addr-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* Pick on Map button */
+.addr-form__map-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed var(--color-primary, #26a541);
+    border-radius: 10px;
+    background: rgba(38, 165, 65, 0.05);
+    color: var(--color-primary, #26a541);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+.addr-form__map-btn:hover {
+    background: rgba(38, 165, 65, 0.12);
+}
+.addr-form__latlng {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary, #888);
+    margin-top: -4px;
+}
+
 @media (max-width: 768px) { .address-page__title { font-size: 1.8rem; } .addr-grid { grid-template-columns: 1fr; } .addr-form__row { grid-template-columns: 1fr; } }

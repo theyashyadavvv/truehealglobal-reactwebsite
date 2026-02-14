@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HiMenuAlt3, HiOutlineSearch, HiOutlineBell, HiOutlineShoppingCart, HiOutlineLockClosed, HiOutlineUser } from 'react-icons/hi';
-import { HiOutlineBeaker, HiOutlineCube, HiOutlineDesktopComputer, HiOutlineChip, HiOutlineSparkles, HiOutlineStar } from 'react-icons/hi';
-import { MenuItem, ProductItem, HoveredLink } from './NavbarMenu';
+import { MenuItem, ProductItem } from './NavbarMenu';
 import MenuDrawer from './MenuDrawer';
 import { useCategories, usePopularStores, usePopularItems } from '../hooks/useDataHooks';
 import { useAuth } from '../context/AuthContext';
@@ -37,13 +36,10 @@ export default function Navbar() {
     const navStores = (popularStores || []).slice(0, 4);
     const navCategories = categories || [];
 
-    // Icons for categories
-    const catIcons = [HiOutlineBeaker, HiOutlineDesktopComputer, HiOutlineCube, HiOutlineBeaker, HiOutlineChip, HiOutlineSparkles];
-
     return (
         <>
             <div className="tagline-bar">
-                The World's First Healing Company
+                The World's First <span className="tagline-highlight">Water Healing</span> Company
             </div>
             <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
                 <div className="container navbar__container">
@@ -55,15 +51,16 @@ export default function Navbar() {
                         <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
 
                         <MenuItem setActive={setActiveMenu} active={activeMenu} item="Categories" to="/categories">
-                            <div className="nav-menu-links-col">
-                                {navCategories.map((cat, i) => {
-                                    const Icon = catIcons[i % catIcons.length];
-                                    return (
-                                        <HoveredLink key={cat.id} to={`/categories/${cat.id}`} icon={Icon}>
-                                            {cat.name}
-                                        </HoveredLink>
-                                    );
-                                })}
+                            <div className="nav-menu-products-grid">
+                                {navCategories.slice(0, 6).map(cat => (
+                                    <ProductItem
+                                        key={cat.id}
+                                        title={cat.name}
+                                        description={cat.products_count ? `${cat.products_count} Products` : ''}
+                                        href={`/categories/${cat.id}`}
+                                        src={cat.image_full_url || cat.image}
+                                    />
+                                ))}
                             </div>
                         </MenuItem>
 

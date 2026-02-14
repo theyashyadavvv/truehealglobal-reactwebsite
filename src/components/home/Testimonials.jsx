@@ -37,13 +37,13 @@ const testimonialData = [
 
 export default function Testimonials() {
     return (
-        <section className="testimonials section" style={{ background: 'var(--gradient-dark)' }}>
+        <section className="testimonials section" style={{ background: '#FFFFFF' }}>
             <div className="container">
                 <ScrollReveal>
                     <div className="section-header">
-                        <p className="section-label" style={{ color: 'var(--color-primary-light)' }}>Testimonials</p>
-                        <h2 className="section-title" style={{ color: 'var(--color-white)' }}>What People Are Saying</h2>
-                        <p className="section-subtitle" style={{ color: 'var(--color-gray-300)' }}>
+                        <p className="section-label">Testimonials</p>
+                        <h2 className="section-title">What People Are Saying</h2>
+                        <p className="section-subtitle">
                             Thousands of customers across India trust True Heal Global for their hydration needs
                         </p>
                     </div>
@@ -55,12 +55,12 @@ export default function Testimonials() {
                             testimonials={testimonialData}
                             autoplay
                             colors={{
-                                name: '#ffffff',
-                                designation: 'var(--color-primary-light)',
-                                testimony: 'var(--color-gray-100)',
-                                arrowBackground: 'var(--color-primary)',
+                                name: '#111827',
+                                designation: 'var(--color-primary)',
+                                testimony: '#4B5563',
+                                arrowBackground: '#111827',
                                 arrowForeground: '#ffffff',
-                                arrowHoverBackground: 'var(--color-accent)',
+                                arrowHoverBackground: 'var(--color-primary)',
                             }}
                             fontSizes={{
                                 name: '1.75rem',

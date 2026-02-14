@@ -1,20 +1,45 @@
 import ScrollReveal from '../ScrollReveal';
 import AnimatedCounter from '../AnimatedCounter';
 import { benefits } from '../../data/mockData';
-import { HiLightningBolt, HiShieldCheck, HiSparkles, HiHeart, HiBeaker } from 'react-icons/hi';
+import { HiBeaker } from 'react-icons/hi';
+import { Carousel, Card } from '../ui/apple-cards-carousel';
 import './ScienceBenefits.css';
 
-const iconMap = {
-    antioxidant: HiShieldCheck,
-    muscle: HiLightningBolt,
-    energy: HiLightningBolt,
-    skin: HiSparkles,
-    gut: HiHeart,
-};
+/* Build detail content for each benefit card modal */
+const BenefitDetail = ({ benefit }) => (
+    <div>
+        <div className="apple-card__detail-block">
+            <div className="apple-card__detail-stat">
+                {benefit.stat}
+                <span className="apple-card__detail-stat-label">{benefit.statLabel}</span>
+            </div>
+            <p className="apple-card__detail-text">
+                <strong>{benefit.title}:</strong> {benefit.description}
+            </p>
+            <img
+                src={benefit.image}
+                alt={benefit.title}
+                className="apple-card__detail-image"
+            />
+        </div>
+    </div>
+);
+
+/* Map benefits data → card format for the carousel */
+const cardsData = benefits.map((b) => ({
+    category: 'Science-Backed',
+    title: b.title,
+    src: b.image,
+    content: <BenefitDetail benefit={b} />,
+}));
 
 export default function ScienceBenefits() {
+    const cards = cardsData.map((card, index) => (
+        <Card key={card.src + index} card={card} index={index} />
+    ));
+
     return (
-        <section className="benefits section">
+        <section className="benefits section" style={{ background: '#fff' }}>
             <div className="container">
                 <ScrollReveal>
                     <div className="section-header">
@@ -27,31 +52,8 @@ export default function ScienceBenefits() {
                     </div>
                 </ScrollReveal>
 
-                <div className="benefits__grid">
-                    {benefits.map((benefit, i) => {
-                        const Icon = iconMap[benefit.icon] || HiBeaker;
-                        return (
-                            <ScrollReveal key={benefit.id} delay={i * 0.1} className="benefits__card-wrap">
-                                <div className="benefits__card">
-                                    <div className="benefits__card-image">
-                                        <img src={benefit.image} alt={benefit.title} />
-                                        <div className="benefits__card-stat-overlay">
-                                            <span className="benefits__stat-value">{benefit.stat}</span>
-                                            <span className="benefits__stat-label">{benefit.statLabel}</span>
-                                        </div>
-                                    </div>
-                                    <div className="benefits__card-content">
-                                        <div className="benefits__card-icon">
-                                            <Icon size={22} />
-                                        </div>
-                                        <h3 className="benefits__card-title">{benefit.title}</h3>
-                                        <p className="benefits__card-desc">{benefit.description}</p>
-                                    </div>
-                                </div>
-                            </ScrollReveal>
-                        );
-                    })}
-                </div>
+                {/* Apple-style horizontal card carousel */}
+                <Carousel items={cards} />
 
                 {/* Science metrics bar with animated counters */}
                 <ScrollReveal delay={0.3}>

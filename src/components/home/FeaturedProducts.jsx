@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../ScrollReveal';
-import { HiArrowRight, HiStar, HiShoppingCart } from 'react-icons/hi';
+import { HiArrowRight, HiStar, HiOutlineHeart } from 'react-icons/hi';
 import { usePopularItems } from '../../hooks/useDataHooks';
 import GradientButton from '../GradientButton';
 import SpotlightCard from '../SpotlightCard';
@@ -74,51 +74,37 @@ export default function FeaturedProducts() {
 
                             return (
                                 <ScrollReveal key={product.id} delay={i * 0.1} className="featured__card-wrapper">
-                                    <SpotlightCard glowColor="teal">
-                                        <Link to={`/products/${product.id}`} className="featured__card card">
-                                            {discount > 0 && (
-                                                <span className="featured__badge">
-                                                    {product.discount_type === 'percent' ? `${discount}% off` : `₹${discount} off`}
-                                                </span>
+                                    <Link to={`/products/${product.id}`} className="featured__card">
+                                        <div className="featured__card-image">
+                                            <img src={image} alt={product.name} onError={(e) => e.target.src = '/assets/image/placeholder.png'} />
+                                            <button className="featured__card-wishlist" onClick={(e) => e.preventDefault()} aria-label="Wishlist">
+                                                <HiOutlineHeart size={18} />
+                                            </button>
+                                        </div>
+                                        <div className="featured__card-body">
+                                            <h4 className="featured__card-store">{product.store_name || 'True Heal Global'}</h4>
+                                            <p className="featured__card-name">{product.name}</p>
+                                            <div className="featured__card-pricing">
+                                                <span className="featured__card-price">{formatPrice(product.price)}</span>
+                                                {discount > 0 && (
+                                                    <>
+                                                        <span className="featured__card-original">{formatPrice(originalPrice)}</span>
+                                                        <span className="featured__card-discount">
+                                                            {product.discount_type === 'percent' ? `${discount}%` : `₹${discount}`} off
+                                                        </span>
+                                                    </>
+                                                )}
+                                            </div>
+                                            {product.avg_rating > 0 && (
+                                                <div className="featured__card-rating-pill">
+                                                    <span className="featured__card-rating-val">{product.avg_rating.toFixed(1)}</span>
+                                                    <HiStar size={11} />
+                                                    <span className="featured__card-rating-count">({product.rating_count || 0})</span>
+                                                </div>
                                             )}
-                                            <div className="featured__card-image">
-                                                <img src={image} alt={product.name} onError={(e) => e.target.src = '/assets/image/placeholder.png'} />
-                                            </div>
-                                            <div className="featured__card-body">
-                                                <span className="featured__card-category">
-                                                    {product.store_name || product.module_type || 'Product'}
-                                                </span>
-                                                <h3 className="featured__card-name">{product.name}</h3>
-                                                <div className="featured__card-rating">
-                                                    <div className="stars">
-                                                        {[...Array(5)].map((_, j) => (
-                                                            <HiStar key={j} style={{ opacity: j < Math.floor(product.avg_rating || 0) ? 1 : 0.3 }} />
-                                                        ))}
-                                                    </div>
-                                                    <span className="featured__card-reviews">({product.rating_count || 0})</span>
-                                                </div>
-                                                <div className="featured__card-pricing">
-                                                    <span className="featured__card-price">{formatPrice(product.price)}</span>
-                                                    {discount > 0 && (
-                                                        <>
-                                                            <span className="featured__card-original">{formatPrice(originalPrice)}</span>
-                                                            <span className="featured__card-discount">
-                                                                {product.discount_type === 'percent' ? `${discount}%` : `₹${discount}`} off
-                                                            </span>
-                                                        </>
-                                                    )}
-                                                </div>
-                                                <GradientButton
-                                                    size="sm"
-                                                    className="featured__card-cart"
-                                                    onClick={(e) => e.preventDefault()}
-                                                >
-                                                    <HiShoppingCart size={16} />
-                                                    Add to Cart
-                                                </GradientButton>
-                                            </div>
-                                        </Link>
-                                    </SpotlightCard>
+                                            {discount >= 40 && <span className="featured__card-limited">Limited stock!</span>}
+                                        </div>
+                                    </Link>
                                 </ScrollReveal>
                             );
                         })}

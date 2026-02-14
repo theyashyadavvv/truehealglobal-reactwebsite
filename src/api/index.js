@@ -65,3 +65,6 @@ export * from './services/parcel';
 
 // Static Pages
 export * from './services/pages';
+
+// Map / Location
+export * from './services/mapService';

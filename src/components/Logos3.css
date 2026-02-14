@@ -2,7 +2,7 @@
     padding: 3rem 0 4rem;
     overflow: hidden;
     position: relative;
-    background: var(--color-off-white);
+    background: #FFFFFF;
     border-top: 1px solid var(--color-gray-100);
     border-bottom: 1px solid var(--color-gray-100);
 }
@@ -107,12 +107,12 @@
 
 .logos3-fade-left {
     left: 0;
-    background: linear-gradient(to right, var(--color-off-white), transparent);
+    background: linear-gradient(to right, #FFFFFF, transparent);
 }
 
 .logos3-fade-right {
     right: 0;
-    background: linear-gradient(to left, var(--color-off-white), transparent);
+    background: linear-gradient(to left, #FFFFFF, transparent);
 }
 
 /* If background is dark/different, update fade colors above */

@@ -19,9 +19,12 @@ export default function HeroScroll() {
                     </div>
                 }
             >
-                <img
-                    src="/assets/image/hero_scroll_showcase.jpg"
-                    alt="Premium hydrogen water purification system showcase"
+                <video
+                    src="/Blue%20Cream%20Collage%20Water%20Pollution%20Action%20Video.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                     draggable={false}
                 />
             </ContainerScroll>

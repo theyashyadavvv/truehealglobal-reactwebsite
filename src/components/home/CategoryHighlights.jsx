@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import ScrollReveal from '../ScrollReveal';
 import { HiArrowRight } from 'react-icons/hi';
 import { useCategories } from '../../hooks/useDataHooks';
@@ -12,34 +11,14 @@ export default function CategoryHighlights() {
     if (loading && catList.length === 0) return null;
 
     return (
-        <section className="categories section">
+        <section className="categories section" style={{ background: '#fff' }}>
             <div className="container">
                 <ScrollReveal>
                     <div className="section-header">
                         <p className="section-label">Our Collections</p>
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, amount: 0.3 }}
-                            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginBottom: '1rem', flexWrap: 'wrap', overflow: 'hidden' }}
-                        >
-                            <motion.img
-                                src="/assets/image/trolley.png"
-                                alt="Trolley"
-                                variants={{
-                                    hidden: { x: -400, opacity: 0 },
-                                    visible: {
-                                        x: 0,
-                                        opacity: 1,
-                                        transition: { duration: 1, type: 'spring', bounce: 0.3 }
-                                    }
-                                }}
-                                style={{ width: 'auto', height: '150px' }}
-                            />
-                            <h2 className="section-title" style={{ margin: 0 }}>Tailored Hydration Starts Here</h2>
-                        </motion.div>
+                        <h2 className="section-title">Tailored Hydration Starts Here</h2>
                         <p className="section-subtitle">
-                            Choose your path to optimal wellness with our product collections
+                            Choose your path to optimal wellness with our curated product collections
                         </p>
                     </div>
                 </ScrollReveal>
@@ -60,12 +39,9 @@ export default function CategoryHighlights() {
                                         {(cat.name || '')[0]?.toUpperCase() || '?'}
                                     </div>
                                     <h3 className="categories__card-title">{cat.name}</h3>
-                                    <motion.span
-                                        className="categories__card-link"
-                                        whileHover={{ x: 8 }}
-                                    >
+                                    <span className="categories__card-link">
                                         Explore Collection <HiArrowRight />
-                                    </motion.span>
+                                    </span>
                                 </div>
                             </Link>
                         </ScrollReveal>

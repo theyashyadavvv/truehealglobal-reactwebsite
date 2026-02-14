@@ -68,6 +68,7 @@ export default function App() {
         <>
             <ScrollToTop />
             <Navbar />
+            <div className="app-content">
             <Suspense fallback={LazyFallback}>
                 <AnimatePresence mode="wait">
                     <motion.div
@@ -138,6 +139,7 @@ export default function App() {
                     </motion.div>
                 </AnimatePresence>
             </Suspense>
+            </div>
             <Footer />
         </>
     );

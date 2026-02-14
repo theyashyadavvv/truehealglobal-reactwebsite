@@ -5,36 +5,70 @@
 .globe-section {
     position: relative;
     width: 100%;
-    min-height: 480px;
+    min-height: 600px;
     overflow: hidden;
-    background: linear-gradient(135deg, #0b1215 0%, #0f1f2b 50%, #0d2233 100%);
+    background: #FFFFFF;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 0;
 }
 
 /* ── Text content ── */
 .globe-section__content {
     position: relative;
     z-index: 10;
-    padding: 4rem 3rem 4rem calc(max((100vw - 1200px) / 2, 2rem));
-    max-width: 580px;
+    flex: 0 0 auto;
+    padding: 4rem 3rem 4rem calc(max((100vw - 1200px) / 2, 3rem));
+    max-width: 520px;
+}
+
+.globe-section__label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-primary, #39a6ba);
+    background: rgba(57, 166, 186, 0.08);
+    border: 1px solid rgba(57, 166, 186, 0.15);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .globe-section__title {
     font-family: var(--font-display, 'Inter', sans-serif);
-    font-size: clamp(2rem, 3.5vw, 3.25rem);
+    font-size: clamp(2.25rem, 3.8vw, 3.5rem);
     font-weight: 800;
     letter-spacing: -0.03em;
-    line-height: 1.1;
-    color: #ffffff;
-    margin-bottom: 1.25rem;
+    line-height: 1.15;
+    color: #111827;
+    margin-bottom: 1.5rem;
+}
+
+.globe-section__title-highlight {
+    color: var(--color-primary, #39a6ba);
+    position: relative;
+}
+
+.globe-section__title-highlight::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    width: 100%;
+    height: 3px;
+    background: var(--color-primary, #39a6ba);
+    border-radius: 2px;
+    opacity: 0.3;
 }
 
 .globe-section__desc {
     font-size: 1.05rem;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 2.25rem;
+    line-height: 1.75;
+    color: #6B7280;
+    margin-bottom: 2.5rem;
     max-width: 440px;
 }
 
@@ -71,14 +105,14 @@
 }
 
 .globe-section__btn--secondary {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #F5F5F5;
+    color: #111827;
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .globe-section__btn--secondary:hover {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255, 255, 255, 0.25);
+    background: #EBEBEB;
+    border-color: rgba(0, 0, 0, 0.2);
     transform: translateY(-2px);
 }
 
@@ -88,11 +122,9 @@
 
 /* ── Globe container — right half of the screen ── */
 .globe-section__globe {
-    position: absolute;
-    right: -14rem;
-    bottom: -18rem;
-    width: 48rem;
-    height: 48rem;
+    position: relative;
+    flex: 1 1 55%;
+    height: 600px;
     z-index: 5;
     pointer-events: auto;
 }
@@ -145,14 +177,15 @@
     }
 
     .globe-section__title {
-        font-size: 1.75rem;
+        font-size: 1.85rem;
+    }
+
+    .globe-section__label {
+        margin-bottom: 1rem;
     }
 
     .globe-section__globe {
-        right: -18rem;
-        bottom: -18rem;
-        width: 42rem;
-        height: 42rem;
+        height: 420px;
     }
 }
 
@@ -165,26 +198,27 @@
     .globe-section__content {
         max-width: 100%;
         padding: 3rem 1.5rem 1rem;
+        text-align: center;
     }
 
     .globe-section__title {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 
     .globe-section__desc {
-        font-size: 0.92rem;
+        font-size: 0.95rem;
         margin-bottom: 1.5rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .globe-section__buttons {
         flex-wrap: wrap;
+        justify-content: center;
     }
 
     .globe-section__globe {
-        position: relative;
-        right: auto;
-        bottom: auto;
         width: 100%;
-        height: 280px;
+        height: 350px;
     }
 }

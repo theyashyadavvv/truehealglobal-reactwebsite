@@ -1,13 +1,13 @@
 .banner-carousel {
     position: relative;
-    height: 600px;
+    height: 520px;
     overflow: hidden;
     background: var(--color-gray-900);
 }
 
 @media (max-width: 768px) {
     .banner-carousel {
-        height: 500px;
+        height: 420px;
     }
 }
 
@@ -35,7 +35,7 @@
 .banner-carousel__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(3, 7, 18, 0.88) 0%, rgba(3, 7, 18, 0.45) 60%, rgba(3, 7, 18, 0.2) 100%);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.25) 40%, transparent 65%);
 }
 
 .banner-carousel__content {
@@ -46,22 +46,26 @@
 }
 
 .banner-carousel__title {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 3.75rem);
-    color: var(--color-white);
-    margin-bottom: 1.25rem;
-    line-height: 1.08;
-    max-width: 680px;
-    letter-spacing: -0.02em;
+    font-family: var(--font-primary);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    color: #111827;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    max-width: 460px;
+    letter-spacing: -0.01em;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-shadow: 0 1px 8px rgba(255, 255, 255, 0.4);
 }
 
 .banner-carousel__subtitle {
-    font-size: 1.15rem;
-    color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 2.5rem;
-    max-width: 540px;
-    line-height: 1.7;
+    font-size: 1rem;
+    color: #374151;
+    margin-bottom: 1.75rem;
+    max-width: 400px;
+    line-height: 1.6;
     font-weight: 400;
+    text-shadow: 0 1px 6px rgba(255, 255, 255, 0.3);
 }
 
 /* Navigation arrows */
@@ -70,25 +74,25 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-lg);
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(220, 220, 220, 0.6);
+    backdrop-filter: blur(8px);
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-white);
+    color: #333;
     cursor: pointer;
-    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s ease;
 }
 
 .banner-carousel__nav:hover {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
-    transform: translateY(-50%) scale(1.08);
-    box-shadow: 0 4px 16px rgba(57, 166, 186, 0.35);
+    background: rgba(200, 200, 200, 0.85);
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #111;
 }
 
 .banner-carousel__nav--prev {
@@ -117,10 +121,10 @@
 }
 
 .banner-carousel__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: var(--radius-full);
-    background: rgba(255, 255, 255, 0.25);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.15);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
     border: none;
@@ -128,9 +132,9 @@
 
 .banner-carousel__dot--active {
     background: var(--color-primary);
-    width: 28px;
-    border-radius: var(--radius-full);
-    box-shadow: 0 0 12px rgba(57, 166, 186, 0.5);
+    width: 10px;
+    border-radius: 50%;
+    box-shadow: none;
 }
 
 /* Progress bar */
@@ -152,12 +156,12 @@
 
 @media (max-width: 480px) {
     .banner-carousel {
-        height: 400px;
+        height: 340px;
     }
 
     .banner-carousel__title {
-        font-size: clamp(1.5rem, 7vw, 2rem);
-        margin-bottom: 0.75rem;
+        font-size: clamp(1.25rem, 6vw, 1.75rem);
+        margin-bottom: 0.5rem;
     }
 
     .banner-carousel__subtitle {
@@ -171,12 +175,12 @@
     }
 
     .banner-carousel__dot {
-        width: 6px;
-        height: 6px;
+        width: 8px;
+        height: 8px;
     }
 
     .banner-carousel__dot--active {
-        width: 20px;
+        width: 8px;
     }
 }
 
@@ -217,4 +221,23 @@
     background: linear-gradient(135deg, var(--color-gray-800) 0%, var(--color-gray-900) 100%);
     color: rgba(255, 255, 255, 0.5);
     font-size: 1.1rem;
+}
+
+/* Override GradientButton inside banner to be dark/black like CLiQ */
+.banner-carousel__content .gradient-btn {
+    background: #111827 !important;
+    color: #fff !important;
+    border-radius: 4px;
+    padding: 0.75rem 2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    box-shadow: none;
+}
+
+.banner-carousel__content .gradient-btn:hover {
+    background: #000 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
 }

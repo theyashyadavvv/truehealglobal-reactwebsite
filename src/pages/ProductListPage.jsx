@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
-import { HiStar, HiShoppingCart, HiFilter, HiViewGrid, HiViewList, HiChevronDown } from 'react-icons/hi';
+import { HiStar, HiFilter, HiViewGrid, HiViewList, HiChevronDown } from 'react-icons/hi';
+import { HiOutlineHeart } from 'react-icons/hi';
 import { fetchPopularItems, fetchDiscountedItems } from '../api/services/items';
 import { useCategories } from '../hooks/useDataHooks';
 import './ProductListPage.css';
@@ -127,45 +128,41 @@ export default function ProductListPage() {
                                 {sorted.map((product, i) => {
                                     const image = product.image_full_url || product.image || '/assets/image/placeholder.png';
                                     const discount = product.discount || 0;
+                                    const originalPrice = discount > 0
+                                        ? (product.discount_type === 'percent'
+                                            ? product.price / (1 - discount / 100)
+                                            : product.price + discount)
+                                        : null;
 
                                     return (
                                         <ScrollReveal key={product.id} delay={i * 0.08}>
-                                            <Link to={`/products/${product.id}`} className="plp-card card">
-                                                {discount > 0 && (
-                                                    <span className="plp-card__badge">
-                                                        {product.discount_type === 'percent' ? `${discount}% off` : `₹${discount} off`}
-                                                    </span>
-                                                )}
+                                            <Link to={`/products/${product.id}`} className="plp-card">
                                                 <div className="plp-card__image">
                                                     <img src={image} alt={product.name} onError={(e) => e.target.src = '/assets/image/placeholder.png'} />
+                                                    <button className="plp-card__wishlist" onClick={e => e.preventDefault()} aria-label="Wishlist">
+                                                        <HiOutlineHeart size={20} />
+                                                    </button>
                                                 </div>
                                                 <div className="plp-card__body">
-                                                    <span className="plp-card__category">
-                                                        {product.store_name || 'Product'}
-                                                    </span>
-                                                    <h3 className="plp-card__name">{product.name}</h3>
-                                                    <p className="plp-card__desc">{(product.description || '').slice(0, 80)}...</p>
-                                                    <div className="plp-card__rating">
-                                                        <div className="stars">
-                                                            {[...Array(5)].map((_, j) => (
-                                                                <HiStar key={j} style={{ opacity: j < Math.floor(product.avg_rating || 0) ? 1 : 0.3 }} />
-                                                            ))}
-                                                        </div>
-                                                        <span>{product.avg_rating ? product.avg_rating.toFixed(1) : 'New'} ({product.rating_count || 0})</span>
+                                                    <h4 className="plp-card__store">{product.store_name || 'True Heal Global'}</h4>
+                                                    <p className="plp-card__name">{product.name}</p>
+                                                    <div className="plp-card__price-row">
+                                                        <span className="plp-card__price">{formatPrice(product.price)}</span>
+                                                        {originalPrice && <span className="plp-card__original">{formatPrice(originalPrice)}</span>}
+                                                        {discount > 0 && (
+                                                            <span className="plp-card__discount-pct">
+                                                                {product.discount_type === 'percent' ? `${discount}% off` : `₹${discount} off`}
+                                                            </span>
+                                                        )}
                                                     </div>
-                                                    <div className="plp-card__footer">
-                                                        <div className="plp-card__pricing">
-                                                            <span className="plp-card__price">{formatPrice(product.price)}</span>
+                                                    {(product.avg_rating > 0) && (
+                                                        <div className="plp-card__rating-pill">
+                                                            <span className="plp-card__rating-val">{product.avg_rating.toFixed(1)}</span>
+                                                            <HiStar size={12} />
+                                                            <span className="plp-card__rating-count">({product.rating_count || 0})</span>
                                                         </div>
-                                                        <motion.button
-                                                            className="plp-card__cart-btn"
-                                                            whileHover={{ scale: 1.1 }}
-                                                            whileTap={{ scale: 0.9 }}
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            <HiShoppingCart size={18} />
-                                                        </motion.button>
-                                                    </div>
+                                                    )}
+                                                    {discount >= 40 && <span className="plp-card__limited">Limited stock!</span>}
                                                 </div>
                                             </Link>
                                         </ScrollReveal>

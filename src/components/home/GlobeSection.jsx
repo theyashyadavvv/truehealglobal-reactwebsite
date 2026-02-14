@@ -25,8 +25,9 @@ export default function GlobeSection() {
         <section className="globe-section">
             {/* Text content */}
             <div className="globe-section__content">
+                <span className="globe-section__label">Global Reach</span>
                 <h2 className="globe-section__title">
-                    Delivering wellness all over the world with a click.
+                    Delivering <span className="globe-section__title-highlight">wellness</span> all over the world with a click.
                 </h2>
                 <p className="globe-section__desc">
                     Shop from our curated collection of health and wellness products, delivered to your doorstep from trusted stores worldwide.
@@ -50,9 +51,7 @@ export default function GlobeSection() {
                         className="globe-section__canvas"
                         markers={sampleMarkers}
                         config={{
-                            showAtmosphere: true,
-                            atmosphereColor: '#4da6ff',
-                            atmosphereIntensity: 20,
+                            showAtmosphere: false,
                             bumpScale: 5,
                             autoRotateSpeed: 0.3,
                         }}

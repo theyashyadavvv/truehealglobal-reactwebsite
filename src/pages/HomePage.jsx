@@ -26,8 +26,8 @@ export default function HomePage() {
     return (
         <main>
             <BannerCarousel />
-            <HeroScroll />
             <CategoryGrid />
+            <HeroScroll />
             <PopularStores />
             <WhyChooseUs />
             <GlobeSection />

@@ -1,10 +1,59 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from 'react-icons/hi';
+import { HiOutlineMail } from 'react-icons/hi';
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
+import { motion, useReducedMotion } from 'framer-motion';
 import './Footer.css';
 import { useToast } from '../context/ToastContext';
 import { subscribeNewsletter } from '../api/services/newsletterService';
+
+function AnimatedBlock({ children, delay = 0.1, className = '' }) {
+    const shouldReduce = useReducedMotion();
+    if (shouldReduce) return <div className={className}>{children}</div>;
+    return (
+        <motion.div
+            initial={{ filter: 'blur(4px)', translateY: -8, opacity: 0 }}
+            whileInView={{ filter: 'blur(0px)', translateY: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay, duration: 0.8 }}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
+const footerSections = [
+    {
+        label: 'Quick Links',
+        links: [
+            { title: 'Home', to: '/' },
+            { title: 'All Products', to: '/products' },
+            { title: 'Categories', to: '/categories' },
+            { title: 'Stores', to: '/stores' },
+            { title: 'FAQs', to: '/faq' },
+        ],
+    },
+    {
+        label: 'Policies',
+        links: [
+            { title: 'Privacy Policy', to: '/privacy' },
+            { title: 'Terms & Conditions', to: '/terms' },
+            { title: 'Refund Policy', to: '/refund-policy' },
+            { title: 'Shipping Policy', to: '/shipping-policy' },
+            { title: 'About Us', to: '/about' },
+        ],
+    },
+    {
+        label: 'Connect',
+        links: [
+            { title: 'Facebook', href: 'https://www.facebook.com/people/Truehealglobal/61576012675998/', icon: FaFacebookF },
+            { title: 'Instagram', href: 'https://www.instagram.com/truehealglobal/', icon: FaInstagram },
+            { title: 'LinkedIn', href: '#', icon: FaLinkedinIn },
+            { title: 'YouTube', href: '#', icon: FaYoutube },
+        ],
+    },
+];
 
 export default function Footer() {
     const [email, setEmail] = useState('');
@@ -14,7 +63,6 @@ export default function Footer() {
     const handleSubscribe = async (e) => {
         e.preventDefault();
         if (!email) return;
-
         setLoading(true);
         try {
             await subscribeNewsletter(email);
@@ -29,123 +77,60 @@ export default function Footer() {
 
     return (
         <footer className="footer">
-            <div className="footer__wave">
-                <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
-                    <path d="M0,60 C240,100 480,0 720,50 C960,100 1200,20 1440,60 L1440,100 L0,100 Z" fill="currentColor" />
-                </svg>
-            </div>
-
-            <div className="footer__main">
-                <div className="container">
-                    <div className="footer__grid">
-                        {/* Brand Column */}
-                        <div className="footer__brand">
-                            <div className="footer__brand-logo">
-                                <img src="/assets/image/thg-logo.png" alt="THG" className="footer__logo-img" />
-                                <div>
-                                    <h3 className="footer__brand-name">True Heal Global</h3>
-                                    <p className="footer__brand-tagline">Premium Water Technology</p>
-                                </div>
-                            </div>
-                            <p className="footer__brand-desc">
-                                Transforming hydration with advanced hydrogen and alkaline water machines.
-                                Backed by science, trusted by thousands across India.
-                            </p>
-                            <div className="footer__socials">
-                                <div className="footer__socials">
-                                    <a href="https://www.facebook.com/people/Truehealglobal/61576012675998/" target="_blank" rel="noreferrer" className="footer__social-link" aria-label="Facebook"><FaFacebookF /></a>
-                                    <a href="https://www.instagram.com/truehealglobal/" target="_blank" rel="noreferrer" className="footer__social-link" aria-label="Instagram"><FaInstagram /></a>
-                                    <a href="#" className="footer__social-link" aria-label="LinkedIn"><FaLinkedinIn /></a>
-                                    <a href="#" className="footer__social-link" aria-label="YouTube"><FaYoutube /></a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Quick Links */}
-                        <div className="footer__column">
-                            <h4 className="footer__heading">Quick Links</h4>
-                            <ul className="footer__list">
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/products">All Products</Link></li>
-                                <li><Link to="/categories">Categories</Link></li>
-                                <li><Link to="/stores">Stores</Link></li>
-                                <li><Link to="/brands">Brands</Link></li>
-                                <li><Link to="/flash-sales">Flash Sales</Link></li>
-                                <li><Link to="/faq">FAQs</Link></li>
-                            </ul>
-                        </div>
-
-                        {/* Policies */}
-                        <div className="footer__column">
-                            <h4 className="footer__heading">Policies</h4>
-                            <ul className="footer__list">
-                                <li><Link to="/privacy">Privacy Policy</Link></li>
-                                <li><Link to="/terms">Terms & Conditions</Link></li>
-                                <li><Link to="/cancellation-policy">Cancellation Policy</Link></li>
-                                <li><Link to="/refund-policy">Refund Policy</Link></li>
-                                <li><Link to="/shipping-policy">Shipping Policy</Link></li>
-                                <li><Link to="/about">About Us</Link></li>
-                            </ul>
-                        </div>
-
-                        {/* Contact */}
-                        <div className="footer__column">
-                            <h4 className="footer__heading">Contact Us</h4>
-                            <ul className="footer__contact-list">
-                                <li>
-                                    <HiOutlinePhone size={18} />
-                                    <span>+91 98765 43210</span>
-                                </li>
-                                <li>
-                                    <HiOutlineMail size={18} />
-                                    <span>support@truehealglobal.com</span>
-                                </li>
-                                <li>
-                                    <HiOutlineLocationMarker size={18} />
-                                    <span>Mumbai, Maharashtra, India</span>
-                                </li>
-                            </ul>
-
-                            <div className="footer__newsletter">
-                                <h5 className="footer__newsletter-title">Stay Updated</h5>
-                                <form className="footer__newsletter-form" onSubmit={handleSubscribe}>
-                                    <input
-                                        type="email"
-                                        placeholder="Your email"
-                                        className="footer__newsletter-input"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                    <button type="submit" className="footer__newsletter-btn" disabled={loading}>
-                                        {loading ? <div className="spinner-sm" /> : <HiOutlineMail size={18} />}
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
+            <div className="footer__glow" />
+            <div className="footer__inner">
+                {/* Left — Brand */}
+                <AnimatedBlock className="footer__brand" delay={0.1}>
+                    <div className="footer__brand-logo">
+                        <img src="/assets/image/thg-logo.png" alt="THG" className="footer__logo-img" />
+                        <span className="footer__brand-name">True Heal Global</span>
                     </div>
+                    <p className="footer__brand-desc">
+                        Premium hydrogen & alkaline water technology. Backed by science, trusted by thousands.
+                    </p>
+                    {/* Newsletter inline */}
+                    <form className="footer__newsletter-form" onSubmit={handleSubscribe}>
+                        <input
+                            type="email"
+                            placeholder="Your email"
+                            className="footer__newsletter-input"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <button type="submit" className="footer__newsletter-btn" disabled={loading}>
+                            {loading ? '...' : <HiOutlineMail size={16} />}
+                        </button>
+                    </form>
+                </AnimatedBlock>
+
+                {/* Right — Link columns */}
+                <div className="footer__columns">
+                    {footerSections.map((section, idx) => (
+                        <AnimatedBlock key={section.label} delay={0.15 + idx * 0.1}>
+                            <h4 className="footer__heading">{section.label}</h4>
+                            <ul className="footer__list">
+                                {section.links.map((link) => (
+                                    <li key={link.title}>
+                                        {link.to ? (
+                                            <Link to={link.to}>{link.title}</Link>
+                                        ) : (
+                                            <a href={link.href} target="_blank" rel="noreferrer">
+                                                {link.icon && <link.icon size={13} style={{ marginRight: 6 }} />}
+                                                {link.title}
+                                            </a>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </AnimatedBlock>
+                    ))}
                 </div>
             </div>
 
-            {/* Trust Bar */}
-            <div className="footer__trust">
-                <div className="container">
-                    <div className="footer__trust-items">
-                        {['FDA Approved', 'CE Certified', 'ROHS Compliant', 'GMP Certified', 'ISO 9001'].map(cert => (
-                            <div key={cert} className="footer__trust-item">
-                                <div className="footer__trust-icon">✓</div>
-                                <span>{cert}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Bottom Bar */}
+            {/* Bottom */}
             <div className="footer__bottom">
-                <div className="container">
-                    <p>© 2026 True Heal Global. All rights reserved. Crafted with care for your wellness.</p>
-                </div>
+                <p>© {new Date().getFullYear()} True Heal Global. All rights reserved.</p>
             </div>
         </footer>
     );

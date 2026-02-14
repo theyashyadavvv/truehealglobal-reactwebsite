@@ -1,7 +1,7 @@
 /* ========== HeroScroll Section ========== */
 
 .hero-scroll {
-    background: var(--color-pure-white, #ffffff);
+    background: #FFFFFF;
     overflow: hidden;
 }
 

@@ -5,8 +5,8 @@
     left: 0;
     right: 0;
     height: 32px;
-    background: var(--color-primary);
-    color: var(--color-white);
+    background: #111827;
+    color: rgba(255, 255, 255, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,7 +15,14 @@
     z-index: 1001;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
+    gap: 0.3em;
+}
+
+.tagline-highlight {
+    color: var(--color-primary, #39A6BA);
+    font-weight: 800;
+    text-shadow: 0 0 8px rgba(57, 166, 186, 0.4);
 }
 
 .navbar {
@@ -25,19 +32,22 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 1.1rem 0;
+    padding: 0.85rem 0;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    background: transparent;
+    background: #111827;
     box-shadow: none;
 }
 
+/* App content pushed below fixed tagline + navbar */
+.app-content {
+    padding-top: 90px; /* 32px tagline + ~58px navbar */
+}
+
 .navbar--scrolled {
-    padding: 0.65rem 0;
-    background: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 24px rgba(0, 0, 0, 0.06);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    padding: 0.55rem 0;
+    background: #0d1117;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .navbar__container {
@@ -59,7 +69,7 @@
 
 .navbar__links a {
     font-weight: 500;
-    color: var(--color-gray-500);
+    color: rgba(255, 255, 255, 0.75);
     transition: color 0.2s ease;
     position: relative;
     font-size: 0.9rem;
@@ -68,11 +78,11 @@
 
 .navbar__links a:hover,
 .navbar__links a.active {
-    color: var(--color-gray-800);
+    color: #ffffff;
 }
 
 .navbar__links a.active {
-    color: var(--color-primary);
+    color: var(--color-primary-light);
     font-weight: 600;
 }
 
@@ -84,7 +94,7 @@
     transform: translateX(-50%);
     width: 20px;
     height: 2px;
-    background: var(--color-primary);
+    background: var(--color-primary-light);
     border-radius: 1px;
 }
 
@@ -96,7 +106,7 @@
 
 .navbar__action-btn {
     position: relative;
-    color: var(--color-gray-500);
+    color: rgba(255, 255, 255, 0.8);
     transition: all 0.25s ease;
     display: flex;
     align-items: center;
@@ -108,8 +118,8 @@
 }
 
 .navbar__action-btn:hover {
-    background: var(--color-gray-50);
-    color: var(--color-gray-800);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
     transform: scale(1.05);
 }
 
@@ -137,7 +147,7 @@
     height: 6px;
     background: var(--color-error);
     border-radius: 50%;
-    border: 1px solid var(--color-white);
+    border: 1px solid #111827;
 }
 
 .navbar__auth-btn {
@@ -169,18 +179,18 @@
     width: 40px;
     height: 40px;
     background: transparent;
-    color: var(--color-gray-600);
+    color: rgba(255, 255, 255, 0.8);
     border-radius: var(--radius-lg);
     margin-left: 0.25rem;
     cursor: pointer;
     transition: all 0.25s ease;
-    border: 1px solid var(--color-gray-100);
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .navbar__menu-btn:hover {
-    background: var(--color-gray-50);
-    color: var(--color-gray-800);
-    border-color: var(--color-gray-200);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 @media (max-width: 992px) {
@@ -196,6 +206,10 @@
 @media (max-width: 768px) {
     .navbar {
         padding: 0.85rem 0;
+    }
+
+    .app-content {
+        padding-top: 82px; /* Smaller navbar on mobile */
     }
 
     .navbar--scrolled {

@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ScrollReveal from '../components/ScrollReveal';
 import GradientButton from '../components/GradientButton';
-import { HiLocationMarker, HiPlus, HiPencil, HiTrash, HiHome, HiOfficeBuilding, HiX } from 'react-icons/hi';
+import LocationPicker from '../components/LocationPicker';
+import { HiLocationMarker, HiPlus, HiPencil, HiTrash, HiHome, HiOfficeBuilding, HiX, HiMap } from 'react-icons/hi';
 import { useAuth } from '../context/AuthContext';
 import { fetchAddresses, addAddress, updateAddress, deleteAddress } from '../api/services/address';
 import './AddressPage.css';
@@ -16,6 +17,7 @@ export default function AddressPage() {
     const [form, setForm] = useState({ address_type: 'home', contact_person_name: '', contact_person_number: '', address: '', city: '', house: '', road: '', floor: '', latitude: '28.6139', longitude: '77.2090' });
     const [saving, setSaving] = useState(false);
     const [formError, setFormError] = useState('');
+    const [showMapPicker, setShowMapPicker] = useState(false);
     const { isLoggedIn, user } = useAuth();
     const navigate = useNavigate();
 
@@ -82,6 +84,19 @@ export default function AddressPage() {
     };
 
     const typeIcon = { home: HiHome, office: HiOfficeBuilding };
+
+    /** Handle location picked from map picker */
+    const handleLocationPicked = (location) => {
+        setForm(f => ({
+            ...f,
+            latitude: location.latitude,
+            longitude: location.longitude,
+            address: location.address || f.address,
+            zone_id: location.zone_id,
+            zone_ids: location.zone_ids,
+        }));
+        setShowMapPicker(false);
+    };
 
     return (
         <main className="address-page">
@@ -165,6 +180,18 @@ export default function AddressPage() {
                                         <label>Phone Number *</label>
                                         <input type="tel" value={form.contact_person_number} onChange={e => setForm(f => ({ ...f, contact_person_number: e.target.value }))} required />
                                     </div>
+
+                                    {/* Pick on Map */}
+                                    <button type="button" className="addr-form__map-btn" onClick={() => setShowMapPicker(true)}>
+                                        <HiMap size={18} />
+                                        <span>{form.latitude !== '28.6139' ? 'Change Location on Map' : 'Pick Location on Map'}</span>
+                                    </button>
+                                    {form.latitude && form.latitude !== '28.6139' && (
+                                        <div className="addr-form__latlng">
+                                            📍 {parseFloat(form.latitude).toFixed(6)}, {parseFloat(form.longitude).toFixed(6)}
+                                        </div>
+                                    )}
+
                                     <div className="addr-form__group">
                                         <label>Full Address *</label>
                                         <textarea rows={2} value={form.address} onChange={e => setForm(f => ({ ...f, address: e.target.value }))} required />
@@ -187,6 +214,17 @@ export default function AddressPage() {
                     )}
                 </div>
             </section>
+
+            {/* Location Picker Map overlay */}
+            {showMapPicker && (
+                <LocationPicker
+                    initialLat={form.latitude}
+                    initialLng={form.longitude}
+                    initialAddress={form.address}
+                    onPick={handleLocationPicked}
+                    onClose={() => setShowMapPicker(false)}
+                />
+            )}
         </main>
     );
 }

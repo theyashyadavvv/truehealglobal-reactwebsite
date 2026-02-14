@@ -17,6 +17,7 @@
 
   /* Neutral Colors */
   --color-white: #FFFFFF;
+  --color-cream: #F5F5F5;
   --color-off-white: #F9FAFB;
   --color-gray-50: #F3F4F6;
   --color-gray-100: #E5E7EB;
@@ -141,7 +142,7 @@ body {
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-normal);
   color: var(--color-gray-600);
-  background-color: var(--color-white);
+  background-color: var(--color-cream);
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   -webkit-tap-highlight-color: transparent;

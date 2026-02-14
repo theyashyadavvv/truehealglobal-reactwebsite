@@ -70,11 +70,12 @@
 }
 
 /* Inner image styling */
-.container-scroll__card-inner img {
+.container-scroll__card-inner img,
+.container-scroll__card-inner video {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: left top;
+    object-position: center center;
     border-radius: 1rem;
 }
 

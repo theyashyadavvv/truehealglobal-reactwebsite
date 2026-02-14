@@ -12,7 +12,7 @@ export default function PopularStores() {
     const stores = Array.isArray(data) ? data : data?.stores || [];
 
     return (
-        <section className="popular-stores section" style={{ background: 'var(--color-off-white)' }}>
+        <section className="popular-stores section" style={{ background: '#FFFFFF' }}>
             <div className="container">
                 <ScrollReveal>
                     <div className="section-header-row">

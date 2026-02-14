@@ -119,17 +119,17 @@ export default function CartPage() {
                                         >
                                             <div className="cart-item__image">
                                                 <img
-                                                    src={item.image_full_url || item.image || '/assets/image/placeholder.jpg'}
-                                                    alt={item.name}
+                                                    src={item.item?.image_full_url || item.image_full_url || item.image || '/assets/image/placeholder.jpg'}
+                                                    alt={item.item?.name || item.name}
                                                     className="cart-item-image"
                                                     onError={(e) => { e.target.onerror = null; e.target.src = '/assets/image/placeholder.jpg'; }}
                                                 />
                                             </div>
                                             <div className="cart-item__details">
                                                 <span className="cart-item__category">
-                                                    {item.store_name || item.module_name || 'Product'}
+                                                    {item.item?.store_name || item.store_name || item.module_name || 'Product'}
                                                 </span>
-                                                <h3 className="cart-item__name">{item.name}</h3>
+                                                <h3 className="cart-item__name">{item.item?.name || item.name}</h3>
                                                 <div className="cart-item__pricing">
                                                     <span className="cart-item__price">{formatPrice(item.price)}</span>
                                                 </div>

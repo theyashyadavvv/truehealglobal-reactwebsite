@@ -318,8 +318,8 @@ export default function CheckoutPage() {
                                     {cartItems.map(item => (
                                         <div key={item.id} className="checkout-summary__item">
                                             <img
-                                                src={item.image_full_url || item.image || '/assets/image/placeholder.jpg'}
-                                                alt={item.name}
+                                                src={item.item?.image_full_url || item.image_full_url || item.image || '/assets/image/placeholder.jpg'}
+                                                alt={item.item?.name || item.name}
                                                 onError={e => {
                                                     console.log('Image failed:', e.target.src);
                                                     e.target.onerror = null;
@@ -327,7 +327,7 @@ export default function CheckoutPage() {
                                                 }}
                                             />
                                             <div>
-                                                <p className="item-name">{item.name}</p>
+                                                <p className="item-name">{item.item?.name || item.name}</p>
                                                 <p className="item-qty">x{item.quantity || 1}</p>
                                             </div>
                                             <span>{formatPrice((item.price || 0) * (item.quantity || 1))}</span>

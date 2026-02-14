@@ -21,8 +21,9 @@ export default function ProductDetailPage() {
     const [addingToCart, setAddingToCart] = useState(false);
     const [wishlistLoading, setWishlistLoading] = useState(false);
     const [isWishlisted, setIsWishlisted] = useState(false);
+    const [activeImage, setActiveImage] = useState(0);
     // Variation state
-    const [selectedVariation, setSelectedVariation] = useState(null); // old-style variation index
+    const [choiceSelections, setChoiceSelections] = useState([]); // [index per choice group] for old-style
     const [selectedFoodVariations, setSelectedFoodVariations] = useState({}); // { groupName: [selectedLabels] }
     const [selectedAddons, setSelectedAddons] = useState({}); // { addonId: qty }
 
@@ -37,9 +38,9 @@ export default function ProductDetailPage() {
                 const data = await fetchItemDetails(id);
                 setProduct(data);
 
-                // Set default variation
-                if (data.variations && data.variations.length > 0) {
-                    setSelectedVariation(0);
+                // Set default choice selections (one index per choice group)
+                if (data.choice_options && data.choice_options.length > 0) {
+                    setChoiceSelections(data.choice_options.map(() => 0));
                 }
                 if (data.food_variations && data.food_variations.length > 0) {
                     const defaults = {};
@@ -68,20 +69,37 @@ export default function ProductDetailPage() {
             loadProduct();
             setQuantity(1);
             setSelectedAddons({});
+            setActiveImage(0);
         }
     }, [id]);
 
     const formatPrice = (price) =>
         new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price);
 
+    // Build variation type string from current choice selections (mirrors Flutter)
+    const getSelectedVariationType = () => {
+        if (!product?.choice_options?.length || choiceSelections.length === 0) return '';
+        return product.choice_options
+            .map((group, idx) => (group.options[choiceSelections[idx]] || '').replace(/\s+/g, ''))
+            .join('-');
+    };
+
+    // Find the matching variation object by type string
+    const getMatchedVariation = () => {
+        if (!product?.variations?.length || !product?.choice_options?.length) return null;
+        const type = getSelectedVariationType();
+        return product.variations.find(v => v.type === type) || null;
+    };
+
     // Calculate final price with variations & addons
     const calculatePrice = () => {
         if (!product) return 0;
         let basePrice = product.price;
 
-        // Old-style variation price
-        if (product.variations?.length > 0 && selectedVariation !== null) {
-            basePrice = product.variations[selectedVariation]?.price || product.price;
+        // Old-style variation price — match via choice_options
+        const matched = getMatchedVariation();
+        if (matched) {
+            basePrice = matched.price || product.price;
         }
 
         // Food variation surcharges
@@ -157,12 +175,12 @@ export default function ProductDetailPage() {
             let variationBody = [];
             let variant = '';
 
-            // Old-style variations (non-food: ecommerce, grocery)
-            if (product.variations?.length > 0 && selectedVariation !== null) {
-                const v = product.variations[selectedVariation];
-                price = v.price || product.price;
-                variationBody = [v];
-                variant = v.type || '';
+            // Old-style variations — find matched variation from choice selections
+            const matchedVar = getMatchedVariation();
+            if (matchedVar) {
+                price = matchedVar.price || product.price;
+                variationBody = [matchedVar];
+                variant = matchedVar.type || '';
             }
 
             // Food variations (OrderVariation format)
@@ -324,12 +342,25 @@ export default function ProductDetailPage() {
             <section className="pdp__main section">
                 <div className="container">
                     <div className="pdp__layout">
-                        {/* Image */}
+                        {/* Image Gallery */}
                         <ScrollReveal direction="right" className="pdp__gallery">
                             <div className="pdp__image-main">
                                 {discount > 0 && <span className="pdp__badge">-{discount}% OFF</span>}
-                                <img src={image} alt={product.name} />
+                                <img src={images[activeImage] || image} alt={product.name} />
                             </div>
+                            {images.length > 1 && (
+                                <div className="pdp__thumbs">
+                                    {images.map((img, idx) => (
+                                        <button
+                                            key={idx}
+                                            className={`pdp__thumb ${activeImage === idx ? 'pdp__thumb--active' : ''}`}
+                                            onClick={() => setActiveImage(idx)}
+                                        >
+                                            <img src={img} alt={`${product.name} ${idx + 1}`} />
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </ScrollReveal>
 
                         {/* Info */}
@@ -359,27 +390,72 @@ export default function ProductDetailPage() {
                                 <p className="pdp__desc">{product.description}</p>
                             )}
 
-                            {/* Old-style Variations (ecommerce/grocery) */}
-                            {product.variations?.length > 0 && (
-                                <div className="pdp__variations">
-                                    <h4>Select Variant</h4>
-                                    <div className="pdp__variation-options">
-                                        {product.variations.map((v, i) => (
-                                            <button
-                                                key={i}
-                                                className={`pdp__variation-btn ${selectedVariation === i ? 'pdp__variation-btn--active' : ''}`}
-                                                onClick={() => setSelectedVariation(i)}
-                                            >
-                                                {v.type}
-                                                {v.price !== product.price && (
-                                                    <span className="pdp__variation-price">{formatPrice(v.price)}</span>
-                                                )}
-                                                {v.stock !== null && v.stock <= 0 && <span className="pdp__variation-oos">Out of Stock</span>}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
+                            {/* Old-style Variations via choice_options (ecommerce/grocery) */}
+                            {product.choice_options?.length > 0 && (() => {
+                                // Separate: groups with multiple options (selectable) vs single-option (specs)
+                                const selectableGroups = product.choice_options
+                                    .map((g, i) => ({ ...g, _idx: i }))
+                                    .filter(g => g.options.length > 1);
+                                const specGroups = product.choice_options
+                                    .filter(g => g.options.length === 1);
+
+                                return (
+                                    <>
+                                        {/* Selectable variant groups (multiple options) */}
+                                        {selectableGroups.length > 0 && (
+                                            <div className="pdp__choice-options">
+                                                <h4>Select Variant</h4>
+                                                {selectableGroups.map(group => (
+                                                    <div key={group.name} className="pdp__choice-group">
+                                                        <span className="pdp__choice-title">{group.title}</span>
+                                                        <div className="pdp__choice-pills">
+                                                            {group.options.map((opt, oIdx) => (
+                                                                <button
+                                                                    key={oIdx}
+                                                                    className={`pdp__choice-pill ${choiceSelections[group._idx] === oIdx ? 'pdp__choice-pill--active' : ''}`}
+                                                                    onClick={() => {
+                                                                        setChoiceSelections(prev => {
+                                                                            const next = [...prev];
+                                                                            next[group._idx] = oIdx;
+                                                                            return next;
+                                                                        });
+                                                                    }}
+                                                                >
+                                                                    {opt}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                                {(() => {
+                                                    const matched = getMatchedVariation();
+                                                    if (matched && matched.stock !== null && matched.stock <= 0) {
+                                                        return <p className="pdp__variation-oos">Out of Stock for this combination</p>;
+                                                    }
+                                                    return null;
+                                                })()}
+                                            </div>
+                                        )}
+
+                                        {/* Specifications table (single-option groups = product specs) */}
+                                        {specGroups.length > 0 && (
+                                            <div className="pdp__specs-table">
+                                                <h4>Specifications</h4>
+                                                <table>
+                                                    <tbody>
+                                                        {specGroups.map(group => (
+                                                            <tr key={group.name}>
+                                                                <td className="pdp__spec-label">{group.title}</td>
+                                                                <td className="pdp__spec-value">{group.options[0]}</td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        )}
+                                    </>
+                                );
+                            })()}
 
                             {/* Food Variations (new-style) */}
                             {product.food_variations?.length > 0 && product.food_variations.map(group => (
